@@ -1,0 +1,8 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+*.sh text eol=lf
+*.c  text eol=lf
+*.h  text eol=lf
+Makefile text eol=lf
+*.mk text eol=lf
+docs/measurements/ai-evaluation/* text eol=lf

@@ -1,0 +1,211 @@
+{
+  "schema_version": 1,
+  "model": "geometry_mapped_historical_unit_cost_estimate",
+  "input_manifest": "cost_inputs.json",
+  "historical_measurement_run": "20260928_e2e_04",
+  "cycle_seconds": 15,
+  "unit_costs": {
+    "clip_count": 100,
+    "total_observed_clip_bytes": 310005628,
+    "mean_clip_bytes": 3100056.28,
+    "mean_clip_MB": 3.10005628,
+    "total_observed_metadata_bytes": 29200,
+    "total_observed_spool_bytes": 310034828,
+    "min_clip_bytes": 3091431,
+    "max_clip_bytes": 3111523,
+    "cpu_branch_core_seconds": {
+      "fov_reject": 0.0006835420797223629,
+      "ai_not_found": 36.21951587789192,
+      "ai_found_and_upload": 11.906128461156001
+    },
+    "cpu_source_values": {
+      "fov_reject": {
+        "metrics_group": "g1",
+        "average_cores": 0.10904514087198149,
+        "idle_cores": 0.1089995714,
+        "excess_cores": 4.556947198149086e-05
+      },
+      "ai_not_found": {
+        "metrics_group": "g2",
+        "average_cores": 2.5186340086994616,
+        "idle_cores": 0.10399961684,
+        "excess_cores": 2.4146343918594617
+      },
+      "ai_found_and_upload": {
+        "metrics_group": "g3",
+        "average_cores": 0.8657413901504,
+        "idle_cores": 0.07199949274,
+        "excess_cores": 0.7937418974104
+      }
+    }
+  },
+  "scenario_count": 100,
+  "totals": {
+    "N": 5990,
+    "N1": 2839,
+    "N2": 925,
+    "visible_independent": 925,
+    "visible_but_first_rejected": 0,
+    "network_all_upload_MB": 18569.3371172,
+    "network_fov_only_MB": 8801.05977892,
+    "network_two_stage_MB": 2867.552059,
+    "network_fov_reduction_fraction": 0.526043405676127,
+    "network_second_conditional_reduction_fraction": 0.6741810496653751,
+    "network_total_reduction_fraction": 0.845575959933222,
+    "cpu_all_ai_core_seconds": 194465.0167480919,
+    "cpu_two_stage_core_seconds": 80339.47605794764,
+    "cpu_reduction_fraction": 0.5868692611071604,
+    "independent_visible_retention_fraction": 1.0
+  },
+  "mean_per_scenario": {
+    "N": 59.9,
+    "N1": 28.39,
+    "N2": 9.25,
+    "visible_independent": 9.25,
+    "visible_but_first_rejected": 0.0,
+    "network_all_upload_MB": 185.693371172,
+    "network_fov_only_MB": 88.0105977892,
+    "network_two_stage_MB": 28.67552059,
+    "cpu_all_ai_core_seconds": 1944.650167480919,
+    "cpu_two_stage_core_seconds": 803.3947605794764
+  },
+  "by_road": {
+    "elevated": {
+      "scenario_count": 25,
+      "totals": {
+        "N": 1640,
+        "N1": 741,
+        "N2": 137,
+        "visible_independent": 137,
+        "visible_but_first_rejected": 0,
+        "network_all_upload_MB": 5084.0922992,
+        "network_fov_only_MB": 2297.14170348,
+        "network_two_stage_MB": 424.70771036,
+        "network_fov_reduction_fraction": 0.548170731707317,
+        "network_second_conditional_reduction_fraction": 0.815114709851552,
+        "network_total_reduction_fraction": 0.9164634146341464,
+        "cpu_all_ai_core_seconds": 56069.071963649934,
+        "cpu_two_stage_core_seconds": 23508.341693754763,
+        "cpu_reduction_fraction": 0.5807253291262708,
+        "independent_visible_retention_fraction": 1.0
+      },
+      "mean_per_scenario": {
+        "N": 65.6,
+        "N1": 29.64,
+        "N2": 5.48,
+        "visible_independent": 5.48,
+        "visible_but_first_rejected": 0.0,
+        "network_all_upload_MB": 203.36369196799998,
+        "network_fov_only_MB": 91.8856681392,
+        "network_two_stage_MB": 16.988308414400002,
+        "cpu_all_ai_core_seconds": 2242.7628785459974,
+        "cpu_two_stage_core_seconds": 940.3336677501906
+      }
+    },
+    "normal": {
+      "scenario_count": 25,
+      "totals": {
+        "N": 1465,
+        "N1": 712,
+        "N2": 199,
+        "visible_independent": 199,
+        "visible_but_first_rejected": 0,
+        "network_all_upload_MB": 4541.5824502,
+        "network_fov_only_MB": 2207.24007136,
+        "network_two_stage_MB": 616.91119972,
+        "network_fov_reduction_fraction": 0.5139931740614334,
+        "network_second_conditional_reduction_fraction": 0.7205056179775281,
+        "network_total_reduction_fraction": 0.8641638225255972,
+        "cpu_all_ai_core_seconds": 48223.22666518122,
+        "cpu_two_stage_core_seconds": 20950.44591631463,
+        "cpu_reduction_fraction": 0.5655527975808066,
+        "independent_visible_retention_fraction": 1.0
+      },
+      "mean_per_scenario": {
+        "N": 58.6,
+        "N1": 28.48,
+        "N2": 7.96,
+        "visible_independent": 7.96,
+        "visible_but_first_rejected": 0.0,
+        "network_all_upload_MB": 181.66329800799997,
+        "network_fov_only_MB": 88.2896028544,
+        "network_two_stage_MB": 24.6764479888,
+        "cpu_all_ai_core_seconds": 1928.9290666072486,
+        "cpu_two_stage_core_seconds": 838.0178366525853
+      }
+    },
+    "underpass": {
+      "scenario_count": 25,
+      "totals": {
+        "N": 1425,
+        "N1": 679,
+        "N2": 291,
+        "visible_independent": 291,
+        "visible_but_first_rejected": 0,
+        "network_all_upload_MB": 4417.580199,
+        "network_fov_only_MB": 2104.93821412,
+        "network_two_stage_MB": 902.11637748,
+        "network_fov_reduction_fraction": 0.5235087719298246,
+        "network_second_conditional_reduction_fraction": 0.5714285714285714,
+        "network_total_reduction_fraction": 0.7957894736842105,
+        "cpu_all_ai_core_seconds": 44537.61438772584,
+        "cpu_two_stage_core_seconds": 17518.365465209936,
+        "cpu_reduction_fraction": 0.606661342192638,
+        "independent_visible_retention_fraction": 1.0
+      },
+      "mean_per_scenario": {
+        "N": 57.0,
+        "N1": 27.16,
+        "N2": 11.64,
+        "visible_independent": 11.64,
+        "visible_but_first_rejected": 0.0,
+        "network_all_upload_MB": 176.70320796,
+        "network_fov_only_MB": 84.1975285648,
+        "network_two_stage_MB": 36.0846550992,
+        "cpu_all_ai_core_seconds": 1781.5045755090334,
+        "cpu_two_stage_core_seconds": 700.7346186083975
+      }
+    },
+    "urban": {
+      "scenario_count": 25,
+      "totals": {
+        "N": 1460,
+        "N1": 707,
+        "N2": 298,
+        "visible_independent": 298,
+        "visible_but_first_rejected": 0,
+        "network_all_upload_MB": 4526.0821688,
+        "network_fov_only_MB": 2191.73978996,
+        "network_two_stage_MB": 923.81677144,
+        "network_fov_reduction_fraction": 0.5157534246575343,
+        "network_second_conditional_reduction_fraction": 0.5785007072135785,
+        "network_total_reduction_fraction": 0.7958904109589041,
+        "cpu_all_ai_core_seconds": 45635.1037315349,
+        "cpu_two_stage_core_seconds": 18362.322982668313,
+        "cpu_reduction_fraction": 0.5976272325205754,
+        "independent_visible_retention_fraction": 1.0
+      },
+      "mean_per_scenario": {
+        "N": 58.4,
+        "N1": 28.28,
+        "N2": 11.92,
+        "visible_independent": 11.92,
+        "visible_but_first_rejected": 0.0,
+        "network_all_upload_MB": 181.04328675199997,
+        "network_fov_only_MB": 87.6695915984,
+        "network_two_stage_MB": 36.9526708576,
+        "cpu_all_ai_core_seconds": 1825.404149261396,
+        "cpu_two_stage_core_seconds": 734.4929193067325
+      }
+    }
+  },
+  "scope": [
+    "Historical 2026-09-28 hardware costs use the pre-event 10-second video implementation and 15-second device-wide averages, not the later pre-8/post-2 implementation.",
+    "The same observed unit costs are applied to synthetic random road scenes. Geometry maps cost branches; it is not an AI accuracy assumption or a new performance measurement.",
+    "Network estimates count MP4 payload bytes only, excluding the separately recorded metadata, protocol overhead, retransmissions and other device traffic. Equal mean clip size is assumed for every modeled upload.",
+    "CPU is idle-subtracted device-wide core-seconds, including branch processing and encoding/upload where present. It is not isolated model inference time.",
+    "The CPU comparator runs AI for all neighbors, mapping independent geometry visibility to positive or negative measured branch costs. No CPU claim is made for the all-upload network comparator.",
+    "The accident vehicle's own video and CPU are a common term outside all reported witness totals; no own-video size is assumed.",
+    "Retained and missed independently visible vehicle counts are reported alongside the estimated cost reductions."
+  ]
+}

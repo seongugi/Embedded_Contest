@@ -1,0 +1,29 @@
+[Unit]
+Description=ACE Wi-Fi Direct client and P2P receiver
+Wants=NetworkManager.service witness_filter.service
+After=NetworkManager.service witness_filter.service
+Before=p2p-go.service
+Conflicts=p2p-go.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=notify
+NotifyAccess=main
+WatchdogSec=15s
+TimeoutStartSec=infinity
+User=root
+Group=root
+WorkingDirectory=@EXEC_ROOT@
+ExecStart=/bin/bash @EXEC_ROOT@/p2p_client.sh
+Environment=ACE_P2P_SYSTEMD=1
+Restart=always
+RestartSec=5s
+TimeoutStopSec=20s
+KillSignal=SIGTERM
+KillMode=control-group
+PrivateTmp=false
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

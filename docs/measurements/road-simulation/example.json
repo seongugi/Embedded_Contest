@@ -1,0 +1,1950 @@
+{
+  "schema_version": 1,
+  "model_type": "geometric_visibility",
+  "source": {
+    "file": "simulator.html",
+    "sha256_lf_utf8": "f60e1162c5c05baa816fcb7e8e50e396cf3f444ec7e44885b31bbcd90a13f268"
+  },
+  "design": {
+    "road": "elevated",
+    "lanes": 8,
+    "count": 80,
+    "seed": 42,
+    "units": "scene units",
+    "camera_horizontal_fov_degrees": 64,
+    "accident_body_radius": 17
+  },
+  "counts": {
+    "N": 80,
+    "N1": 42,
+    "N2": 6,
+    "visible_independent": 6,
+    "visible_but_first_rejected": 0,
+    "first_reduction": 0.475,
+    "second_conditional_reduction": 0.8571428571428571,
+    "total_reduction": 0.925,
+    "independent_visible_retention": 1
+  },
+  "accident": {
+    "x": 500,
+    "y": 340,
+    "z": 80,
+    "heading_degrees": -18
+  },
+  "vehicles": [
+    {
+      "id": 1,
+      "x": 509.5,
+      "y": 562.8993678033353,
+      "z": 0.25,
+      "h": 1.5707963267948966,
+      "pitch": 0,
+      "truck": false,
+      "road": "surface",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 2,
+      "x": 285.3926226399386,
+      "y": 349.5,
+      "z": 60.474355794250656,
+      "h": 0,
+      "pitch": 0.519146114246523,
+      "truck": false,
+      "road": "event",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 3,
+      "x": 855.3147151484155,
+      "y": 182.5,
+      "z": 0.25,
+      "h": 3.141592653589793,
+      "pitch": 0,
+      "truck": false,
+      "road": "side-1",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 4,
+      "x": 500.70725003028303,
+      "y": 292.5,
+      "z": 80.25,
+      "h": 3.141592653589793,
+      "pitch": 0,
+      "truck": false,
+      "road": "event",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 5,
+      "x": 566.5,
+      "y": 321.5224885715172,
+      "z": 0.25,
+      "h": 1.5707963267948966,
+      "pitch": 0,
+      "truck": false,
+      "road": "surface",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 6,
+      "x": 67.06371306414434,
+      "y": 349.5,
+      "z": 0.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": false,
+      "road": "event",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 7,
+      "x": 762.3994295062837,
+      "y": 292.5,
+      "z": 33.16461171069506,
+      "h": 3.141592653589793,
+      "pitch": 0.519146114246523,
+      "truck": false,
+      "road": "event",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 8,
+      "x": 812.1827394562712,
+      "y": 292.5,
+      "z": 4.71700602498791,
+      "h": 3.141592653589793,
+      "pitch": 0.519146114246523,
+      "truck": false,
+      "road": "event",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 9,
+      "x": 69.818468648009,
+      "y": 201.5,
+      "z": 0.25,
+      "h": 3.141592653589793,
+      "pitch": 0,
+      "truck": true,
+      "road": "side-1",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 10,
+      "x": 490.5,
+      "y": 178.84846359649677,
+      "z": 0.25,
+      "h": 4.71238898038469,
+      "pitch": 0,
+      "truck": false,
+      "road": "surface",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 11,
+      "x": 724.5818855208157,
+      "y": 311.5,
+      "z": 54.77463684524817,
+      "h": 3.141592653589793,
+      "pitch": 0.519146114246523,
+      "truck": false,
+      "road": "event",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 12,
+      "x": 547.5,
+      "y": 203.53249586075543,
+      "z": 0.25,
+      "h": 1.5707963267948966,
+      "pitch": 0,
+      "truck": false,
+      "road": "surface",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 13,
+      "x": 675.2583699597628,
+      "y": 368.5,
+      "z": 80.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": false,
+      "road": "event",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 14,
+      "x": 435.95787227619445,
+      "y": 239.5,
+      "z": 0.25,
+      "h": 3.141592653589793,
+      "pitch": 0,
+      "truck": false,
+      "road": "side-1",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 15,
+      "x": 51.84711080513436,
+      "y": 273.5,
+      "z": 0.25,
+      "h": 3.141592653589793,
+      "pitch": 0,
+      "truck": false,
+      "road": "event",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 16,
+      "x": 490.5,
+      "y": 592.680462288484,
+      "z": 0.25,
+      "h": 4.71238898038469,
+      "pitch": 0,
+      "truck": false,
+      "road": "surface",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 17,
+      "x": 692.1244170563297,
+      "y": 459.5,
+      "z": 0.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": false,
+      "road": "side1",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 18,
+      "x": 452.5,
+      "y": 100.0627434338443,
+      "z": 0.25,
+      "h": 4.71238898038469,
+      "pitch": 0,
+      "truck": false,
+      "road": "surface",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 19,
+      "x": 433.5,
+      "y": 298.255509851221,
+      "z": 0.25,
+      "h": 4.71238898038469,
+      "pitch": 0,
+      "truck": false,
+      "road": "surface",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 20,
+      "x": 328.35475176969,
+      "y": 349.5,
+      "z": 80.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": false,
+      "road": "event",
+      "first": true,
+      "visible": true,
+      "final": true
+    },
+    {
+      "id": 21,
+      "x": 812.5511365856964,
+      "y": 330.5,
+      "z": 4.506493379602006,
+      "h": 3.141592653589793,
+      "pitch": 0.519146114246523,
+      "truck": false,
+      "road": "event",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 22,
+      "x": 542.0482133468614,
+      "y": 459.5,
+      "z": 0.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": false,
+      "road": "side1",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 23,
+      "x": 319.128976526202,
+      "y": 368.5,
+      "z": 79.75227230068685,
+      "h": 0,
+      "pitch": 0.519146114246523,
+      "truck": false,
+      "road": "event",
+      "first": true,
+      "visible": true,
+      "final": true
+    },
+    {
+      "id": 24,
+      "x": 799.4142509461382,
+      "y": 201.5,
+      "z": 0.25,
+      "h": 3.141592653589793,
+      "pitch": 0,
+      "truck": false,
+      "road": "side-1",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 25,
+      "x": 685.7128436514178,
+      "y": 220.5,
+      "z": 0.25,
+      "h": 3.141592653589793,
+      "pitch": 0,
+      "truck": false,
+      "road": "side-1",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 26,
+      "x": 649.951537306686,
+      "y": 292.5,
+      "z": 80.25,
+      "h": 3.141592653589793,
+      "pitch": 0,
+      "truck": false,
+      "road": "event",
+      "first": true,
+      "visible": true,
+      "final": true
+    },
+    {
+      "id": 27,
+      "x": 853.840091361358,
+      "y": 368.5,
+      "z": 0.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": false,
+      "road": "event",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 28,
+      "x": 631.1404349389298,
+      "y": 368.5,
+      "z": 80.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": false,
+      "road": "event",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 29,
+      "x": 489.9954740470276,
+      "y": 220.5,
+      "z": 0.25,
+      "h": 3.141592653589793,
+      "pitch": 0,
+      "truck": false,
+      "road": "side-1",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 30,
+      "x": 64.70666585890697,
+      "y": 311.5,
+      "z": 0.25,
+      "h": 3.141592653589793,
+      "pitch": 0,
+      "truck": false,
+      "road": "event",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 31,
+      "x": 187.3955309391022,
+      "y": 497.5,
+      "z": 0.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": false,
+      "road": "side1",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 32,
+      "x": 528.5,
+      "y": 273.3806646366604,
+      "z": 0.25,
+      "h": 1.5707963267948966,
+      "pitch": 0,
+      "truck": false,
+      "road": "surface",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 33,
+      "x": 401.60729771050035,
+      "y": 368.5,
+      "z": 80.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": false,
+      "road": "event",
+      "first": true,
+      "visible": true,
+      "final": true
+    },
+    {
+      "id": 34,
+      "x": 603.108943423722,
+      "y": 201.5,
+      "z": 0.25,
+      "h": 3.141592653589793,
+      "pitch": 0,
+      "truck": false,
+      "road": "side-1",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 35,
+      "x": 547.5,
+      "y": 229.56121085211635,
+      "z": 0.25,
+      "h": 1.5707963267948966,
+      "pitch": 0,
+      "truck": false,
+      "road": "surface",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 36,
+      "x": 241.3368524156426,
+      "y": 368.5,
+      "z": 35.29962995179577,
+      "h": 0,
+      "pitch": 0.519146114246523,
+      "truck": false,
+      "road": "event",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 37,
+      "x": 528.5,
+      "y": 102.79445321261885,
+      "z": 0.25,
+      "h": 1.5707963267948966,
+      "pitch": 0,
+      "truck": false,
+      "road": "surface",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 38,
+      "x": 230.22243205326257,
+      "y": 349.5,
+      "z": 28.94853260186433,
+      "h": 0,
+      "pitch": 0.519146114246523,
+      "truck": false,
+      "road": "event",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 39,
+      "x": 171.33422506041825,
+      "y": 459.5,
+      "z": 0.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": false,
+      "road": "side1",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 40,
+      "x": 452.5,
+      "y": 557.0351377303713,
+      "z": 0.25,
+      "h": 4.71238898038469,
+      "pitch": 0,
+      "truck": false,
+      "road": "surface",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 41,
+      "x": 197.9097097148258,
+      "y": 273.5,
+      "z": 10.484119837043318,
+      "h": 3.141592653589793,
+      "pitch": -0.519146114246523,
+      "truck": false,
+      "road": "event",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 42,
+      "x": 452.5,
+      "y": 650.7971615844407,
+      "z": 0.25,
+      "h": 4.71238898038469,
+      "pitch": 0,
+      "truck": false,
+      "road": "surface",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 43,
+      "x": 845.6004670868712,
+      "y": 330.5,
+      "z": 0.25,
+      "h": 3.141592653589793,
+      "pitch": 0,
+      "truck": false,
+      "road": "event",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 44,
+      "x": 622.1017507212915,
+      "y": 406.5,
+      "z": 80.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": false,
+      "road": "event",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 45,
+      "x": 471.5,
+      "y": 628.337650142517,
+      "z": 0.25,
+      "h": 4.71238898038469,
+      "pitch": 0,
+      "truck": false,
+      "road": "surface",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 46,
+      "x": 177.2148322640826,
+      "y": 368.5,
+      "z": 0.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": false,
+      "road": "event",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 47,
+      "x": 300.33969260000555,
+      "y": 273.5,
+      "z": 69.0155386285746,
+      "h": 3.141592653589793,
+      "pitch": -0.519146114246523,
+      "truck": false,
+      "road": "event",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 48,
+      "x": 471.5,
+      "y": 525.6545825079083,
+      "z": 0.25,
+      "h": 4.71238898038469,
+      "pitch": 0,
+      "truck": false,
+      "road": "surface",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 49,
+      "x": 517.2620177907027,
+      "y": 368.5,
+      "z": 80.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": false,
+      "road": "event",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 50,
+      "x": 427.3382317142394,
+      "y": 330.5,
+      "z": 80.25,
+      "h": 3.141592653589793,
+      "pitch": 0,
+      "truck": false,
+      "road": "event",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 51,
+      "x": 490.5,
+      "y": 433.19961969945587,
+      "z": 0.25,
+      "h": 4.71238898038469,
+      "pitch": 0,
+      "truck": false,
+      "road": "surface",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 52,
+      "x": 432.5204837911485,
+      "y": 387.5,
+      "z": 80.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": false,
+      "road": "event",
+      "first": true,
+      "visible": true,
+      "final": true
+    },
+    {
+      "id": 53,
+      "x": 91.49258372741241,
+      "y": 387.5,
+      "z": 0.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": false,
+      "road": "event",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 54,
+      "x": 562.0977353193388,
+      "y": 368.5,
+      "z": 80.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": false,
+      "road": "event",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 55,
+      "x": 775.6365877506324,
+      "y": 478.5,
+      "z": 0.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": false,
+      "road": "side1",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 56,
+      "x": 107.62011397397146,
+      "y": 440.5,
+      "z": 0.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": false,
+      "road": "side1",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 57,
+      "x": 666.8929566306306,
+      "y": 311.5,
+      "z": 80.25,
+      "h": 3.141592653589793,
+      "pitch": 0,
+      "truck": false,
+      "road": "event",
+      "first": true,
+      "visible": true,
+      "final": true
+    },
+    {
+      "id": 58,
+      "x": 433.5,
+      "y": 37.79682554258034,
+      "z": 0.25,
+      "h": 4.71238898038469,
+      "pitch": 0,
+      "truck": false,
+      "road": "surface",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 59,
+      "x": 804.1129056940422,
+      "y": 311.5,
+      "z": 9.328339603404501,
+      "h": 3.141592653589793,
+      "pitch": 0.519146114246523,
+      "truck": false,
+      "road": "event",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 60,
+      "x": 917.070931330098,
+      "y": 406.5,
+      "z": 0.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": false,
+      "road": "event",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 61,
+      "x": 452.5,
+      "y": 615.3132304162718,
+      "z": 0.25,
+      "h": 4.71238898038469,
+      "pitch": 0,
+      "truck": false,
+      "road": "surface",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 62,
+      "x": 550.4867091448979,
+      "y": 478.5,
+      "z": 0.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": false,
+      "road": "side1",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 63,
+      "x": 322.108426259365,
+      "y": 497.5,
+      "z": 0.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": false,
+      "road": "side1",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 64,
+      "x": 452.5,
+      "y": 268.44288391228764,
+      "z": 0.25,
+      "h": 4.71238898038469,
+      "pitch": 0,
+      "truck": false,
+      "road": "surface",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 65,
+      "x": 415.889718942455,
+      "y": 406.5,
+      "z": 80.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": false,
+      "road": "event",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 66,
+      "x": 452.5,
+      "y": 414.5360163440928,
+      "z": 0.25,
+      "h": 4.71238898038469,
+      "pitch": 0,
+      "truck": false,
+      "road": "surface",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 67,
+      "x": 528.5,
+      "y": 422.69617214808244,
+      "z": 0.25,
+      "h": 1.5707963267948966,
+      "pitch": 0,
+      "truck": false,
+      "road": "surface",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 68,
+      "x": 822.460475373082,
+      "y": 440.5,
+      "z": 0.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": false,
+      "road": "side1",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 69,
+      "x": 509.5,
+      "y": 69.65600166218356,
+      "z": 0.25,
+      "h": 1.5707963267948966,
+      "pitch": 0,
+      "truck": false,
+      "road": "surface",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 70,
+      "x": 446.78787099896,
+      "y": 459.5,
+      "z": 0.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": false,
+      "road": "side1",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 71,
+      "x": 190.8606628375128,
+      "y": 440.5,
+      "z": 0.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": false,
+      "road": "side1",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 72,
+      "x": 566.5,
+      "y": 44.54945171605795,
+      "z": 0.25,
+      "h": 1.5707963267948966,
+      "pitch": 0,
+      "truck": false,
+      "road": "surface",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 73,
+      "x": 617.2671118262224,
+      "y": 239.5,
+      "z": 0.25,
+      "h": 3.141592653589793,
+      "pitch": 0,
+      "truck": false,
+      "road": "side-1",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 74,
+      "x": 618.3132106414997,
+      "y": 182.5,
+      "z": 0.25,
+      "h": 3.141592653589793,
+      "pitch": 0,
+      "truck": false,
+      "road": "side-1",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 75,
+      "x": 528.5,
+      "y": 188.30621866881847,
+      "z": 0.25,
+      "h": 1.5707963267948966,
+      "pitch": 0,
+      "truck": false,
+      "road": "surface",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 76,
+      "x": 509.5,
+      "y": 398.1337116480806,
+      "z": 0.25,
+      "h": 1.5707963267948966,
+      "pitch": 0,
+      "truck": false,
+      "road": "surface",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 77,
+      "x": 143.42912677675486,
+      "y": 497.5,
+      "z": 0.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": true,
+      "road": "side1",
+      "first": true,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 78,
+      "x": 257.5515606421631,
+      "y": 311.5,
+      "z": 44.5651775098075,
+      "h": 3.141592653589793,
+      "pitch": -0.519146114246523,
+      "truck": false,
+      "road": "event",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 79,
+      "x": 352.7028486481868,
+      "y": 497.5,
+      "z": 0.25,
+      "h": 0,
+      "pitch": 0,
+      "truck": false,
+      "road": "side1",
+      "first": false,
+      "visible": false,
+      "final": false
+    },
+    {
+      "id": 80,
+      "x": 775.0843305344603,
+      "y": 368.5,
+      "z": 25.916096837451263,
+      "h": 0,
+      "pitch": -0.519146114246523,
+      "truck": false,
+      "road": "event",
+      "first": false,
+      "visible": false,
+      "final": false
+    }
+  ],
+  "roads": [
+    {
+      "id": "event",
+      "points": [
+        [
+          0,
+          340,
+          0
+        ],
+        [
+          180,
+          340,
+          0
+        ],
+        [
+          320,
+          340,
+          80
+        ],
+        [
+          680,
+          340,
+          80
+        ],
+        [
+          820,
+          340,
+          0
+        ],
+        [
+          1000,
+          340,
+          0
+        ]
+      ],
+      "width": 168,
+      "lanes": 8,
+      "raised": true,
+      "kind": "road",
+      "segments": [
+        {
+          "a": [
+            0,
+            340,
+            0
+          ],
+          "b": [
+            180,
+            340,
+            0
+          ],
+          "u": [
+            1,
+            0,
+            0
+          ],
+          "v": [
+            0,
+            1,
+            0
+          ],
+          "n": [
+            0,
+            0,
+            1
+          ],
+          "len": 180,
+          "start": 0,
+          "center": [
+            90,
+            340,
+            -4
+          ],
+          "axes": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "size": [
+            180.15,
+            168,
+            8
+          ],
+          "x": 90,
+          "y": 340,
+          "kind": "deck",
+          "name": "고가도로 상판"
+        },
+        {
+          "a": [
+            180,
+            340,
+            0
+          ],
+          "b": [
+            320,
+            340,
+            80
+          ],
+          "u": [
+            0.8682431421244593,
+            0,
+            0.49613893835683387
+          ],
+          "v": [
+            0,
+            1,
+            0
+          ],
+          "n": [
+            -0.49613893835683387,
+            0,
+            0.8682431421244593
+          ],
+          "len": 161.24515496597098,
+          "start": 180,
+          "center": [
+            251.98455575342734,
+            340,
+            36.52702743150216
+          ],
+          "axes": [
+            [
+              0.8682431421244593,
+              0,
+              0.49613893835683387
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              -0.49613893835683387,
+              0,
+              0.8682431421244593
+            ]
+          ],
+          "size": [
+            161.395154965971,
+            168,
+            8
+          ],
+          "x": 251.98455575342734,
+          "y": 340,
+          "kind": "deck",
+          "name": "고가도로 상판"
+        },
+        {
+          "a": [
+            320,
+            340,
+            80
+          ],
+          "b": [
+            680,
+            340,
+            80
+          ],
+          "u": [
+            1,
+            0,
+            0
+          ],
+          "v": [
+            0,
+            1,
+            0
+          ],
+          "n": [
+            0,
+            0,
+            1
+          ],
+          "len": 360,
+          "start": 341.245154965971,
+          "center": [
+            500,
+            340,
+            76
+          ],
+          "axes": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "size": [
+            360.15,
+            168,
+            8
+          ],
+          "x": 500,
+          "y": 340,
+          "kind": "deck",
+          "name": "고가도로 상판"
+        },
+        {
+          "a": [
+            680,
+            340,
+            80
+          ],
+          "b": [
+            820,
+            340,
+            0
+          ],
+          "u": [
+            0.8682431421244593,
+            0,
+            -0.49613893835683387
+          ],
+          "v": [
+            0,
+            1,
+            0
+          ],
+          "n": [
+            0.49613893835683387,
+            0,
+            0.8682431421244593
+          ],
+          "len": 161.24515496597098,
+          "start": 701.245154965971,
+          "center": [
+            748.0154442465727,
+            340,
+            36.52702743150216
+          ],
+          "axes": [
+            [
+              0.8682431421244593,
+              0,
+              -0.49613893835683387
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0.49613893835683387,
+              0,
+              0.8682431421244593
+            ]
+          ],
+          "size": [
+            161.395154965971,
+            168,
+            8
+          ],
+          "x": 748.0154442465727,
+          "y": 340,
+          "kind": "deck",
+          "name": "고가도로 상판"
+        },
+        {
+          "a": [
+            820,
+            340,
+            0
+          ],
+          "b": [
+            1000,
+            340,
+            0
+          ],
+          "u": [
+            1,
+            0,
+            0
+          ],
+          "v": [
+            0,
+            1,
+            0
+          ],
+          "n": [
+            0,
+            0,
+            1
+          ],
+          "len": 180,
+          "start": 862.490309931942,
+          "center": [
+            910,
+            340,
+            -4
+          ],
+          "axes": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "size": [
+            180.15,
+            168,
+            8
+          ],
+          "x": 910,
+          "y": 340,
+          "kind": "deck",
+          "name": "고가도로 상판"
+        }
+      ],
+      "total": 1042.490309931942
+    },
+    {
+      "id": "surface",
+      "points": [
+        [
+          500,
+          0,
+          0
+        ],
+        [
+          500,
+          680,
+          0
+        ]
+      ],
+      "width": 168,
+      "lanes": 8,
+      "raised": false,
+      "kind": "road",
+      "segments": [
+        {
+          "a": [
+            500,
+            0,
+            0
+          ],
+          "b": [
+            500,
+            680,
+            0
+          ],
+          "u": [
+            0,
+            1,
+            0
+          ],
+          "v": [
+            -1,
+            0,
+            0
+          ],
+          "n": [
+            0,
+            0,
+            1
+          ],
+          "len": 680,
+          "start": 0,
+          "center": [
+            500,
+            340,
+            -1
+          ],
+          "axes": [
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              -1,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "size": [
+            680.15,
+            168,
+            2
+          ],
+          "x": 500,
+          "y": 340,
+          "kind": "deck",
+          "name": "고가도로 상판"
+        }
+      ],
+      "total": 680
+    },
+    {
+      "id": "side-1",
+      "points": [
+        [
+          0,
+          211,
+          0
+        ],
+        [
+          1000,
+          211,
+          0
+        ]
+      ],
+      "width": 82,
+      "lanes": 4,
+      "raised": false,
+      "kind": "frontage",
+      "segments": [
+        {
+          "a": [
+            0,
+            211,
+            0
+          ],
+          "b": [
+            1000,
+            211,
+            0
+          ],
+          "u": [
+            1,
+            0,
+            0
+          ],
+          "v": [
+            0,
+            1,
+            0
+          ],
+          "n": [
+            0,
+            0,
+            1
+          ],
+          "len": 1000,
+          "start": 0,
+          "center": [
+            500,
+            211,
+            -1
+          ],
+          "axes": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "size": [
+            1000.15,
+            82,
+            2
+          ],
+          "x": 500,
+          "y": 211,
+          "kind": "deck",
+          "name": "고가도로 상판"
+        }
+      ],
+      "total": 1000
+    },
+    {
+      "id": "side1",
+      "points": [
+        [
+          0,
+          469,
+          0
+        ],
+        [
+          1000,
+          469,
+          0
+        ]
+      ],
+      "width": 82,
+      "lanes": 4,
+      "raised": false,
+      "kind": "frontage",
+      "segments": [
+        {
+          "a": [
+            0,
+            469,
+            0
+          ],
+          "b": [
+            1000,
+            469,
+            0
+          ],
+          "u": [
+            1,
+            0,
+            0
+          ],
+          "v": [
+            0,
+            1,
+            0
+          ],
+          "n": [
+            0,
+            0,
+            1
+          ],
+          "len": 1000,
+          "start": 0,
+          "center": [
+            500,
+            469,
+            -1
+          ],
+          "axes": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "size": [
+            1000.15,
+            82,
+            2
+          ],
+          "x": 500,
+          "y": 469,
+          "kind": "deck",
+          "name": "고가도로 상판"
+        }
+      ],
+      "total": 1000
+    }
+  ],
+  "structures": [
+    {
+      "a": [
+        180,
+        340,
+        0
+      ],
+      "b": [
+        320,
+        340,
+        80
+      ],
+      "u": [
+        0.8682431421244593,
+        0,
+        0.49613893835683387
+      ],
+      "v": [
+        0,
+        1,
+        0
+      ],
+      "n": [
+        -0.49613893835683387,
+        0,
+        0.8682431421244593
+      ],
+      "len": 161.24515496597098,
+      "start": 180,
+      "center": [
+        251.98455575342734,
+        340,
+        36.52702743150216
+      ],
+      "axes": [
+        [
+          0.8682431421244593,
+          0,
+          0.49613893835683387
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          -0.49613893835683387,
+          0,
+          0.8682431421244593
+        ]
+      ],
+      "size": [
+        161.395154965971,
+        168,
+        8
+      ],
+      "x": 251.98455575342734,
+      "y": 340,
+      "kind": "deck",
+      "name": "고가도로 상판"
+    },
+    {
+      "a": [
+        320,
+        340,
+        80
+      ],
+      "b": [
+        680,
+        340,
+        80
+      ],
+      "u": [
+        1,
+        0,
+        0
+      ],
+      "v": [
+        0,
+        1,
+        0
+      ],
+      "n": [
+        0,
+        0,
+        1
+      ],
+      "len": 360,
+      "start": 341.245154965971,
+      "center": [
+        500,
+        340,
+        76
+      ],
+      "axes": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "size": [
+        360.15,
+        168,
+        8
+      ],
+      "x": 500,
+      "y": 340,
+      "kind": "deck",
+      "name": "고가도로 상판"
+    },
+    {
+      "a": [
+        680,
+        340,
+        80
+      ],
+      "b": [
+        820,
+        340,
+        0
+      ],
+      "u": [
+        0.8682431421244593,
+        0,
+        -0.49613893835683387
+      ],
+      "v": [
+        0,
+        1,
+        0
+      ],
+      "n": [
+        0.49613893835683387,
+        0,
+        0.8682431421244593
+      ],
+      "len": 161.24515496597098,
+      "start": 701.245154965971,
+      "center": [
+        748.0154442465727,
+        340,
+        36.52702743150216
+      ],
+      "axes": [
+        [
+          0.8682431421244593,
+          0,
+          -0.49613893835683387
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0.49613893835683387,
+          0,
+          0.8682431421244593
+        ]
+      ],
+      "size": [
+        161.395154965971,
+        168,
+        8
+      ],
+      "x": 748.0154442465727,
+      "y": 340,
+      "kind": "deck",
+      "name": "고가도로 상판"
+    },
+    {
+      "x": 365,
+      "y": 340,
+      "w": 14,
+      "h": 23,
+      "zMin": 0,
+      "zMax": 65,
+      "name": "고가 교각",
+      "kind": "pier"
+    },
+    {
+      "x": 365,
+      "y": 340,
+      "w": 22,
+      "h": 138.6,
+      "zMin": 65,
+      "zMax": 72,
+      "name": "교각 받침보",
+      "kind": "cap"
+    },
+    {
+      "x": 365,
+      "y": 340,
+      "w": 28,
+      "h": 38,
+      "zMin": -0.2,
+      "zMax": 3,
+      "name": "교각 기초",
+      "kind": "footing"
+    },
+    {
+      "x": 635,
+      "y": 340,
+      "w": 14,
+      "h": 23,
+      "zMin": 0,
+      "zMax": 65,
+      "name": "고가 교각",
+      "kind": "pier"
+    },
+    {
+      "x": 635,
+      "y": 340,
+      "w": 22,
+      "h": 138.6,
+      "zMin": 65,
+      "zMax": 72,
+      "name": "교각 받침보",
+      "kind": "cap"
+    },
+    {
+      "x": 635,
+      "y": 340,
+      "w": 28,
+      "h": 38,
+      "zMin": -0.2,
+      "zMax": 3,
+      "name": "교각 기초",
+      "kind": "footing"
+    }
+  ],
+  "buildings": [
+    {
+      "x": 85,
+      "y": 65,
+      "w": 62,
+      "h": 58,
+      "zMin": 0,
+      "zMax": 32,
+      "name": "주변 건물",
+      "decor": true
+    },
+    {
+      "x": 85,
+      "y": 615,
+      "w": 62,
+      "h": 58,
+      "zMin": 0,
+      "zMax": 32,
+      "name": "주변 건물",
+      "decor": true
+    },
+    {
+      "x": 915,
+      "y": 65,
+      "w": 62,
+      "h": 58,
+      "zMin": 0,
+      "zMax": 32,
+      "name": "주변 건물",
+      "decor": true
+    },
+    {
+      "x": 915,
+      "y": 615,
+      "w": 62,
+      "h": 58,
+      "zMin": 0,
+      "zMax": 32,
+      "name": "주변 건물",
+      "decor": true
+    }
+  ]
+}

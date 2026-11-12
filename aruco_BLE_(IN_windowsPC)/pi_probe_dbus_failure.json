@@ -1,0 +1,23 @@
+{
+  "purpose": "TEMPORARY SYNTHETIC ACP1/ACT1 BLE PROBE; NOT CAMERA/GPS DATA",
+  "protocol": "ACP1_40B_ACT1_20B",
+  "elapsed_s": 0.046788583,
+  "counts": {},
+  "known_pose_counts": {},
+  "epoch": 663911465272597493,
+  "epoch_history": [
+    663911465272597493
+  ],
+  "pose_interval_ms_excluding_invalid_gap": {
+    "count": 0
+  },
+  "capture_age_ms": {
+    "count": 0
+  },
+  "capture_age_meaning": "Pi receive time minus conservatively translated synthetic PC observation time; not optical latency",
+  "pose_resume_after_invalid": [],
+  "observed_write_att_mtus": [],
+  "errors": [
+    "Startup/runtime: DBusError: Failed to register advertisement"
+  ]
+}

@@ -1,0 +1,286 @@
+From adc4e92280125032d536ef68065ee6524d43aca4 Mon Sep 17 00:00:00 2001
+From: kimwooseok <ssassa601@gmail.com>
+Date: Sat, 12 Sep 2026 19:51:18 +0900
+Subject: [PATCH] debian: backport WPA-PSK authentication retries for known
+ profiles
+
+A previously successful WPA-PSK profile can request a new key after a
+4-way-handshake failure, including when connection.auth-retries is zero.
+
+Backport the upstream retry getter, retry-availability helper and WPA-PSK
+StateChanged handling to Raspberry Pi OS Trixie network-manager 1.52.1-1+rpt4.
+Apply the CONFIG-state guard and reuse the stored key while retries remain.
+
+On a Pi 5, a 45-second test with a temporary wrong PSK and auth-retries=0
+recorded eight stored-key retries and zero new-key requests. The base package
+recorded zero stored-key retries and one new-key request in the same window.
+The native arm64 build produced nine packages. The focused C regression
+harness passed 24 cases and 580 assertions.
+
+Upstream: a3267aaf7bfab66604b2a6e69973301bb7f9b867
+Upstream: 6dc51ddf01afe790bcf48d93192a0e535987334e
+Upstream: 746a5902ad85ec0611a3e6ebfd7b68b45621a40b
+Upstream: 6dd07a80e535a2e76e7304c92d4db97097af98a4 (CONFIG guard)
+---
+ debian/changelog                              |   9 +
+ ...wifi-backport-known-psk-auth-retries.patch | 221 ++++++++++++++++++
+ debian/patches/series                         |   1 +
+ 3 files changed, 231 insertions(+)
+ create mode 100644 debian/patches/0001-wifi-backport-known-psk-auth-retries.patch
+
+diff --git a/debian/changelog b/debian/changelog
+index c73a691..79efc30 100644
+--- a/debian/changelog
++++ b/debian/changelog
+@@ -1,3 +1,12 @@
++network-manager (1.52.1-1+rpt4+codex1) UNRELEASED; urgency=medium
++
++  * Backport upstream authentication retries for previously successful WPA-PSK
++    profiles. Reuse the stored key while retries remain and honor
++    connection.auth-retries=0 for continued authentication attempts.
++  * Apply the CONFIG-state guard to the supplicant authentication-failure path.
++
++ -- kimwooseok <ssassa601@gmail.com>  Sat, 12 Sep 2026 10:51:18 +0000
++
+ network-manager (1.52.1-1+rpt4) trixie; urgency=medium
+ 
+   * Add patch to fix duplicate connections and improve synchronization with netplan.
+diff --git a/debian/patches/0001-wifi-backport-known-psk-auth-retries.patch b/debian/patches/0001-wifi-backport-known-psk-auth-retries.patch
+new file mode 100644
+index 0000000..e41b290
+--- /dev/null
++++ b/debian/patches/0001-wifi-backport-known-psk-auth-retries.patch
+@@ -0,0 +1,221 @@
++Description: Retry known WPA-PSK profiles before requesting a new key
++ Backport NetworkManager authentication retries to Raspberry Pi OS Trixie.
++ Previously successful profiles reuse their stored key after a CONFIG-state
++ handshake failure while retries remain. With connection.auth-retries=0,
++ authentication keeps retrying. Finite retries request a new key on the last
++ attempt; new profiles request a key when authentication fails.
++ .
++ Upstream retry getter: a3267aaf7bfab66604b2a6e69973301bb7f9b867.
++ Retry availability helper: 6dc51ddf01afe790bcf48d93192a0e535987334e.
++ WPA-PSK StateChanged handling: 746a5902ad85ec0611a3e6ebfd7b68b45621a40b.
++ CONFIG-state guard: 6dd07a80e535a2e76e7304c92d4db97097af98a4.
++Origin: backport, https://github.com/NetworkManager/NetworkManager/commit/746a5902ad85ec0611a3e6ebfd7b68b45621a40b
++Bug: https://gitlab.freedesktop.org/NetworkManager/NetworkManager/-/issues/1316
++Forwarded: not-needed
++Author: Jan Fooken <jan.fooken@suse.com>
++Author: Mitchell Augustin (CONFIG-state guard)
++Last-Update: 2026-09-13
++X-Base-Package: network-manager 1.52.1-1+rpt4
++X-Backported-by: kimwooseok <ssassa601@gmail.com>
++
++diff --git a/src/core/devices/wifi/nm-device-wifi.c b/src/core/devices/wifi/nm-device-wifi.c
++--- a/src/core/devices/wifi/nm-device-wifi.c
+++++ b/src/core/devices/wifi/nm-device-wifi.c
++@@ -2333,6 +2333,26 @@
++ }
++ 
++ static gboolean
+++wifi_connection_is_new(NMDeviceWifi *self)
+++{
+++    NMDevice             *device = NM_DEVICE(self);
+++    NMActRequest         *req;
+++    NMSettingsConnection *connection;
+++    guint64               timestamp = 0;
+++
+++    req = nm_device_get_act_request(device);
+++    g_return_val_if_fail(NM_IS_ACT_REQUEST(req), TRUE);
+++
+++    connection = nm_act_request_get_settings_connection(req);
+++    g_return_val_if_fail(NM_IS_SETTINGS_CONNECTION(connection), TRUE);
+++
+++    if (nm_settings_connection_get_timestamp(connection, &timestamp) && timestamp != 0)
+++        return FALSE;
+++
+++    return TRUE;
+++}
+++
+++static gboolean
++ need_new_wpa_psk(NMDeviceWifi              *self,
++                  NMSupplicantInterfaceState old_state,
++                  int                        disconnect_reason,
++@@ -2380,18 +2400,21 @@
++                               NMSupplicantInterfaceState old_state,
++                               int                        disconnect_reason)
++ {
++-    NMDevice     *device = NM_DEVICE(self);
++-    NMActRequest *req;
++-    const char   *setting_name = NULL;
++-    gboolean      handled      = FALSE;
+++    NMDevice                    *device = NM_DEVICE(self);
+++    NMActRequest                *req;
+++    const char                  *setting_name = NULL;
+++    NMSecretAgentGetSecretsFlags secret_flags = NM_SECRET_AGENT_GET_SECRETS_FLAG_ALLOW_INTERACTION
+++                                                | NM_SECRET_AGENT_GET_SECRETS_FLAG_REQUEST_NEW;
++ 
++     g_return_val_if_fail(new_state == NM_SUPPLICANT_INTERFACE_STATE_DISCONNECTED, FALSE);
+++
+++    if (nm_device_get_state(device) != NM_DEVICE_STATE_CONFIG)
+++        return FALSE;
++ 
++     req = nm_device_get_act_request(NM_DEVICE(self));
++     g_return_val_if_fail(req != NULL, FALSE);
++ 
++-    if (need_new_8021x_secrets(self, old_state, &setting_name)
++-        || need_new_wpa_psk(self, old_state, disconnect_reason, &setting_name)) {
+++    if (need_new_8021x_secrets(self, old_state, &setting_name)) {
++         nm_act_request_clear_secrets(req);
++ 
++         _LOGI(LOGD_DEVICE | LOGD_WIFI,
++@@ -2401,14 +2424,54 @@
++         nm_device_state_changed(device,
++                                 NM_DEVICE_STATE_NEED_AUTH,
++                                 NM_DEVICE_STATE_REASON_SUPPLICANT_DISCONNECT);
++-        wifi_secrets_get_secrets(self,
++-                                 setting_name,
++-                                 NM_SECRET_AGENT_GET_SECRETS_FLAG_ALLOW_INTERACTION
++-                                     | NM_SECRET_AGENT_GET_SECRETS_FLAG_REQUEST_NEW);
++-        handled = TRUE;
++-    }
++-
++-    return handled;
+++        wifi_secrets_get_secrets(self, setting_name, secret_flags);
+++        return TRUE;
+++    }
+++
+++    if (need_new_wpa_psk(self, old_state, disconnect_reason, &setting_name)) {
+++        nm_act_request_clear_secrets(req);
+++        cleanup_association_attempt(self, TRUE);
+++
+++        if (wifi_connection_is_new(self)) {
+++            _LOGI(LOGD_DEVICE | LOGD_WIFI,
+++                  "Activation: (wifi) new connection disconnected during association, asking for "
+++                  "new key");
+++            nm_device_state_changed(device,
+++                                    NM_DEVICE_STATE_NEED_AUTH,
+++                                    NM_DEVICE_STATE_REASON_SUPPLICANT_DISCONNECT);
+++            wifi_secrets_get_secrets(self, setting_name, secret_flags);
+++            return TRUE;
+++        }
+++
+++        if (!nm_device_auth_retries_try_next(device)) {
+++            nm_device_state_changed(device,
+++                                    NM_DEVICE_STATE_FAILED,
+++                                    NM_DEVICE_STATE_REASON_NO_SECRETS);
+++            return TRUE;
+++        }
+++
+++        if (nm_device_auth_retries_has_next(device)) {
+++            secret_flags &= ~NM_SECRET_AGENT_GET_SECRETS_FLAG_REQUEST_NEW;
+++            _LOGI(
+++                LOGD_DEVICE | LOGD_WIFI,
+++                "Activation: (wifi) disconnected during association, reauthenticating connection");
+++        } else {
+++            _LOGI(LOGD_DEVICE | LOGD_WIFI,
+++                  "Activation: (wifi) disconnected during association, asking for new key");
+++        }
+++
+++        nm_device_state_changed(device,
+++                                NM_DEVICE_STATE_NEED_AUTH,
+++                                NM_DEVICE_STATE_REASON_SUPPLICANT_DISCONNECT);
+++        wifi_secrets_get_secrets(self, setting_name, secret_flags);
+++
+++        return TRUE;
+++    }
+++
+++    _LOGI(LOGD_DEVICE | LOGD_WIFI,
+++          "Activation: (wifi) disconnected during association, retrying connection");
+++
+++    return FALSE;
++ }
++ 
++ static gboolean
++diff --git a/src/core/devices/nm-device.c b/src/core/devices/nm-device.c
++--- a/src/core/devices/nm-device.c
+++++ b/src/core/devices/nm-device.c
++@@ -18521,14 +18521,14 @@
++                                                        SUPPLICANT_DEFAULT_TIMEOUT);
++ }
++ 
++-gboolean
++-nm_device_auth_retries_try_next(NMDevice *self)
+++static int
+++_device_get_auth_retries(NMDevice *self)
++ {
++     NMDevicePrivate     *priv;
++     NMSettingConnection *s_con;
++     int                  auth_retries;
++ 
++-    g_return_val_if_fail(NM_IS_DEVICE(self), FALSE);
+++    g_return_val_if_fail(NM_IS_DEVICE(self), 0);
++ 
++     priv         = NM_DEVICE_GET_PRIVATE(self);
++     auth_retries = priv->auth_retries;
++@@ -18560,13 +18560,47 @@
++         priv->auth_retries = auth_retries;
++     }
++ 
+++    return auth_retries;
+++}
+++
+++gboolean
+++nm_device_auth_retries_has_next(NMDevice *self)
+++{
+++    int auth_retries;
+++
+++    g_return_val_if_fail(NM_IS_DEVICE(self), FALSE);
+++
+++    auth_retries = _device_get_auth_retries(self);
+++
+++    if (auth_retries == NM_DEVICE_AUTH_RETRIES_INFINITY)
+++        return TRUE;
+++
+++    if (auth_retries > 0)
+++        return TRUE;
+++
+++    return FALSE;
+++}
+++
+++gboolean
+++nm_device_auth_retries_try_next(NMDevice *self)
+++{
+++    NMDevicePrivate *priv;
+++    int              auth_retries;
+++
+++    g_return_val_if_fail(NM_IS_DEVICE(self), FALSE);
+++
+++    priv         = NM_DEVICE_GET_PRIVATE(self);
+++    auth_retries = _device_get_auth_retries(self);
+++
++     if (auth_retries == NM_DEVICE_AUTH_RETRIES_INFINITY)
++         return TRUE;
++     if (auth_retries <= 0) {
++         nm_assert(auth_retries == 0);
++         return FALSE;
++     }
+++
++     priv->auth_retries--;
+++
++     return TRUE;
++ }
++ 
++diff --git a/src/core/devices/nm-device.h b/src/core/devices/nm-device.h
++--- a/src/core/devices/nm-device.h
+++++ b/src/core/devices/nm-device.h
++@@ -792,6 +792,7 @@
++ void     nm_device_update_dynamic_ip_setup(NMDevice *self, const char *reason);
++ guint    nm_device_get_supplicant_timeout(NMDevice *self);
++ 
+++gboolean nm_device_auth_retries_has_next(NMDevice *self);
++ gboolean nm_device_auth_retries_try_next(NMDevice *self);
++ 
++ gboolean nm_device_hw_addr_get_cloned(NMDevice     *self,
+diff --git a/debian/patches/series b/debian/patches/series
+index 1ddf419..9a0c9e4 100644
+--- a/debian/patches/series
++++ b/debian/patches/series
+@@ -4,3 +4,4 @@ netplan/0001-netplan-Adopt-buildsystems-for-Netplan-integration.patch
+ netplan/0002-netplan-make-use-of-libnetplan-for-YAML-backend.patch
+ netplan/0003-Allow-the-NetworkManager-daemon-to-write-to-lib-netp.patch
+ 0012-fix-netplan.patch
++0001-wifi-backport-known-psk-auth-retries.patch
+-- 
+2.53.0.windows.3
+

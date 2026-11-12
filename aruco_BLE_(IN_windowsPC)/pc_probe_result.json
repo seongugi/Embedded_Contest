@@ -1,0 +1,39 @@
+{
+  "purpose": "SYNTHETIC BLE LINK PROBE; NOT CAMERA/GPS DATA",
+  "target": "ACPTEST1",
+  "requested_seconds": 20.0,
+  "generated_pose_frames": 0,
+  "generated_lost_frames": 0,
+  "wire_protocol": "ACP1 40 bytes / ACT1 20-byte clock read",
+  "phases": [
+    "pose(x123,y456,heading12.5)",
+    "flags=0 fresh frames for 2 seconds",
+    "pose(x988,y654,heading315)"
+  ],
+  "error": "TimeoutError: Temporary probe did not connect and synchronize",
+  "snapshot_after_stop": {
+    "running": false,
+    "fatal_error": "",
+    "cars": {
+      "1": {
+        "state": "stopped",
+        "connected": false,
+        "synchronized": false,
+        "sent_pose": 0,
+        "sent_lost": 0,
+        "dropped": 0,
+        "replaced": 0,
+        "errors": 1,
+        "last_error": "Waiting for the configured BLE target",
+        "last_frame_seq": null,
+        "clock_rtt_ms": null,
+        "clock_uncertainty_ms": null,
+        "mtu": null,
+        "epoch": null,
+        "last_capture_pi_ns": null,
+        "address": "88:A2:9E:9F:DA:8E",
+        "pending": 0
+      }
+    }
+  }
+}

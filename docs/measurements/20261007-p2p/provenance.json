@@ -1,0 +1,114 @@
+{
+  "deployed_release_commit": "0910e1f9c678bf9b9a51760415e1fa39cf400403",
+  "instrumentation_base_commit": "afca0e4e86f15ca824d1678b06a10f27faca60c8",
+  "source_archive_sha256": "9a25981f0877233e593bf92a251504ab8c6d792a76c8df4712aab1d633f5700a",
+  "instrumentation": {
+    "sender": {
+      "original_sha256": "5ba0dccc373090ba4261d9b9a2882953ae3417cc0300a337ae9e0882fa3bdd8b",
+      "instrumented_sha256": "434a5fed2b59f1628bf5a5be20abb399349c86950c9d36145e5fb1f56be299cb"
+    },
+    "receiver": {
+      "original_sha256": "b4ba5fec01622d7ff9cbfc372222ff1e01166d7f583c039e5a990d6afea11ff9",
+      "instrumented_sha256": "8abeb921bc949a491b2cd831195d3348e81cfaf608dc973aaf43e6d7ca6b2510"
+    }
+  },
+  "binary_sha256": {
+    "broadcast_sender": "afdc4a1232163160b772984480b4b882431fe4f56f3743015237f0cae6b8d2b3",
+    "broadcast_receiver": "1b413d55726d4d536abbb8387788297a309720e0c608e19e6a65418b68609555"
+  },
+  "script_sha256": {
+    "instrument.py": "7ea7d3867a0ca1cda54060fddcd9efc34c4ca9bba3d529d90b4a191312a76158",
+    "session.py": "1de1deced11b66e24c8c2df11f6729fa93d9b3c0e4c674e8dc5717c0b525dd4a",
+    "analyse.py": "ea02d268553f62bf59f68dd1a1e5dd094a36f31a7f46b282d393086633f6ec17",
+    "fleet_vm.py": "0801a9221d4401f904128c5ac9b08497c0d3ddf04661fac4c57d4de3af1579fb"
+  },
+  "run_id": "20261007T083753Z-full",
+  "conditions": {
+    "events": 10000,
+    "observers": 4,
+    "injection_pause_seconds": 0.1,
+    "elapsed_seconds": 1012.9190523500001,
+    "started_unix_seconds": 1791362289.0031526,
+    "retry_after_seconds": 1,
+    "ack_wait_limit_seconds": 3,
+    "retry_count": 1
+  },
+  "event_identity": [
+    "station_id",
+    "sequence",
+    "detection_its_ms"
+  ],
+  "latency_basis": "Sender CLOCK_MONOTONIC from initial TX_BEGIN to receiver ACK; includes retransmission wait.",
+  "raw_archive": "raw-events.zip",
+  "raw_sha256": {
+    "craft2_events.csv": "529de4b09a77077b0460a1ce5940b6130f62cafc7ddfd4bbb7b57827145df1da",
+    "craft3_events.csv": "311905cda0d4e969fce8521ea627366782937611a58f308ede8da9f2a66b3fac",
+    "craft3_sink_events.csv": "ef5733222777d8b6d9ff6555c98a73c9db2c857bb0da0f8dcf084cbb328fefa7",
+    "craft4_events.csv": "f0d1f5d490b24fe78d17e29f2de9603033af7e89c9ad28df441b26c1ece8cf22",
+    "craft4_sink_events.csv": "f45e0d60df5a1ec85cb9459581dce7f7e2c32240693e6a901421467f0f1ba10e",
+    "craft6_events.csv": "3086d55aba6c3891598f9d86b65fbde10248696a0e62855d57cdd83b52355676",
+    "craft6_sink_events.csv": "99ce33e682f75d33048bdbdebcc110fef8962d6560d2b4b19362b73b0b47253c",
+    "seongugi_events.csv": "18c1292bef17016a33ee0d6010d5960edb16e1073fe50aae2b7417441cfe3fb7",
+    "seongugi_sink_events.csv": "d09fde16bc547da4ecf2e3a92acb021c0111f779f22704e3afafa74637989536",
+    "craft2_sensor_ipc.csv": "734954ec25118223b038dbfbdd24be3d4a0f75247a329b4c9753e7e32a554fb5"
+  },
+  "source_derived_sha256": {
+    "summary.json": "f93422638f8cf2331ee9aac5635a2fd536c1372cfc2cf538943ac86002a3710c",
+    "summary.csv": "21526cce0ec819ec953e424f743ce6a2a6a7cdbc7426dd416baea2f8c2f156a6",
+    "packet_results.csv": "9ec7ee8da30b47fbfb2ece0b164a690ee403c96b0dad1ee80bb44b08ade8a5ab",
+    "ack_rtt_samples.csv": "a0445ef0d4cebbd9c3edefd914a2409ce93b49e5720383102c7dc48f5e739349"
+  },
+  "publication_transform": {
+    "raw-events.zip": "CSV bytes preserved exactly; ZIP compression only.",
+    "summary.json": "Remove files and one_way_latency_basis fields and per-client raw_clock_based_latency_mean_ms; serialize UTF-8 LF.",
+    "summary.csv": "Same per-client columns as published summary.json; UTF-8 without BOM and LF.",
+    "packet_results.csv": "UTF-8 BOM removed; line endings normalized to LF; values unchanged.",
+    "ack_rtt_samples.csv": "UTF-8 BOM removed; line endings normalized to LF; values unchanged."
+  },
+  "restoration": {
+    "craft2": {
+      "restored": true,
+      "active": true,
+      "binary_sha_match": true,
+      "unit_match": true,
+      "sensor_state_match": true
+    },
+    "craft3": {
+      "restored": true,
+      "active": true,
+      "binary_sha_match": true,
+      "unit_match": true,
+      "sensor_state_match": true
+    },
+    "craft4": {
+      "restored": true,
+      "active": true,
+      "binary_sha_match": true,
+      "unit_match": true,
+      "sensor_state_match": true
+    },
+    "seongugi": {
+      "restored": true,
+      "active": true,
+      "binary_sha_match": true,
+      "unit_match": true,
+      "sensor_state_match": true
+    },
+    "craft6": {
+      "restored": true,
+      "active": true,
+      "binary_sha_match": true,
+      "unit_match": true,
+      "sensor_state_match": true
+    }
+  },
+  "published_sha256": {
+    "ack_rtt_samples.csv": "94b96e0538a2706a52b07ea76e77ed6f40873ec99f6b3109ba53aafa13a86252",
+    "packet_results.csv": "469cfc7f796f18bab775ea66281afcb1ebd1a57d1d5ba6c11fa73ee68eec0b08",
+    "raw-events.zip": "05e3de298cb9d5feaa91b3d99f9f096c6933e4532a61150a32abc5a6cec898af",
+    "summary.csv": "41ac5d11771495096d720bc6979845982e60f3557b13649761fa973df378a5af",
+    "summary.json": "5b1f2aebbbb24e51ba2e76b73fdd6f25a73b9ea45d705df9aa75dee649d45a39"
+  },
+  "script_sha256_phase": "Initial measurement staging",
+  "analysis_script_sha256": "0a9ac9dc4b4fe3761a12efa0d73ed2af6df4ff12d75883ae19219668344e6825"
+}

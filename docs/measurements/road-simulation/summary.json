@@ -1,0 +1,659 @@
+{
+  "schema_version": 1,
+  "title": "100개 합성 도로 배치의 기하 가시성 기반 선별 결과",
+  "model_type": "geometric_visibility",
+  "source": {
+    "file": "simulator.html",
+    "sha256_lf_utf8": "f60e1162c5c05baa816fcb7e8e50e396cf3f444ec7e44885b31bbcd90a13f268",
+    "encoding": "UTF-8 with CRLF normalized to LF before SHA-256"
+  },
+  "design": {
+    "master_seed": 20261006,
+    "cases": 100,
+    "cases_per_road": 25,
+    "road_order": "balanced four-type sample, Fisher-Yates shuffled by the master PRNG",
+    "rng": "simulator.html random(seed), unsigned 32-bit seeded generator",
+    "seed_draws": "after road-order shuffle: unique scenario seed; its first draw selects count and second draw selects layout seed",
+    "vehicle_count_values": [
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50,
+      55,
+      60,
+      65,
+      70,
+      75,
+      80,
+      85,
+      90,
+      95,
+      100
+    ],
+    "vehicle_count_sampling": "discrete uniform, independently for each case",
+    "lanes": 6,
+    "accident": {
+      "x": 500,
+      "y": 340,
+      "heading_degrees": -18,
+      "elevation_by_road": {
+        "normal": 0,
+        "urban": 0,
+        "underpass": -50,
+        "elevated": 80
+      }
+    },
+    "geometry": "road shape and accident XY are fixed for each road type; observer count and non-overlapping placement vary",
+    "coordinates": "original simulator scene units; geometric scale is not calibrated from a road survey",
+    "camera_horizontal_fov_degrees": 64,
+    "first_stage": "accident body bounding-circle angular span intersects inclusive +/-32-degree horizontal camera FOV; distance <= radius always passes",
+    "accident_body_bounding_circle": {
+      "length": 30,
+      "width": 16,
+      "radius": 17,
+      "units": "scene units"
+    },
+    "second_stage": "one or more accident body sample points inside horizontal FOV and unoccluded",
+    "body_samples": {
+      "flat": 117,
+      "grade_separated": 351
+    },
+    "occlusion": "2D oriented boxes for flat roads; 3D volumes for underpass/elevated roads",
+    "visible_fraction_denominator": "body sample points inside the observer horizontal FOV; zero if none",
+    "visible_body_fraction_denominator": "all 117 or 351 body sample points",
+    "independent_visibility": "same point visibility test without the stage-1 body-circle angular-overlap gate",
+    "real_ai_executed": false,
+    "resource_measurement_performed": false
+  },
+  "aggregation": {
+    "ratios": "ratios of summed vehicle counts, not unweighted averages of scenario percentages",
+    "percentiles": "per-case unweighted distribution, linear interpolation at (n-1)*p; null denominators excluded",
+    "null_ratio": "denominator equals zero",
+    "interpretation": "generated-scenario distribution, not an estimate of the frequency of real traffic situations"
+  },
+  "overall": {
+    "cases": 100,
+    "N": 5990,
+    "N1": 2839,
+    "N2": 925,
+    "visible_independent": 925,
+    "visible_but_first_rejected": 0,
+    "first_reduction": 0.5260434056761268,
+    "second_conditional_reduction": 0.6741810496653752,
+    "total_reduction": 0.845575959933222,
+    "independent_visible_retention": 1
+  },
+  "by_road": {
+    "normal": {
+      "label": "일반도로",
+      "cases": 25,
+      "N": 1465,
+      "N1": 712,
+      "N2": 199,
+      "visible_independent": 199,
+      "visible_but_first_rejected": 0,
+      "first_reduction": 0.5139931740614334,
+      "second_conditional_reduction": 0.7205056179775281,
+      "total_reduction": 0.8641638225255973,
+      "independent_visible_retention": 1,
+      "case_percentiles": {
+        "N": {
+          "count": 25,
+          "min": 20,
+          "p10": 30,
+          "p25": 40,
+          "median": 55,
+          "p75": 80,
+          "p90": 93,
+          "max": 95,
+          "mean": 58.6
+        },
+        "N1": {
+          "count": 25,
+          "min": 11,
+          "p10": 15.200000000000001,
+          "p25": 21,
+          "median": 27,
+          "p75": 40,
+          "p90": 42.6,
+          "max": 44,
+          "mean": 28.48
+        },
+        "N2": {
+          "count": 25,
+          "min": 6,
+          "p10": 6,
+          "p25": 6,
+          "median": 8,
+          "p75": 9,
+          "p90": 10,
+          "max": 13,
+          "mean": 7.96
+        },
+        "visible_independent": {
+          "count": 25,
+          "min": 6,
+          "p10": 6,
+          "p25": 6,
+          "median": 8,
+          "p75": 9,
+          "p90": 10,
+          "max": 13,
+          "mean": 7.96
+        },
+        "visible_but_first_rejected": {
+          "count": 25,
+          "min": 0,
+          "p10": 0,
+          "p25": 0,
+          "median": 0,
+          "p75": 0,
+          "p90": 0,
+          "max": 0,
+          "mean": 0
+        },
+        "first_reduction": {
+          "count": 25,
+          "min": 0.36666666666666664,
+          "p10": 0.44,
+          "p25": 0.475,
+          "median": 0.5,
+          "p75": 0.55,
+          "p90": 0.5773333333333334,
+          "max": 0.6333333333333333,
+          "mean": 0.5066040127742915
+        },
+        "second_conditional_reduction": {
+          "count": 25,
+          "min": 0.23529411764705882,
+          "p10": 0.4727272727272727,
+          "p25": 0.5714285714285714,
+          "median": 0.6842105263157895,
+          "p75": 0.8125,
+          "p90": 0.8571428571428571,
+          "max": 0.8604651162790697,
+          "mean": 0.6716796654318121
+        },
+        "total_reduction": {
+          "count": 25,
+          "min": 0.5666666666666667,
+          "p10": 0.7171428571428572,
+          "p25": 0.8,
+          "median": 0.84,
+          "p75": 0.9111111111111111,
+          "p90": 0.9276470588235295,
+          "max": 0.9368421052631579,
+          "mean": 0.836300825181011
+        },
+        "independent_visible_retention": {
+          "count": 25,
+          "min": 1,
+          "p10": 1,
+          "p25": 1,
+          "median": 1,
+          "p75": 1,
+          "p90": 1,
+          "max": 1,
+          "mean": 1
+        }
+      }
+    },
+    "urban": {
+      "label": "평면 교차로",
+      "cases": 25,
+      "N": 1460,
+      "N1": 707,
+      "N2": 298,
+      "visible_independent": 298,
+      "visible_but_first_rejected": 0,
+      "first_reduction": 0.5157534246575343,
+      "second_conditional_reduction": 0.5785007072135785,
+      "total_reduction": 0.7958904109589041,
+      "independent_visible_retention": 1,
+      "case_percentiles": {
+        "N": {
+          "count": 25,
+          "min": 20,
+          "p10": 30,
+          "p25": 45,
+          "median": 55,
+          "p75": 80,
+          "p90": 91.00000000000001,
+          "max": 100,
+          "mean": 58.4
+        },
+        "N1": {
+          "count": 25,
+          "min": 9,
+          "p10": 13,
+          "p25": 20,
+          "median": 25,
+          "p75": 41,
+          "p90": 45.60000000000001,
+          "max": 49,
+          "mean": 28.28
+        },
+        "N2": {
+          "count": 25,
+          "min": 5,
+          "p10": 7.4,
+          "p25": 9,
+          "median": 12,
+          "p75": 14,
+          "p90": 17,
+          "max": 19,
+          "mean": 11.92
+        },
+        "visible_independent": {
+          "count": 25,
+          "min": 5,
+          "p10": 7.4,
+          "p25": 9,
+          "median": 12,
+          "p75": 14,
+          "p90": 17,
+          "max": 19,
+          "mean": 11.92
+        },
+        "visible_but_first_rejected": {
+          "count": 25,
+          "min": 0,
+          "p10": 0,
+          "p25": 0,
+          "median": 0,
+          "p75": 0,
+          "p90": 0,
+          "max": 0,
+          "mean": 0
+        },
+        "first_reduction": {
+          "count": 25,
+          "min": 0.3333333333333333,
+          "p10": 0.47,
+          "p25": 0.4875,
+          "median": 0.52,
+          "p75": 0.5555555555555556,
+          "p90": 0.5733333333333334,
+          "max": 0.6,
+          "mean": 0.5178314717274468
+        },
+        "second_conditional_reduction": {
+          "count": 25,
+          "min": 0,
+          "p10": 0.25,
+          "p25": 0.3076923076923077,
+          "median": 0.5416666666666666,
+          "p75": 0.6666666666666666,
+          "p90": 0.7189814814814816,
+          "max": 0.875,
+          "mean": 0.5003624167020175
+        },
+        "total_reduction": {
+          "count": 25,
+          "min": 0.5333333333333333,
+          "p10": 0.5888888888888889,
+          "p25": 0.7,
+          "median": 0.775,
+          "p75": 0.8375,
+          "p90": 0.8686666666666667,
+          "max": 0.9411764705882353,
+          "mean": 0.7592711569476276
+        },
+        "independent_visible_retention": {
+          "count": 25,
+          "min": 1,
+          "p10": 1,
+          "p25": 1,
+          "median": 1,
+          "p75": 1,
+          "p90": 1,
+          "max": 1,
+          "mean": 1
+        }
+      }
+    },
+    "underpass": {
+      "label": "지하차도",
+      "cases": 25,
+      "N": 1425,
+      "N1": 679,
+      "N2": 291,
+      "visible_independent": 291,
+      "visible_but_first_rejected": 0,
+      "first_reduction": 0.5235087719298246,
+      "second_conditional_reduction": 0.5714285714285714,
+      "total_reduction": 0.7957894736842105,
+      "independent_visible_retention": 1,
+      "case_percentiles": {
+        "N": {
+          "count": 25,
+          "min": 25,
+          "p10": 27,
+          "p25": 35,
+          "median": 50,
+          "p75": 80,
+          "p90": 98,
+          "max": 100,
+          "mean": 57
+        },
+        "N1": {
+          "count": 25,
+          "min": 12,
+          "p10": 12.4,
+          "p25": 16,
+          "median": 24,
+          "p75": 39,
+          "p90": 45,
+          "max": 49,
+          "mean": 27.16
+        },
+        "N2": {
+          "count": 25,
+          "min": 4,
+          "p10": 6,
+          "p25": 8,
+          "median": 13,
+          "p75": 15,
+          "p90": 17,
+          "max": 18,
+          "mean": 11.64
+        },
+        "visible_independent": {
+          "count": 25,
+          "min": 4,
+          "p10": 6,
+          "p25": 8,
+          "median": 13,
+          "p75": 15,
+          "p90": 17,
+          "max": 18,
+          "mean": 11.64
+        },
+        "visible_but_first_rejected": {
+          "count": 25,
+          "min": 0,
+          "p10": 0,
+          "p25": 0,
+          "median": 0,
+          "p75": 0,
+          "p90": 0,
+          "max": 0,
+          "mean": 0
+        },
+        "first_reduction": {
+          "count": 25,
+          "min": 0.4,
+          "p10": 0.47363636363636363,
+          "p25": 0.49333333333333335,
+          "median": 0.52,
+          "p75": 0.56,
+          "p90": 0.59,
+          "max": 0.6571428571428571,
+          "mean": 0.5240305706333569
+        },
+        "second_conditional_reduction": {
+          "count": 25,
+          "min": 0.2857142857142857,
+          "p10": 0.37142857142857144,
+          "p25": 0.5,
+          "median": 0.5517241379310345,
+          "p75": 0.625,
+          "p90": 0.6612244897959183,
+          "max": 0.7058823529411765,
+          "mean": 0.5459018022313482
+        },
+        "total_reduction": {
+          "count": 25,
+          "min": 0.6666666666666666,
+          "p10": 0.6980000000000001,
+          "p25": 0.75,
+          "median": 0.775,
+          "p75": 0.825,
+          "p90": 0.8372631578947368,
+          "max": 0.8888888888888888,
+          "mean": 0.7830920536635708
+        },
+        "independent_visible_retention": {
+          "count": 25,
+          "min": 1,
+          "p10": 1,
+          "p25": 1,
+          "median": 1,
+          "p75": 1,
+          "p90": 1,
+          "max": 1,
+          "mean": 1
+        }
+      }
+    },
+    "elevated": {
+      "label": "고가도로",
+      "cases": 25,
+      "N": 1640,
+      "N1": 741,
+      "N2": 137,
+      "visible_independent": 137,
+      "visible_but_first_rejected": 0,
+      "first_reduction": 0.5481707317073171,
+      "second_conditional_reduction": 0.815114709851552,
+      "total_reduction": 0.9164634146341464,
+      "independent_visible_retention": 1,
+      "case_percentiles": {
+        "N": {
+          "count": 25,
+          "min": 30,
+          "p10": 42,
+          "p25": 50,
+          "median": 60,
+          "p75": 80,
+          "p90": 91.00000000000001,
+          "max": 100,
+          "mean": 65.6
+        },
+        "N1": {
+          "count": 25,
+          "min": 10,
+          "p10": 17,
+          "p25": 21,
+          "median": 30,
+          "p75": 37,
+          "p90": 43.00000000000001,
+          "max": 49,
+          "mean": 29.64
+        },
+        "N2": {
+          "count": 25,
+          "min": 1,
+          "p10": 3,
+          "p25": 4,
+          "median": 5,
+          "p75": 6,
+          "p90": 8.600000000000001,
+          "max": 11,
+          "mean": 5.48
+        },
+        "visible_independent": {
+          "count": 25,
+          "min": 1,
+          "p10": 3,
+          "p25": 4,
+          "median": 5,
+          "p75": 6,
+          "p90": 8.600000000000001,
+          "max": 11,
+          "mean": 5.48
+        },
+        "visible_but_first_rejected": {
+          "count": 25,
+          "min": 0,
+          "p10": 0,
+          "p25": 0,
+          "median": 0,
+          "p75": 0,
+          "p90": 0,
+          "max": 0,
+          "mean": 0
+        },
+        "first_reduction": {
+          "count": 25,
+          "min": 0.4666666666666667,
+          "p10": 0.4779084967320261,
+          "p25": 0.51,
+          "median": 0.5384615384615384,
+          "p75": 0.5666666666666667,
+          "p90": 0.638,
+          "max": 0.75,
+          "mean": 0.5517501972056151
+        },
+        "second_conditional_reduction": {
+          "count": 25,
+          "min": 0.55,
+          "p10": 0.7039745627980922,
+          "p25": 0.7692307692307693,
+          "median": 0.8125,
+          "p75": 0.8461538461538461,
+          "p90": 0.8910204081632653,
+          "max": 0.925,
+          "mean": 0.8049778109626925
+        },
+        "total_reduction": {
+          "count": 25,
+          "min": 0.8,
+          "p10": 0.8822857142857142,
+          "p25": 0.9,
+          "median": 0.9176470588235294,
+          "p75": 0.9333333333333333,
+          "p90": 0.952,
+          "max": 0.975,
+          "mean": 0.9127341996496797
+        },
+        "independent_visible_retention": {
+          "count": 25,
+          "min": 1,
+          "p10": 1,
+          "p25": 1,
+          "median": 1,
+          "p75": 1,
+          "p90": 1,
+          "max": 1,
+          "mean": 1
+        }
+      }
+    }
+  },
+  "case_percentiles": {
+    "N": {
+      "count": 100,
+      "min": 20,
+      "p10": 30,
+      "p25": 40,
+      "median": 57.5,
+      "p75": 80,
+      "p90": 95,
+      "max": 100,
+      "mean": 59.9
+    },
+    "N1": {
+      "count": 100,
+      "min": 9,
+      "p10": 13,
+      "p25": 19,
+      "median": 26.5,
+      "p75": 39.25,
+      "p90": 44.10000000000001,
+      "max": 49,
+      "mean": 28.39
+    },
+    "N2": {
+      "count": 100,
+      "min": 1,
+      "p10": 5,
+      "p25": 6,
+      "median": 9,
+      "p75": 12.25,
+      "p90": 15,
+      "max": 19,
+      "mean": 9.25
+    },
+    "visible_independent": {
+      "count": 100,
+      "min": 1,
+      "p10": 5,
+      "p25": 6,
+      "median": 9,
+      "p75": 12.25,
+      "p90": 15,
+      "max": 19,
+      "mean": 9.25
+    },
+    "visible_but_first_rejected": {
+      "count": 100,
+      "min": 0,
+      "p10": 0,
+      "p25": 0,
+      "median": 0,
+      "p75": 0,
+      "p90": 0,
+      "max": 0,
+      "mean": 0
+    },
+    "first_reduction": {
+      "count": 100,
+      "min": 0.3333333333333333,
+      "p10": 0.4666666666666667,
+      "p25": 0.4875,
+      "median": 0.52,
+      "p75": 0.560625,
+      "p90": 0.5820000000000002,
+      "max": 0.75,
+      "mean": 0.5250540630851779
+    },
+    "second_conditional_reduction": {
+      "count": 100,
+      "min": 0,
+      "p10": 0.3333333333333333,
+      "p25": 0.5238095238095238,
+      "median": 0.6561913696060038,
+      "p75": 0.801923076923077,
+      "p90": 0.8571428571428571,
+      "max": 0.925,
+      "mean": 0.6307304238319674
+    },
+    "total_reduction": {
+      "count": 100,
+      "min": 0.5333333333333333,
+      "p10": 0.698,
+      "p25": 0.765909090909091,
+      "median": 0.83,
+      "p75": 0.9,
+      "p90": 0.9333333333333333,
+      "max": 0.975,
+      "mean": 0.8228495588604718
+    },
+    "independent_visible_retention": {
+      "count": 100,
+      "min": 1,
+      "p10": 1,
+      "p25": 1,
+      "median": 1,
+      "p75": 1,
+      "p90": 1,
+      "max": 1,
+      "mean": 1
+    }
+  },
+  "outputs": {
+    "scenarios": "scenarios.csv",
+    "vehicles": "vehicles.csv"
+  },
+  "baseline_counts": {
+    "all_upload": "N uploads, no implied AI execution",
+    "first_only_upload": "N1 uploads after body-circle angular-overlap gate",
+    "two_stage": "N1 visibility checks, N2 uploads under the geometric proxy",
+    "all_visibility": "N visibility checks, visible_independent uploads under the geometric proxy",
+    "first_gate_loss": "visible_but_first_rejected counts geometrically visible accident bodies excluded by the body-circle angular-overlap gate"
+  }
+}

@@ -1,0 +1,25 @@
+[Unit]
+Description=ACE witness vehicle field-of-view filter
+Wants=inference.service
+After=inference.service
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=@EXEC_ROOT@
+ExecStart=@EXEC_ROOT@/witness_filter
+WatchdogSec=15s
+NotifyAccess=main
+Restart=on-failure
+RestartSec=5s
+TimeoutStopSec=20s
+KillSignal=SIGTERM
+UMask=0027
+NoNewPrivileges=true
+PrivateTmp=false
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

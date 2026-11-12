@@ -1,0 +1,268 @@
+# DENM 직렬화 및 UDP 통신 실습 매뉴얼
+
+일단. setup_host를 통해 관련 도구를 자동으로 다운 받을 수 있도록 처리할 예정이며,
+git clone만 하면 이 복잡한 과정을 거치지 않고도 직렬화를 사용할 수 있도록 라이브러리까지 다 제작해서 올려놓을 예정이다.
+이후에는 통신 전체 프로그램 빌드시 명령줄에 링크만 잘하면 될 것이다. 작업 종료 후 해당 명령줄도 잘 작성해 둘 예정이다.
+이 파일은 이해를 위한 것이다.
+
+직렬화는 패딩, 엔디안을 고려하면서 상호 운용성을 갖추고 통신 하기 위한 방법이다.
+데이터를 Byte Stream으로 인코딩해 보내고, 받는 측에서 같은 규칙으로 디코딩하여 수신하는 방법이다.
+denm은 표준상 ASN.1 방법으로 직렬화를 해야한다.
+asn1c워크플로우의 직렬화 가능한 표준 목록을 보면 denm을 지원되므로 사용하도록 한다.
+
+## 1. 작업 환경 구성
+
+관련 도구를 다운 받는다.
+git install asn1c
+
+작업 디렉터리를 생성한다.
+
+```bash
+mkdir -p ~/denm_test/{asn1,generated,src,build}
+cd ~/denm_test
+
+```
+
+온라인 저장소에서 DENM 및 CDD 스키마 파일을 다운로드한다.
+denm은 굉장히 엄격한 구조로 되어있으므로 도구를 사용하기 전에, 우리가 보낼 메시지 구조체를 규칙에 맞게 생성해둬야한다. 
+기초 규격을 가져오는 것으로 이해하면 된다.
+
+```bash
+git -c http.sslVerify=false clone https://forge.etsi.org/rep/ITS/asn1/denm_ts103831.git denm_repo
+git -c http.sslVerify=false clone https://forge.etsi.org/rep/ITS/asn1/cdd_ts102894_2.git cdd_repo
+
+```
+
+버전 일치를 위해 태그를 체크아웃한다.
+
+```bash
+cd ~/denm_test/denm_repo
+git checkout v2.1.1
+cd ~/denm_test/cdd_repo
+git checkout v2.1.1
+
+```
+
+## 2. 스키마 복사 및 사용자 정의 타입 추가
+
+
+
+스키마 파일을 작업 디렉터리로 복사한다.
+단순히 테스트 파일을 홈에 만든것 뿐이다. 예시일 뿐이기에 이는 바뀔 예정이다.
+
+```bash
+cp ~/denm_test/denm_repo/DENM-PDU-Descriptions.asn ~/denm_test/asn1/
+cp ~/denm_test/cdd_repo/ETSI-ITS-CDD.asn ~/denm_test/asn1/
+
+```
+
+원본 파일 보존을 위해 백업을 생성한다.
+
+```bash
+cd ~/denm_test/asn1
+cp DENM-PDU-Descriptions.asn DENM-PDU-Descriptions.asn.backup
+
+```
+
+로컬 좌표계 적용을 위해 DENM-PDU-Descriptions.asn 파일에 새로운 타입을 추가한다.
+.asn파일은 내부에 denm 표준 및 값 규격등이 정의되어 있는 규칙 표이다. 
+우리는 여기에 추가 필드를 만들어서, denm 규격중 확장 선택 필드인 '알라카르트 컨테이너'에 좌표를 실을 수 있게되는 것이다.
+이 규칙표 이용해서 asn1c는 직렬화 수행에 필요한 코드들을 만들어 준다.
+
+부동소수점 대신 밀리미터 단위 정수를 사용하여 x,y 값을 넣기로 했다.
+
+```asn1
+LocalCoordinates ::= SEQUENCE {
+    xMillimeter INTEGER (-1000000..1000000),
+    yMillimeter INTEGER (-1000000..1000000)
+}
+
+```
+
+기존 AlacarteContainer 내부에 추가한 타입을 선택 필드로 연결한다.
+
+```asn1
+AlacarteContainer ::= SEQUENCE {
+    lanePosition        LanePosition OPTIONAL,
+    impactReduction     ImpactReductionContainer OPTIONAL,
+    externalTemperature Temperature OPTIONAL,
+    roadWorks           RoadWorksContainerExtended OPTIONAL,
+    positioningSolution PositioningSolutionType OPTIONAL,
+    stationaryVehicle   StationaryVehicleContainer OPTIONAL,
+    ...,
+    localCoordinates    LocalCoordinates OPTIONAL
+}
+
+```
+
+## 3. 소스 코드 변환
+
+
+
+asn1c 라이브러리에 들어있는 컴파일러를 사용하여 .asn으로 정의된 스키마 파일들을 .c 코드로 변환한다.
+이렇게 변환된 .c코드들은 굉장히 많은데, 이것들이 실제 직렬화에서 참조하게되는 라이브러리가 된다.
+
+```bash
+cd ~/denm_test/generated
+asn1c -fcompound-names -gen-PER ../asn1/ETSI-ITS-CDD.asn ../asn1/DENM-PDU-Descriptions.asn
+
+```
+
+## 4. 송수신 프로그램 작성 절차
+
+
+
+송신 파일을 생성한다.
+
+```bash
+nano ~/denm_test/src/denm_sender.c
+
+```
+
+송신 코드 내부에서 다음 순서로 구조체를 동적 할당하고 값을 입력한다. 
+이 부분은 엄격한 자료형, 값 범위등을 지켜야 하므로 라이브러리를 확인하여 알맞게 채워야한다.
+자세한 코드는 추가 첨부한다.
+
+* Management 컨테이너 필수 값을 채운다.
+
+
+* Situation 컨테이너를 할당하고 정보 품질에 5, 사고 유형에 차량 사고 코드를 입력한다.
+
+
+* Location 컨테이너를 할당하고 예시 값을 적당히 규격에 맞게 넣았다.
+
+
+* Alacarte 컨테이너를 할당하고 우리가 쓸 좌표계 값을 첨부해 보았다. X에 1523, Y에 -840을 입력한다.
+
+
+* 사용하지 않는 선택 필드는 NULL을 넣는등 필수 필드와 선택 필드, 그 안의 규정을 잘 따라야한다. 필수 필드가 비어있으면 전송 안된다.
+
+
+
+수신 파일을 생성한다.
+자세한 코드는 추가 첨부한다.
+
+```bash
+nano ~/denm_test/src/denm_receiver.c
+
+```
+
+수신 코드는 다음 동작을 수행한다.
+
+* 5000번 포트에서 수신을 대기한다.
+
+
+* 수신된 페이로드를 역직렬화하여 구조체로 복원한다.
+
+
+* 컨테이너가 존재하는지 검사한 후 내부 데이터를 출력한다.
+
+
+* 디버깅을 위해 복원된 전체 구조를 터미널에 출력한다.
+
+
+
+## 5. 정적 라이브러리 및 실행 파일 빌드
+
+
+
+생성된 소스 파일들을 하나의 정적 라이브러리로 묶어 컴파일한다.
+왜 .c로 만들더니 또 한번 더 컴파일하느냐? 라이브러리 링크는 .o파일로 해야한다는 것을 잊지 않아야 한다.
+물론 우리가 cpp넘기고 .h 넘기듯이 마지막 결과물을 컴파일 하면서 컴파일 명령줄에 다같이 묶어서 처리해도 된다.
+하지만 .asn을 기반으로 생성되었던 .c파일이 너무 많이 생성된다. 수백개가 나온다. 그러니 라이브러리로 한번 만들어 주는 것이 편하다.
+
+여기서 gcc로 빌드했지만, 파이에서 사용하려면 source setup_sdk 실행시키는 절차대로 한 뒤에 $CC로 빌드해야한다.
+
+```bash
+cd ~/denm_test/generated
+rm -f ./*.o
+rm -f libdenm_asn1.a
+gcc -std=gnu11 -O2 -I. -c $(find . -maxdepth 1 -type f -name "*.c" ! -name "converter-sample.c")
+ar rcs libdenm_asn1.a ./*.o
+
+```
+
+만들었던 sender와 receiver 송신과 수신 코드를 컴파일한다.
+여기에 방금 만들었던 라이브러리(오브젝트 파일 묶음)을 넘겨줘서 직렬화가 동작할 수 있게 하는 것이다.
+여기서도 마찬가지로 gcc로 빌드했지만, 파이에서 사용하려면 source setup_sdk 실행시키는 절차대로 한 뒤에 $CC로 빌드해야한다.
+
+```bash
+cd ~/denm_test
+gcc -std=gnu11 -Wall -Wextra -I./generated ./src/denm_sender.c ./generated/libdenm_asn1.a -o ./build/denm_sender
+gcc -std=gnu11 -Wall -Wextra -I./generated ./src/denm_receiver.c ./generated/libdenm_asn1.a -o ./build/denm_receiver
+
+```
+
+## 6. 통신 테스트 및 결과 확인
+
+
+
+터미널을 두 개 열고 수신부와 송신부를 각각 실행한다.
+
+수신부 실행 결과는 다음과 같다.
+
+```bash
+cd ~/denm_test
+./build/denm_receiver
+
+```
+
+송신부 실행 결과는 다음과 같다.
+
+```bash
+cd ~/denm_test
+./build/denm_sender
+
+```
+
+송신부 전송 결과 출력은 다음과 같다.
+
+```text
+DENM 전체 컨테이너 생성 완료
+UPER 인코딩 크기: 515 bits, 65 bytes
+UDP Loopback 전송 완료: 65 bytes
+
+```
+
+수신부 복원 결과 출력은 다음과 같다.
+
+```text
+UDP 수신 완료: 65 bytes
+UPER 디코딩 성공
+
+===== Header =====
+Protocol Version      : 2
+Message ID            : 1
+Header Station ID     : 1
+
+===== Management Container =====
+Originating Station ID: 1
+Sequence Number       : 1
+Detection Time        : 1000
+Reference Time        : 2000
+Latitude              : 375000000
+Longitude             : 1270000000
+Validity Duration     : 60
+Station Type          : 5
+
+===== Situation Container =====
+Information Quality   : 5
+Cause Code            : 2
+Sub Cause Code        : 1
+
+===== Location Container =====
+Speed Value           : 320
+Speed Confidence      : 127
+Heading Value         : 1234
+Heading Confidence    : 127
+Trace Path Count      : 1
+Path Point Count      : 1
+Delta Latitude        : 10
+Delta Longitude       : 20
+Delta Altitude        : 0
+
+===== Alacarte Container =====
+Local X               : 1523 mm
+Local Y               : -840 mm
+
+```

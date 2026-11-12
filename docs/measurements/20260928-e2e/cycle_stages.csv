@@ -1,0 +1,9 @@
+﻿node,stage,mean_relative_s,event_count,alignment_method
+craft2,VIDEO_READY,3.4698745128299997,100,same_host_monotonic
+craft2,STORAGE_CONFIRMED,5.59799227308,100,same_host_monotonic
+craft4,AI_START,0.026147109949999997,100,cross_host_chrony_estimate
+craft4,AI_RESULT,0.86238130654,100,cross_host_chrony_estimate
+craft4,VIDEO_READY,3.67086503299,100,cross_host_chrony_estimate
+craft4,STORAGE_CONFIRMED,5.195157183,100,cross_host_chrony_estimate
+seongugi,AI_START,0.06291628545454546,99,cross_host_chrony_estimate
+seongugi,AI_RESULT,9.428221281363635,99,cross_host_chrony_estimate

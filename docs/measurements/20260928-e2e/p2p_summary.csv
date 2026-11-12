@@ -1,0 +1,5 @@
+﻿node,triggered_events,transmitted_events,received_events,receiver_rx_recorded_events,initial_received,after_retry_first_rx_estimate,received_phase_unknown,final_missing,final_missing_rate,rx_record_unavailable,duplicate_rx_packets,duplicate_forward_events,not_sent,tx_trace_missing
+craft3,100,100,100,100,99,0,1,0,0.0,0,7,0,0,0
+craft4,100,100,100,100,100,0,0,0,0.0,0,7,0,0,0
+seongugi,100,100,99,99,95,0,4,1,0.01,0,3,0,0,0
+craft6,100,100,99,99,95,0,4,1,0.01,0,3,0,0,0

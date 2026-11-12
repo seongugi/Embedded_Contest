@@ -1,0 +1,101 @@
+{
+  "enabled": true,
+  "service_uuid": "7b9c0001-6a54-4f1b-9f65-2c7b8d1e4a90",
+  "pose_uuid": "7b9c0002-6a54-4f1b-9f65-2c7b8d1e4a90",
+  "clock_uuid": "7b9c0003-6a54-4f1b-9f65-2c7b8d1e4a90",
+  "scan_timeout_s": 4,
+  "reconnect_delay_s": 2,
+  "write_timeout_s": 2,
+  "max_sample_age_ms": 300,
+  "max_rate_hz": 30,
+  "sync_interval_s": 10,
+  "max_clock_rtt_ms": 100,
+  "initial_clock_samples": 5,
+  "cars": [
+    {
+      "marker_id": 1,
+      "vehicle_id": 1,
+      "enabled": true,
+      "address": "88:A2:9E:9F:DA:8E",
+      "heading_offset_deg": 0,
+      "target_offset_marker_mm": [
+        0,
+        0,
+        0
+      ],
+      "forward_axis_marker": [
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "marker_id": 2,
+      "vehicle_id": 2,
+      "enabled": true,
+      "address": "88:A2:9E:48:D3:A1",
+      "heading_offset_deg": 0,
+      "target_offset_marker_mm": [
+        0,
+        0,
+        0
+      ],
+      "forward_axis_marker": [
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "marker_id": 3,
+      "vehicle_id": 3,
+      "enabled": true,
+      "address": "88:A2:9E:48:D6:44",
+      "heading_offset_deg": 0,
+      "target_offset_marker_mm": [
+        0,
+        0,
+        0
+      ],
+      "forward_axis_marker": [
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "marker_id": 4,
+      "vehicle_id": 4,
+      "enabled": true,
+      "address": "88:A2:9E:22:4D:75",
+      "heading_offset_deg": 0,
+      "target_offset_marker_mm": [
+        0,
+        0,
+        0
+      ],
+      "forward_axis_marker": [
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "marker_id": 5,
+      "vehicle_id": 5,
+      "enabled": true,
+      "address": "88:A2:9E:48:D6:B5",
+      "heading_offset_deg": 0,
+      "target_offset_marker_mm": [
+        0,
+        0,
+        0
+      ],
+      "forward_axis_marker": [
+        0,
+        1,
+        0
+      ]
+    }
+  ]
+}

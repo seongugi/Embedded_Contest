@@ -1,0 +1,17 @@
+Description: Cap periodic Wi-Fi scan backoff at five seconds
+ Keep the three-second minimum and the existing scan scheduling logic.
+Origin: other
+Forwarded: not-needed
+Last-Update: 2026-09-16
+
+--- network-manager-1.52.1.orig/src/core/devices/wifi/nm-device-wifi.c
++++ network-manager-1.52.1/src/core/devices/wifi/nm-device-wifi.c
+@@ -47,7 +47,7 @@
+ 
+ #define SCAN_INTERVAL_SEC_MIN  3
+ #define SCAN_INTERVAL_SEC_STEP 20
+-#define SCAN_INTERVAL_SEC_MAX  120
++#define SCAN_INTERVAL_SEC_MAX  5
+ 
+ #define SCAN_EXTRA_DELAY_MSEC 500
+ 

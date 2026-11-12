@@ -1,0 +1,10 @@
+/witness_aruco
+/accident_aruco
+/test_collision_capture
+# 공유 회귀시험은 test/에 둔다. 임시 진단은 scratch/에서만 작업하고 올리지 않는다.
+/scratch/
+# 실측 CSV는 로컬에 보존한다. 공유할 자료만 별도로 검토해 추가한다.
+/collision_captures/
+__pycache__/
+.lgd-nfy*
+*.o

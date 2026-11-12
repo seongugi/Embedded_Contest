@@ -1,0 +1,24 @@
+[Unit]
+Description=ACE %i sensor and ArUco BLE receiver
+Wants=bluetooth.service
+After=bluetooth.service
+ConditionFileIsExecutable=@SENSOR_DIR@/%i_aruco
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=@SENSOR_DIR@
+ExecStartPre=/usr/bin/busctl --system --timeout=10s set-property org.bluez /org/bluez/hci0 org.bluez.Adapter1 Powered b true
+ExecStart=@SENSOR_DIR@/%i_aruco
+WatchdogSec=15s
+NotifyAccess=main
+Restart=on-failure
+RestartSec=5s
+TimeoutStopSec=20s
+KillSignal=SIGTERM
+PrivateTmp=false
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

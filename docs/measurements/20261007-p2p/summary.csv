@@ -1,0 +1,5 @@
+device,requested,sensor_inputs,go_accepted,unique_tx,unique_rx,network_missing,receive_pct,duplicate_packets,duplicate_suppressed,unique_filter_delivered,duplicate_filter_delivered,queue_drops,decode_errors,conversion_errors,process_starts,missing_sequences
+craft3,10000,10000,10000,10000,10000,0,100.0,280,280,10000,0,0,0,0,1,
+craft4,10000,10000,10000,10000,9993,7,99.93,135,135,9993,0,0,0,0,1,2012;7020;7798;7917;7940;8206;8539
+seongugi,10000,10000,10000,10000,9998,2,99.98,209,209,9998,0,0,0,0,1,5784;7940
+craft6,10000,10000,10000,10000,9999,1,99.99,290,290,9999,0,0,0,0,1,3292

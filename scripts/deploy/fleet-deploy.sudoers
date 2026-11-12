@@ -1,0 +1,6 @@
+# root 소유 고정 helper만 허용한다. helper는 호출 계정, hostname, run-attempt를 검사한다.
+craft2 ALL=(root) NOPASSWD: /usr/local/libexec/ace-fleet-apply
+craft3 ALL=(root) NOPASSWD: /usr/local/libexec/ace-fleet-apply
+craft4 ALL=(root) NOPASSWD: /usr/local/libexec/ace-fleet-apply
+seongugi ALL=(root) NOPASSWD: /usr/local/libexec/ace-fleet-apply
+craft6 ALL=(root) NOPASSWD: /usr/local/libexec/ace-fleet-apply

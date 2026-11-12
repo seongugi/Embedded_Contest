@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "model": "geometry_mapped_historical_unit_cost_estimate",
+  "cycle_seconds": 15,
+  "decimal_bytes_per_MB": 1000000,
+  "published_input_sha256": {
+    "../metrics.json": "84780e197ab13bd2eb33cdaef1d6e5636135611b59528b6b26fee8a2eb82bf5c",
+    "scenarios.csv": "6ecab40866571f87409f0a2635b1a2e0b4681a301e3e8727a6251c6af04abc24",
+    "clip_sizes.csv": "24c9d0b7bd89777ee91409c5269041eb2917814909d0d7cd3a8647e865d26bf6"
+  },
+  "published_hash_basis": "UTF-8 bytes with CRLF converted to LF; original BOM presence preserved.",
+  "clip_evidence": {
+    "archive_run_id": "20260928_e2e_04",
+    "hash_basis": "Unmodified original file bytes; all source_line columns are one-based in the JSONL journal.",
+    "source_sha256": {
+      "analysis/events_merged.csv": "9210ec7e1a83bd510dd4ef6b6413be4a7675f8147a25847391433217f3dd03c0",
+      "craft4/events_journal.jsonl": "653f7c9d39d7c65fb223cffcd4cfaa154c9943d591051964450226b02c23b9ae"
+    },
+    "join": {
+      "trigger": "matched craft2 ACCIDENT_TRIGGER; matching craft4 STORAGE_CONFIRMED required",
+      "action_id": "(station << 16) | seq",
+      "job_unix_ns": "(its + 1072915200000 - 5000) * 1000000",
+      "legacy_capture_offset_ms": -5000,
+      "time_note": "This capture's mock producer added 5000 ms to ITS time; the captured job IDs use its inverse. This is a legacy capture mapping, not a general epoch rule or new calibration.",
+      "cross_check": "canonical_event_id local timestamp (UTC+09:00) must equal the derived Unix nanoseconds",
+      "journal": "Exact full job_id across craft4 uploader.service CAMERA_READY_ACCEPTED (video_bytes), UPLOAD_START (metadata_bytes), and SPOOL_COMMIT_COMPLETE (bytes, already_present=0). Video plus metadata must equal spool bytes for every clip."
+    },
+    "matched_unique_clips": 100,
+    "spool_commit_records": 7374,
+    "already_present_skipped": 7274,
+    "unrelated_new_jobs_skipped": 0,
+    "byte_meaning": "clip_sizes.bytes is MP4-only video_bytes from CAMERA_READY_ACCEPTED (source_line). metadata_bytes and spool_bytes retain the separate metadata and combined sizes with their own source lines. No MP4 files are copied."
+  },
+  "cpu_metric_groups": {
+    "fov_reject": "g1",
+    "ai_not_found": "g2",
+    "ai_found_and_upload": "g3"
+  },
+  "formulas": {
+    "clip_MB": "sum(clip_sizes.bytes) / clip_count / 1000000",
+    "branch_core_seconds": "metrics.groups[group].stats.cpu_cores.delta_from_idle * 15",
+    "network_all_upload_MB": "N * clip_MB",
+    "network_fov_only_MB": "N1 * clip_MB",
+    "network_two_stage_MB": "N2 * clip_MB",
+    "cpu_all_ai_core_seconds": "visible_independent * positive_cost + (N - visible_independent) * negative_cost",
+    "cpu_two_stage_core_seconds": "(N - N1) * fov_cost + (N1 - N2) * negative_cost + N2 * positive_cost",
+    "reduction_fraction": "1 - estimated_cost / matching_baseline_cost",
+    "road_and_total_reductions": "ratio of summed costs, not the unweighted mean of scenario percentages"
+  },
+  "scope": [
+    "Historical 2026-09-28 hardware costs use the pre-event 10-second video implementation and 15-second device-wide averages, not the later pre-8/post-2 implementation.",
+    "The same observed unit costs are applied to synthetic random road scenes. Geometry maps cost branches; it is not an AI accuracy assumption or a new performance measurement.",
+    "Network estimates count MP4 payload bytes only, excluding the separately recorded metadata, protocol overhead, retransmissions and other device traffic. Equal mean clip size is assumed for every modeled upload.",
+    "CPU is idle-subtracted device-wide core-seconds, including branch processing and encoding/upload where present. It is not isolated model inference time.",
+    "The CPU comparator runs AI for all neighbors, mapping independent geometry visibility to positive or negative measured branch costs. No CPU claim is made for the all-upload network comparator.",
+    "The accident vehicle's own video and CPU are a common term outside all reported witness totals; no own-video size is assumed.",
+    "Retained and missed independently visible vehicle counts are reported alongside the estimated cost reductions."
+  ]
+}

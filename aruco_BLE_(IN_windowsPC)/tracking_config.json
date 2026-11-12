@@ -1,0 +1,14 @@
+{
+  "camera_index": 1,
+  "reference_markers": {
+    "6": {"center_mm": [46.0, 50.0, 0.0], "yaw_deg": 0.0},
+    "7": {"center_mm": [1770.0, 50.0, 0.0], "yaw_deg": 0.0}
+  },
+  "table_size_mm": [1820.0, 960.0],
+  "reference_max_reprojection_rms_px": 6.0,
+  "max_reprojection_rms_px": 2.0,
+  "ambiguous_error_band_px": 0.15,
+  "max_filter_gap_seconds": 0.2,
+  "vehicle_filter": {"min_cutoff_hz": 2.0, "translation_beta": 10.0, "rotation_beta": 0.08},
+  "reference_filter": {"min_cutoff_hz": 1.2, "translation_beta": 4.0, "rotation_beta": 0.03}
+}

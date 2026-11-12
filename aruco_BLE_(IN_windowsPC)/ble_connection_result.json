@@ -1,0 +1,25 @@
+{
+  "purpose": "BLE CONNECTION AND METADATA ONLY",
+  "name": "ACPTEST1",
+  "address": "88:A2:9E:9F:DA:8E",
+  "connected": true,
+  "characteristic_data_reads": 0,
+  "characteristic_data_writes": 0,
+  "notifications_subscribed": 0,
+  "camera_opened": false,
+  "mtu": 517,
+  "service_uuid": "7b9c0001-6a54-4f1b-9f65-2c7b8d1e4a90",
+  "service_present": true,
+  "pose_present": true,
+  "clock_present": true,
+  "characteristic_properties": {
+    "7b9c0002-6a54-4f1b-9f65-2c7b8d1e4a90": [
+      "write"
+    ],
+    "7b9c0003-6a54-4f1b-9f65-2c7b8d1e4a90": [
+      "read"
+    ]
+  },
+  "held_connected_3_seconds": true,
+  "disconnected": true
+}

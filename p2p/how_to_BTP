@@ -1,0 +1,212 @@
+# BTP 적용
+
+## 1. 적용 목적
+
+ASN.1 UPER 직렬화가 완료된 데이터는 바이너리 페이로드 상태가 된다.
+
+ETSI 표준에서는 페이로드를 그대로 전송하지 않고 전송 계층인 BTP 헤더를 추가한 후 하위 네트워크 계층으로 전달한다.
+
+본 프로젝트에서도 직렬화된 페이로드 앞에 BTP 헤더를 추가하도록 구현하였다.
+DENM은 BTP-B를 사용해야만 하는데, 목적지 포트랑 포트에 대한 추가 설명을 붙이는 것이 BTP계층의 전부다.
+
+왜 이런 게층이 추가로 있느냐?
+V2V는 여러 포트가 있고 포트별로 지원하는 서비스들이 다양하기 때문에 (시설계층이라고 부르는) 각각의 서비스를 구분하기 위한 것이다.
+
+DENM은 필히 2002번이라는 well-known portnumber를 사용해야 한다.
+
+우리 통신의 전체 과정은 다음과 같다.
+
+```text
+DENM Structure
+↓
+UPER Encode
+↓
+DENM Binary Payload
+↓
+BTP Header 추가
+↓
+UDP Packet
+↓
+Wi-Fi Direct
+
+```
+
+## 2. BTP 모듈 생성
+
+전송 계층을 독립적으로 관리하기 위해 BTP 모듈을 별도로 구현하였다.
+
+```text
+btp/
+├── btp.h
+└── btp.c
+
+```
+
+관련 기능은 모두 이 모듈에서 처리하도록 설계하였다. 코드에서 이를 include해서 쓰면 된다.
+
+## 3. BTP 헤더에 대하여
+
+ETSI 규격을 참고하여 다음 헤더를 구현하였다. 헤더는 내용이 간단하다. 두개밖에 없다.
+
+```c
+typedef struct __attribute__((packed))
+{
+    uint16_t destination_port;
+    uint16_t destination_port_info;
+} BTP_B_Header;
+
+```
+
+현재 프로젝트 설정 값은 다음과 같다.
+
+```text
+Destination Port      : 2002
+Destination Port Info : 0
+
+```
+
+목적지 포트는 수신 측에서 어떤 서비스를 처리할 것인지 식별하는 역할을 한다.
+
+## 4. 송신 처리
+
+직렬화가 완료된 바이너리 앞에 헤더를 추가하는 부분이 업로드한 예시 코드에 있을 것이다.
+
+```c
+size_t btp_build_packet(
+    uint8_t *packet,
+    size_t packet_size,
+    uint16_t destination_port,
+    const uint8_t *payload,
+    size_t payload_size
+);
+
+```
+
+동작 과정은 다음과 같다.
+
+```text
+UPER Payload
+↓
+BTP Header 생성
+↓
+Header + Payload 결합
+↓
+최종 Packet 생성
+
+```
+
+송신부는 다음 순서로 호출되며 보낸다는 뜻이다.
+
+```c
+uper_encode_to_buffer(...);
+btp_build_packet(...);
+sendto(...);
+
+```
+
+## 5. 수신 처리
+
+수신부에서는 헤더를 분리한 후 디코더에 전달한다.
+
+이를 위한 함수가 구현되어있다.
+
+```c
+const uint8_t *btp_parse_packet(
+    const uint8_t *packet,
+    size_t packet_size,
+    uint16_t *destination_port,
+    size_t *payload_size
+);
+
+```
+
+동작 과정은 다음과 같다.
+
+```text
+UDP Packet
+↓
+BTP Header 추출
+↓
+Destination Port 확인
+↓
+Payload 반환
+
+```
+
+수신부는 다음 순서로 처리된다는 뜻이다.
+
+```c
+recvfrom(...);
+btp_parse_packet(...);
+switch(destination_port)
+uper_decode_complete(...)
+
+```
+
+목적지 포트가 2002인 경우에만 디코더를 호출하도록 구현하였다.
+
+## 6. 컴파일 변경
+
+BTP 모듈이 추가되면서 송신부와 수신부는 해당 모듈을 함께 링크하도록 수정하였다.
+
+송신부 빌드 명령은 다음과 같다.
+
+```bash
+gcc \
+-I./generated \
+-I./btp \
+./src/denm_sender.c \
+./btp/btp.c \
+./generated/libdenm_asn1.a \
+-o ./build/denm_sender
+
+```
+
+수신부 빌드 명령은 다음과 같다.
+
+```bash
+gcc \
+-I./generated \
+-I./btp \
+./src/denm_receiver.c \
+./btp/btp.c \
+./generated/libdenm_asn1.a \
+-o ./build/denm_receiver
+
+```
+
+## 7. 최종 송수신 흐름
+
+송신 흐름은 다음과 같다.
+
+```text
+DENM Structure
+↓
+UPER Encode
+↓
+BTP Build
+↓
+UDP Send
+↓
+Wi-Fi Direct
+
+```
+
+수신 흐름은 다음과 같다.
+
+```text
+Wi-Fi Direct
+↓
+UDP Receive
+↓
+BTP Parse
+↓
+Destination Port 확인
+↓
+UPER Decode
+↓
+DENM Structure
+
+```
+
+프로토콜을 적용하여 응용 계층과 전송 계층을 분리하였다. 다른 메시지를 추가하더라도 목적지 포트만 변경하여 동일한 모듈을 재사용할 수 있도록 설계하였다.

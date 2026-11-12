@@ -1,0 +1,726 @@
+{
+  "latest_scenario_validation": {
+    "measurement_date": "2026-10-08",
+    "path": "20261008-scenarios/summary.json",
+    "scenario_pass": "27/27",
+    "server_stored": "81/81",
+    "recovery_stored": "12/12"
+  },
+  "created_date": "2026-10-05",
+  "measurement_version": "20260928_e2e_04",
+  "measurement_date": "2026-09-28",
+  "source_sha256": {
+    "analysis\\report.html": "f97dfef5919edd7a30723ded02a2ccedfca015c5d4609ec39eeaf233628be3f3",
+    "analysis\\latency.csv": "7405598d7db14922671d219436ae7301d68c7697140289c9c00f6ac6d6c3e569",
+    "analysis\\summary.json": "e8510a2911436b713699103bc4b350d872fcb551a7a2de25d6d874a29ad80db1"
+  },
+  "published_sha256": {
+    "20260928-e2e/report.html": "8cda7fc2f9efaff5e996628ec3bcfceeb797137f19e76e9422618133fee23be5",
+    "20260928-e2e/latency.csv": "0b5797ac39e882d6a8248415830e189f589b7cdc0b442273bb0b6718d2b42da6",
+    "20260928-e2e/summary.json": "2a7bbaeb892526dec4c91152e5f6732a3379e61d4b8163ef1ea9a0ccd60d2a39"
+  },
+  "provenance": {
+    "schema_version": 1,
+    "source_archive": "20260928_e2e_04",
+    "source_hash_basis": "Unmodified archived analysis file bytes, including original CRLF line endings; source paths are relative to the archived run directory.",
+    "published_hash_basis": "UTF-8, CRLF converted to LF, original BOM presence preserved (latency.csv has a UTF-8 BOM); no other whitespace or serialization changes. These hashes match the published Git blob bytes and are checked against the current working tree. Published paths are relative to this metrics.json file.",
+    "publication_changes": "Only the two named JSON path strings are replaced with repository-relative paths, then CRLF line endings are converted to LF. Measurement values are unchanged; latency.csv has only the newline conversion.",
+    "newline_transform": "CRLF_to_LF",
+    "files": [
+      {
+        "source": "analysis\\report.html",
+        "published": "20260928-e2e/report.html",
+        "path_redaction": {
+          "container": "html_script_json",
+          "script_id": "reportData",
+          "json_pointer": "/source_root",
+          "replacement": "docs/measurements/20260928-e2e"
+        }
+      },
+      {
+        "source": "analysis\\latency.csv",
+        "published": "20260928-e2e/latency.csv"
+      },
+      {
+        "source": "analysis\\summary.json",
+        "published": "20260928-e2e/summary.json",
+        "path_redaction": {
+          "container": "json",
+          "json_pointer": "/output",
+          "replacement": "docs/measurements/20260928-e2e"
+        }
+      }
+    ]
+  },
+  "conditions": {
+    "planned_mock_events": 100,
+    "interval_seconds": 15,
+    "accident_nodes": 1,
+    "witness_nodes": 4,
+    "pose_mode": "fixed_initial_ble",
+    "start": "ACCIDENT_TRIGGER mock event",
+    "storage_endpoint": "uploader receives server storage ACK and verifies event ID, vehicle ID and SHA256",
+    "resource_samples_seconds": 0.1,
+    "display_bins_seconds": 0.5,
+    "averaging": "completed cycles per node equally weighted, then nodes within group equally weighted",
+    "clock": "same host monotonic; across hosts recorded Chrony offset correction estimate",
+    "excluded_missing_receipts": 2,
+    "physical_collision_detection_latency_included": false
+  },
+  "overall": {
+    "received": 398,
+    "target_deliveries": 400,
+    "receipt_percent": 99.5,
+    "duplicate_forward_count": 0,
+    "witness_stored": 100,
+    "accident_stored": 100
+  },
+  "groups": {
+    "g1": {
+      "label": "위치 필터 미통과",
+      "nodes": [
+        "craft3",
+        "craft6"
+      ],
+      "expected_count": 200,
+      "received_count": 199,
+      "completed_count": 199,
+      "missing_rx": 1,
+      "outcome_counts": {
+        "fov_reject": 199,
+        "missing_rx": 1
+      },
+      "cycle_counts_by_node": {
+        "craft3": 100,
+        "craft6": 99
+      },
+      "stats": {
+        "cpu_cores": {
+          "avg": 0.10904514087198149,
+          "peak": 0.12119937023326263,
+          "idle_avg": 0.1089995714,
+          "delta_from_idle": 4.556947198149086e-05,
+          "delta_percent_from_idle": 0.04180701941869369,
+          "raw_100ms_peak": 1.999136073
+        },
+        "memory_mb": {
+          "avg": 696.3206645615192,
+          "peak": 696.6932430765253,
+          "idle_avg": 699.90694912,
+          "delta_from_idle": -3.586284558480884,
+          "delta_percent_from_idle": -0.5123944780073941,
+          "raw_100ms_peak": 748.060672
+        },
+        "network_bytes_per_s": {
+          "avg": 210.2813963458228,
+          "peak": 598.7658321283136,
+          "idle_avg": 163.590976755945,
+          "delta_from_idle": 46.69041958987779,
+          "delta_percent_from_idle": 28.54095043367422,
+          "raw_100ms_peak": 52368.159406676
+        },
+        "temperature_c": {
+          "avg": 47.5753837037037,
+          "peak": 47.622927777777775,
+          "idle_avg": 47.411,
+          "delta_from_idle": 0.1643837037036988,
+          "delta_percent_from_idle": 0.34672060007951977,
+          "raw_100ms_peak": 50.7
+        }
+      },
+      "stages": [
+        {
+          "key": "V2V_RX",
+          "label": "V2V 수신",
+          "mean_s": 0.04577388385646465,
+          "n": 199
+        },
+        {
+          "key": "FILTER_RESULT",
+          "label": "위치 필터 판정",
+          "mean_s": 0.04592802761611112,
+          "n": 199
+        }
+      ],
+      "terminal_key": "FILTER_RESULT",
+      "segment_seconds": {
+        "rx_to_filter": {
+          "n": 199,
+          "mean": 0.0001541427655050505,
+          "median": 0.000146333,
+          "p95": 0.000197704,
+          "min": 0.000112555,
+          "max": 0.000675704
+        }
+      },
+      "terminal_seconds": {
+        "n": 199,
+        "mean": 0.04592802761611112,
+        "median": 0.021091771,
+        "p95": 0.027706456,
+        "min": 0.011239552,
+        "max": 1.023975387
+      }
+    },
+    "g2": {
+      "label": "위치 통과 · AI 미통과",
+      "nodes": [
+        "seongugi"
+      ],
+      "expected_count": 100,
+      "received_count": 99,
+      "completed_count": 99,
+      "missing_rx": 1,
+      "outcome_counts": {
+        "ai_reject": 99,
+        "missing_rx": 1
+      },
+      "cycle_counts_by_node": {
+        "seongugi": 99
+      },
+      "stats": {
+        "cpu_cores": {
+          "avg": 2.5186340086994616,
+          "peak": 4.0025368085414135,
+          "idle_avg": 0.10399961684,
+          "delta_from_idle": 2.4146343918594617,
+          "delta_percent_from_idle": 2321.7723922716923,
+          "raw_100ms_peak": 4.455584418
+        },
+        "memory_mb": {
+          "avg": 1058.5073033740068,
+          "peak": 1059.0861870545455,
+          "idle_avg": 1022.0247449599999,
+          "delta_from_idle": 36.48255841400692,
+          "delta_percent_from_idle": 3.569635529268411,
+          "raw_100ms_peak": 1092.698112
+        },
+        "network_bytes_per_s": {
+          "avg": 313.7264031650845,
+          "peak": 874.8686857099738,
+          "idle_avg": 161.99527716715,
+          "delta_from_idle": 151.7311259979345,
+          "delta_percent_from_idle": 93.66391949894641,
+          "raw_100ms_peak": 82313.59842540101
+        },
+        "temperature_c": {
+          "avg": 63.57311111111111,
+          "peak": 67.37777777777778,
+          "idle_avg": 47.62,
+          "delta_from_idle": 15.953111111111113,
+          "delta_percent_from_idle": 33.50086331606701,
+          "raw_100ms_peak": 70.5
+        }
+      },
+      "stages": [
+        {
+          "key": "V2V_RX",
+          "label": "V2V 수신",
+          "mean_s": 0.05476166736363637,
+          "n": 99
+        },
+        {
+          "key": "FILTER_RESULT",
+          "label": "위치 필터 판정",
+          "mean_s": 0.05489379907070707,
+          "n": 99
+        },
+        {
+          "key": "AI_START",
+          "label": "AI 판독 시작",
+          "mean_s": 0.06301002694949495,
+          "n": 99
+        },
+        {
+          "key": "AI_RESULT",
+          "label": "AI 판독 종료",
+          "mean_s": 9.428319157565657,
+          "n": 99
+        }
+      ],
+      "terminal_key": "AI_RESULT",
+      "segment_seconds": {
+        "rx_to_filter": {
+          "n": 99,
+          "mean": 0.00013213054545454546,
+          "median": 0.000112092,
+          "p95": 0.000235741,
+          "min": 9.1574e-05,
+          "max": 0.000524945
+        },
+        "ai": {
+          "n": 99,
+          "mean": 9.365304995909092,
+          "median": 9.35177114,
+          "p95": 9.475195965,
+          "min": 9.233707303,
+          "max": 9.669159159
+        }
+      },
+      "terminal_seconds": {
+        "n": 99,
+        "mean": 9.428319157565657,
+        "median": 9.382206302,
+        "p95": 9.702518139,
+        "min": 9.248315001,
+        "max": 10.484272571
+      }
+    },
+    "g3": {
+      "label": "위치·AI 통과 · 업로드",
+      "nodes": [
+        "craft4"
+      ],
+      "expected_count": 100,
+      "received_count": 100,
+      "completed_count": 100,
+      "missing_rx": 0,
+      "outcome_counts": {
+        "storage_confirmed": 100
+      },
+      "cycle_counts_by_node": {
+        "craft4": 100
+      },
+      "stats": {
+        "cpu_cores": {
+          "avg": 0.8657413901504,
+          "peak": 3.58760519432,
+          "idle_avg": 0.07199949274,
+          "delta_from_idle": 0.7937418974104,
+          "delta_percent_from_idle": 1102.4270688638187,
+          "raw_100ms_peak": 4.304378414
+        },
+        "memory_mb": {
+          "avg": 851.4347201877333,
+          "peak": 856.9868779519999,
+          "idle_avg": 742.60283392,
+          "delta_from_idle": 108.83188626773335,
+          "delta_percent_from_idle": 14.655463364345,
+          "raw_100ms_peak": 902.807552
+        },
+        "network_bytes_per_s": {
+          "avg": 225724.89485673961,
+          "peak": 2074672.5797114822,
+          "idle_avg": 161.98989547668,
+          "delta_from_idle": 225562.90496126295,
+          "delta_percent_from_idle": 139245.04630212253,
+          "raw_100ms_peak": 8157837.302553528
+        },
+        "temperature_c": {
+          "avg": 51.732909166666666,
+          "peak": 55.8557,
+          "idle_avg": 46.036,
+          "delta_from_idle": 5.696909166666664,
+          "delta_percent_from_idle": 12.37490044023517,
+          "raw_100ms_peak": 60.05
+        }
+      },
+      "stages": [
+        {
+          "key": "V2V_RX",
+          "label": "V2V 수신",
+          "mean_s": 0.01974839464,
+          "n": 100
+        },
+        {
+          "key": "FILTER_RESULT",
+          "label": "위치 필터 판정",
+          "mean_s": 0.0199169257,
+          "n": 100
+        },
+        {
+          "key": "AI_START",
+          "label": "AI 판독 시작",
+          "mean_s": 0.02652261674,
+          "n": 100
+        },
+        {
+          "key": "AI_RESULT",
+          "label": "AI 판독 종료",
+          "mean_s": 0.86275440944,
+          "n": 100
+        },
+        {
+          "key": "VIDEO_READY",
+          "label": "영상 파일 완성",
+          "mean_s": 3.67123810704,
+          "n": 100
+        },
+        {
+          "key": "STORAGE_CONFIRMED",
+          "label": "서버 저장 확인",
+          "mean_s": 5.1955299982000005,
+          "n": 100
+        }
+      ],
+      "terminal_key": "STORAGE_CONFIRMED",
+      "segment_seconds": {
+        "rx_to_filter": {
+          "n": 100,
+          "mean": 0.00016852813,
+          "median": 0.0001452685,
+          "p95": 0.000173185,
+          "min": 0.000111426,
+          "max": 0.001534354
+        },
+        "ai": {
+          "n": 100,
+          "mean": 0.83623419659,
+          "median": 0.6660560345,
+          "p95": 2.323887115,
+          "min": 0.632925022,
+          "max": 4.04049377
+        },
+        "video_to_storage": {
+          "n": 100,
+          "mean": 1.52429215001,
+          "median": 1.4624594005,
+          "p95": 2.315153014,
+          "min": 0.794127748,
+          "max": 2.751549944
+        }
+      },
+      "terminal_seconds": {
+        "n": 100,
+        "mean": 5.1955299982000005,
+        "median": 5.1565199565,
+        "p95": 6.267463994,
+        "min": 4.194463524,
+        "max": 7.768715152
+      }
+    },
+    "accident": {
+      "label": "사고 차량 영상 업로드",
+      "nodes": [
+        "craft2"
+      ],
+      "expected_count": 100,
+      "received_count": 100,
+      "completed_count": 100,
+      "missing_rx": 0,
+      "outcome_counts": {
+        "storage_confirmed": 100
+      },
+      "cycle_counts_by_node": {
+        "craft2": 100
+      },
+      "stats": {
+        "cpu_cores": {
+          "avg": 0.8577525130366611,
+          "peak": 3.7016124302859996,
+          "idle_avg": 0.12000049384,
+          "delta_from_idle": 0.7377520191966611,
+          "delta_percent_from_idle": 614.7908192613994,
+          "raw_100ms_peak": 4.233401568
+        },
+        "memory_mb": {
+          "avg": 1206.5094980039112,
+          "peak": 1212.738142208,
+          "idle_avg": 1134.31937024,
+          "delta_from_idle": 72.19012776391128,
+          "delta_percent_from_idle": 6.364180111694395,
+          "raw_100ms_peak": 1266.384896
+        },
+        "network_bytes_per_s": {
+          "avg": 231369.47861908926,
+          "peak": 1783692.0384515154,
+          "idle_avg": 495.20086687717,
+          "delta_from_idle": 230874.2777522121,
+          "delta_percent_from_idle": 46622.34927175084,
+          "raw_100ms_peak": 6901407.1493019685
+        },
+        "temperature_c": {
+          "avg": 52.00388805555556,
+          "peak": 56.1945,
+          "idle_avg": 47.4275,
+          "delta_from_idle": 4.5763880555555545,
+          "delta_percent_from_idle": 9.649228940078135,
+          "raw_100ms_peak": 58.4
+        }
+      },
+      "stages": [
+        {
+          "key": "VIDEO_READY",
+          "label": "영상 파일 완성",
+          "mean_s": 3.46987451283,
+          "n": 100
+        },
+        {
+          "key": "STORAGE_CONFIRMED",
+          "label": "서버 저장 확인",
+          "mean_s": 5.59799227308,
+          "n": 100
+        }
+      ],
+      "terminal_key": "STORAGE_CONFIRMED",
+      "segment_seconds": {
+        "video_to_storage": {
+          "n": 100,
+          "mean": 2.12811776025,
+          "median": 2.0225148055,
+          "p95": 3.32671674,
+          "min": 1.068568388,
+          "max": 4.156275375
+        }
+      },
+      "terminal_seconds": {
+        "n": 100,
+        "mean": 5.59799227308,
+        "median": 5.45518688,
+        "p95": 7.014058718,
+        "min": 4.467042352,
+        "max": 7.486783184
+      }
+    }
+  },
+  "figures": [
+    {
+      "png": "../assets/end-to-end.png",
+      "aspect_ratio": "16:9",
+      "pixels": [
+        3200,
+        1800
+      ],
+      "selected_for": "본문 종단 성능 검증",
+      "reason": "관측차의 세 처리 경로를 평균·P95·완료 건수로 비교하고 사고차 자체 영상 저장을 별도로 제시한다.",
+      "caption": "사고 이벤트 100회 반복시험. 관측차는 위치·화각 미통과, 영상 초중반부 차량 검출·저장, 영상 전체 탐색 순으로 제시한다. 평균·P95·완료 건수는 공개 집계값을 사용한다.",
+      "source": [
+        "20260928-e2e/report.html",
+        "20260928-e2e/latency.csv"
+      ],
+      "segment_definition": "AI_START: trigger to AI start; AI_RESULT-AI_START; VIDEO_READY-AI_RESULT; STORAGE_CONFIRMED-VIDEO_READY. Mean stage differences preserve the report timeline; not isolated component benchmarks.",
+      "render_script": "scripts/measurements/render_module_metrics.py"
+    },
+    {
+      "png": "../assets/resource-load.png",
+      "aspect_ratio": "16:9",
+      "pixels": [
+        3200,
+        1800
+      ],
+      "selected_for": "본문 단계별 자원 사용량 비교",
+      "reason": "동일한 0~15초 시간축에서 CPU·메모리·네트워크·온도를 정렬해 필터 단계별 처리 비용을 보여 준다.",
+      "caption": "완료 회차를 사고 발생시각에 정렬하고 0.5초 간격으로 평균냈다. 15초 평균 CPU는 위치 제외 0.109코어, AI 제외 2.519코어, 저장 경로 0.866코어였다. 점선은 각 경로의 평균 종료시각이다.",
+      "source": [
+        "20260928-e2e/report.html",
+        "20260928-e2e/resource_cycles.csv",
+        "20260928-e2e/resource_cycle_average.csv"
+      ],
+      "units": {
+        "cpu": "used cores out of four",
+        "memory": "MB=1,000,000 bytes; Total-Available",
+        "network": "MB/s; P2P and server Wi-Fi TX+RX",
+        "temperature": "SoC degrees C"
+      },
+      "render_script": "scripts/measurements/render_module_metrics.py"
+    }
+  ],
+  "supporting_selection": {
+    "IMU": {
+      "title": "실측 파형으로 사고 판정 기준값 선정",
+      "sample_count": 22,
+      "normal_count": 9,
+      "collision_count": 13,
+      "false_positives": 0,
+      "detected_collisions": 13,
+      "detections_per_collision": 1,
+      "jerk_threshold_m_s3": 1600,
+      "dv20_threshold_m_s": 0.16,
+      "coincidence_window_ms": 100,
+      "normal_max_jerk_m_s3": 655.651,
+      "collision_min_jerk_m_s3": 2615.795,
+      "normal_max_dv20_m_s": 0.09184,
+      "collision_min_dv20_m_s": 0.228906,
+      "caption": "정상 9건과 충돌 13건의 최대 jerk·Δv 분포를 비교하여 임계값을 선정했다. 수집 기록을 C 판정 함수에 재생한 결과 정상 오탐 0건, 충돌 검출 13건이었다.",
+      "scope": "요철 제외. 같은 기록으로 캘리브레이션과 재생 검증을 수행했으며 독립 평가 정확도 100%로 표기하지 않음. 원본 세션 session_20260727_153124, 분석·적용일 2026-10-02."
+    },
+    "P2P": {
+      "title": "10,000개 이벤트의 전달 결과",
+      "run_id": "20261007T083753Z-full",
+      "per_receiver": [
+        {
+          "device": "craft3",
+          "requested": 10000,
+          "sensor_inputs": 10000,
+          "go_accepted": 10000,
+          "unique_tx": 10000,
+          "unique_rx": 10000,
+          "network_missing": 0,
+          "receive_pct": 100.0,
+          "duplicate_packets": 280,
+          "duplicate_suppressed": 280,
+          "unique_filter_delivered": 10000,
+          "duplicate_filter_delivered": 0,
+          "queue_drops": 0,
+          "decode_errors": 0,
+          "conversion_errors": 0,
+          "process_starts": 1,
+          "missing_sequences": ""
+        },
+        {
+          "device": "craft4",
+          "requested": 10000,
+          "sensor_inputs": 10000,
+          "go_accepted": 10000,
+          "unique_tx": 10000,
+          "unique_rx": 9993,
+          "network_missing": 7,
+          "receive_pct": 99.93,
+          "duplicate_packets": 135,
+          "duplicate_suppressed": 135,
+          "unique_filter_delivered": 9993,
+          "duplicate_filter_delivered": 0,
+          "queue_drops": 0,
+          "decode_errors": 0,
+          "conversion_errors": 0,
+          "process_starts": 1,
+          "missing_sequences": "2012;7020;7798;7917;7940;8206;8539"
+        },
+        {
+          "device": "seongugi",
+          "requested": 10000,
+          "sensor_inputs": 10000,
+          "go_accepted": 10000,
+          "unique_tx": 10000,
+          "unique_rx": 9998,
+          "network_missing": 2,
+          "receive_pct": 99.98,
+          "duplicate_packets": 209,
+          "duplicate_suppressed": 209,
+          "unique_filter_delivered": 9998,
+          "duplicate_filter_delivered": 0,
+          "queue_drops": 0,
+          "decode_errors": 0,
+          "conversion_errors": 0,
+          "process_starts": 1,
+          "missing_sequences": "5784;7940"
+        },
+        {
+          "device": "craft6",
+          "requested": 10000,
+          "sensor_inputs": 10000,
+          "go_accepted": 10000,
+          "unique_tx": 10000,
+          "unique_rx": 9999,
+          "network_missing": 1,
+          "receive_pct": 99.99,
+          "duplicate_packets": 290,
+          "duplicate_suppressed": 290,
+          "unique_filter_delivered": 9999,
+          "duplicate_filter_delivered": 0,
+          "queue_drops": 0,
+          "decode_errors": 0,
+          "conversion_errors": 0,
+          "process_starts": 1,
+          "missing_sequences": "3292"
+        }
+      ],
+      "expected_deliveries": 40000,
+      "received_deliveries": 39990,
+      "delivery_rate_percent": 99.975,
+      "unique_ipc_deliveries": 39990,
+      "retry_events": 356,
+      "ack_timeout_events": 9,
+      "ack_round_trip_ms": {
+        "n": 9991,
+        "mean_ms": 40.68168470953859,
+        "median_ms": 7.400029,
+        "p95_ms": 13.050231,
+        "max_ms": 1018.147574,
+        "min_ms": 1.563976
+      },
+      "per_receiver_ack_round_trip_ms": {
+        "craft3": {
+          "n": 10000,
+          "mean_ms": 12.2680035374,
+          "median_ms": 6.528105999999999,
+          "p95_ms": 8.663754449999999,
+          "max_ms": 1015.261714,
+          "min_ms": 0.757831
+        },
+        "craft4": {
+          "n": 9993,
+          "mean_ms": 26.43155802121485,
+          "median_ms": 6.453644,
+          "p95_ms": 10.0898524,
+          "max_ms": 1015.027622,
+          "min_ms": 0.757256
+        },
+        "seongugi": {
+          "n": 9998,
+          "mean_ms": 19.58528928935787,
+          "median_ms": 6.643698499999999,
+          "p95_ms": 9.461989149999999,
+          "max_ms": 1018.116593,
+          "min_ms": 0.751868
+        },
+        "craft6": {
+          "n": 9999,
+          "mean_ms": 11.57856104440444,
+          "median_ms": 6.606791,
+          "p95_ms": 8.8696628,
+          "max_ms": 1011.190896,
+          "min_ms": 0.752515
+        }
+      },
+      "caption": "이벤트 10,000개를 관측차 4대로 송신해 39,990/40,000건(99.975%)을 수신했다.",
+      "results": "20261007-p2p/summary.json",
+      "provenance": "20261007-p2p/provenance.json"
+    },
+    "NTP": {
+      "title": "craft2 기준 장치 간 시간차",
+      "per_peer": [
+        {
+          "node": "craft3",
+          "samples": 10000,
+          "ok": 10000,
+          "absolute_offset_p95_ms": 12.728881699999999,
+          "absolute_offset_max_ms": 17.324958,
+          "rtt_p95_ms": 7.688817449999999
+        },
+        {
+          "node": "craft4",
+          "samples": 10000,
+          "ok": 10000,
+          "absolute_offset_p95_ms": 11.298328799999998,
+          "absolute_offset_max_ms": 15.7669815,
+          "rtt_p95_ms": 8.0981838
+        },
+        {
+          "node": "seongugi",
+          "samples": 10000,
+          "ok": 10000,
+          "absolute_offset_p95_ms": 19.18005565,
+          "absolute_offset_max_ms": 22.733166,
+          "rtt_p95_ms": 8.175430249999998
+        },
+        {
+          "node": "craft6",
+          "samples": 10000,
+          "ok": 10000,
+          "absolute_offset_p95_ms": 15.214180274999999,
+          "absolute_offset_max_ms": 22.464954,
+          "rtt_p95_ms": 8.3360626
+        }
+      ],
+      "quantile_method": "numpy percentile, linear interpolation",
+      "caption": "craft2와 각 관측차의 시간 교환을 10,000회 수행했다. 절대 시간차의 P95는 11.30~19.18ms였다.",
+      "scope": "2026-09-23 네트워크 왕복 시간 교환에서 산출한 오프셋 추정. 별도 Chrony 상태 측정의 seongugi는 초기 599건 UNSYNCED, 이후 9,401건 SYNCED. 전체 장치 100% 동기화 유지라는 표현은 사용하지 않음."
+    }
+  },
+  "interpretation_limits": [
+    "E2E is a fixed-pose mock event injection experiment; it does not measure physical collision detection delay or dynamic positioning accuracy.",
+    "Three paths use different nodes and input outcomes; no filter-disabled baseline or causal reduction percentage was measured.",
+    "Cross-host clock root-distance sums in latency.csv range from about 42.5 to 54.4ms; second-scale storage delay is the key result, not submillisecond cross-device latency precision.",
+    "IMU reports calibration-record replay performance, not held-out test accuracy."
+  ],
+  "validation": {
+    "originals_modified": false,
+    "source_report_curves_used_verbatim": true,
+    "resource_unit_conversion_only": "network bytes/s divided by 1,000,000",
+    "render_check": "passed",
+    "source_hashes_unchanged": true,
+    "verified_date": "2026-10-05"
+  },
+  "source_note": "E2E CSV and report copied from 20260928_e2e_04; supporting summaries transcribed from the 2026-10-05 measurement figure dataset."
+}

@@ -1,0 +1,39 @@
+{
+  "purpose": "TEMPORARY SYNTHETIC ACP1/ACT1 BLE PROBE; NOT CAMERA/GPS DATA",
+  "protocol": "ACP1_40B_ACT1_20B",
+  "elapsed_s": 60.095462244,
+  "counts": {},
+  "known_pose_counts": {},
+  "epoch": 8651149685021343620,
+  "epoch_history": [
+    8651149685021343620
+  ],
+  "pose_interval_ms_excluding_invalid_gap": {
+    "count": 0
+  },
+  "capture_age_ms": {
+    "count": 0
+  },
+  "capture_age_meaning": "Pi receive time minus conservatively translated synthetic PC observation time; not optical latency",
+  "pose_resume_after_invalid": [],
+  "observed_write_att_mtus": [],
+  "advertising": {
+    "mode": "explicit_legacy_btmgmt",
+    "instance": 5,
+    "initial_advertising_features": {
+      "supported_flags": 127103,
+      "max_adv_data_len": 31,
+      "max_scan_rsp_len": 31,
+      "max_instances": 5,
+      "instance_ids": [
+        1
+      ]
+    },
+    "kernel_timeout_s": 90,
+    "scan_response_hex": "09094143505445535431",
+    "source": "https://github.com/bluez/bluez/blob/5.82/client/mgmt.c",
+    "registration_output": "Instance added: 5",
+    "cleanup_output": "Instance removed: 5"
+  },
+  "errors": []
+}

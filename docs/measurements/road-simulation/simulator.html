@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ACE Witness Lab · 관측차 선별 시뮬레이터</title>
+<style>
+:root{--ink:#193348;--muted:#708494;--line:#e2e9ed;--bg:#f1f5f7;--blue:#4389bd;--amber:#d99a36;--green:#169b84;--red:#e5695c;font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI','Malgun Gothic',sans-serif;font-synthesis:none}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-size:13px}button,input,select{font:inherit}button,select{cursor:pointer}button{transition:background .15s,border-color .15s,color .15s}button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #8dc4e7;outline-offset:3px}button:hover{filter:brightness(.97)}header{max-width:1720px;margin:auto;padding:24px 32px 20px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:15px}.brandmark{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:#183b51;color:white;font-weight:800;font-size:15px;letter-spacing:-.8px;box-shadow:0 3px 8px #16374c12}.eyebrow{color:#6e8798;font-size:10px;letter-spacing:1.7px;font-weight:750}h1{font-size:22px;letter-spacing:-.8px;margin:3px 0 0;font-weight:750}.header-note{display:flex;align-items:center;gap:9px;color:#678293;font-size:12px}.live-dot{width:6px;height:6px;border-radius:50%;background:var(--green)}main{max-width:1720px;margin:auto;padding:0 32px 22px}.pipeline{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:16px}.metric-card{position:relative;background:white;border:1px solid var(--line);border-radius:12px;padding:14px 18px 12px;overflow:hidden}.metric-card:before{content:'';position:absolute;left:0;top:17px;bottom:17px;width:3px;background:var(--c)}.metric-top{display:flex;justify-content:space-between;align-items:center;gap:8px}.metric-title{font-size:12px;font-weight:750}.step-no{color:var(--c);font-weight:750;font-size:10px;letter-spacing:1px;margin-right:9px}.metric-value{display:flex;align-items:baseline;gap:7px;margin-top:4px}.metric-value strong{font-size:32px;letter-spacing:-1.5px;font-weight:760;line-height:1.15;font-variant-numeric:tabular-nums}.metric-value span{font-size:12px;color:var(--muted)}.metric-sub{font-size:11px;color:var(--muted);margin:5px 0 9px;min-height:15px}.metric-badge{font-size:10px;white-space:nowrap;border-radius:5px;background:color-mix(in srgb,var(--c) 9%,white);color:var(--c);padding:4px 7px;font-weight:700}.meter{height:3px;border-radius:3px;background:#eef2f4;overflow:hidden}.meter i{height:100%;display:block;width:100%;background:var(--c);transition:width .2s}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 254px;gap:16px;align-items:stretch}.mapcard{background:white;border:1px solid var(--line);border-radius:13px;overflow:hidden;min-width:0}.maphead{min-height:66px;padding:12px 17px;display:flex;align-items:center;justify-content:space-between;gap:15px}.map-title{font-size:14px;font-weight:750}.scenario-pill{font-size:10px;border:1px solid #dbe5ea;border-radius:4px;color:#638090;padding:3px 6px;margin-left:8px;font-weight:500}.hint{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.45}.tabs{display:flex;padding:3px;border:1px solid #e3e9ee;border-radius:7px;background:#f5f8fa;flex-shrink:0}.tabs button{padding:7px 11px;color:#728693;background:none;border:0;border-radius:5px;font-size:11px;font-weight:650}.tabs button.active{background:white;color:var(--ink);box-shadow:0 1px 5px #1b3b5618}.tabs button.active[data-stage="1"]{color:#b88128}.tabs button.active[data-stage="2"]{color:#138b77}#map{height:clamp(300px,calc(100vh - 550px),445px);background:#eff4f6;overflow:hidden;position:relative}#map>svg{width:100%;height:100%;display:block}svg .car{cursor:pointer}svg .car:hover{filter:brightness(1.13)}.viewer3d{position:relative;height:100%;background:#eff4f6}#world3d{width:100%;height:100%;display:block;touch-action:none;cursor:grab}#world3d:active{cursor:grabbing}.level-key{position:absolute;top:13px;left:16px;display:flex;gap:15px;pointer-events:none;color:#6d8290;font-size:10px}.level-key span{display:flex;align-items:center;gap:5px}.level-key b{font-weight:650;color:#446477}.level-key i{display:inline-block;width:7px;height:7px;background:#8c9f96;border-radius:2px}.level-key .high{background:#607f99}.view-status{position:absolute;bottom:12px;right:15px;pointer-events:none;font-size:10px;color:#7d919c}.view-status em{font-style:normal;margin:0 7px;color:#bac7cd}.cutaway-note{display:none;position:absolute;bottom:12px;left:16px;font-size:10px;color:#b18230;background:#fff8e9e6;padding:5px 8px;border-radius:4px;pointer-events:none}.cutaway-note.show{display:block}.legend{padding:11px 17px;display:flex;flex-wrap:wrap;gap:15px;color:#788b97;font-size:10px;border-top:1px solid #e7eef1}.legend span{display:flex;gap:5px;align-items:center}.dot{width:6px;height:6px;display:inline-block;border-radius:2px;background:var(--c)}.legend .legend-note{margin-left:auto;color:#93a2ab}
+.settings-panel{background:white;border:1px solid var(--line);border-radius:13px;padding:15px;display:flex;flex-direction:column;gap:11px;min-width:0}.panel-title{font-size:11px;font-weight:750;letter-spacing:.3px;margin:0;color:#638091}.field label{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;font-size:11px;color:#627c8d}.field label b{color:var(--ink);font-size:12px;font-weight:650}.field select{width:100%;border:1px solid #dce5e9;background:#fbfcfd;border-radius:6px;padding:9px 10px;color:var(--ink);outline-offset:2px;font-size:12px}.range{width:100%;height:4px;accent-color:#547f9b;margin:4px 0 0;cursor:pointer}.range-extents{display:flex;justify-content:space-between;font-size:9px;color:#a2afb7;margin-top:4px}.fixed-row{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#6b8392;border-top:1px solid #edf1f3;padding-top:13px}.fixed-row strong{font-size:12px;color:#48687e}.secondary{width:100%;padding:8px 10px;border:1px solid #dce5e9;border-radius:6px;background:white;color:#42667e;font-weight:600;font-size:11px}.secondary .icon{margin-right:6px;font-size:14px;vertical-align:-1px}.camera-controls{border-top:1px solid #edf1f3;padding-top:12px}.view-buttons{display:flex;gap:6px;margin-bottom:10px}.view-buttons button{flex:1;background:#f5f8fa;border:1px solid #e1e8ec;border-radius:5px;padding:7px 2px;color:#648193;font-size:10px}.toggle{display:flex;align-items:center;gap:7px;font-size:11px;color:#728895;cursor:pointer}.toggle input{margin:0;accent-color:#4288af}.inspection{margin-top:auto;border-radius:8px;background:#f3f7f9;padding:11px 12px;min-height:77px;border:1px solid #e8eef1}.inspection-top{display:flex;justify-content:space-between;gap:5px;font-size:11px;font-weight:700;margin-bottom:6px}.inspection-tag{font-size:9px;color:#708b9b;font-weight:500}.inspection p{font-size:10px;color:#778e9c;line-height:1.6;margin:0}.inspect-status{display:block;font-size:11px;margin:5px 0;color:var(--ink)}.inspect-status.pass{color:#138e7b}.inspect-status.reject{color:#b18336}.inspection small{font-size:9px;color:#8ba0ac}
+.compare{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:15px}.compare-card{background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;cursor:pointer;text-align:left;padding:0;color:inherit}.compare-card.active{border-color:var(--c);box-shadow:0 0 0 1px color-mix(in srgb,var(--c) 15%,transparent)}.compare-head{display:flex;justify-content:space-between;align-items:center;padding:10px 13px 2px;gap:5px}.compare-head span{font-size:10px;color:#78909f}.compare-head b{font-weight:700;font-size:11px;color:var(--c)}.compare-count{font-variant-numeric:tabular-nums}.preview3d{width:100%;height:clamp(90px,calc(100vh - 795px),137px);display:block}.compare-card svg{height:clamp(90px,calc(100vh - 795px),137px);width:100%;display:block}.compare-card .car{pointer-events:none}.footer{display:flex;justify-content:space-between;gap:20px;margin-top:13px;font-size:9px;color:#92a2ad;line-height:1.6}.footer strong{font-weight:600;color:#6d8797}.webgl-error{padding:60px 30px;font-size:13px;color:#627989;text-align:center;line-height:1.8}
+.layout{height:clamp(430px,calc(100vh - 440px),560px)}.mapcard{display:flex;flex-direction:column;min-height:0}#map{flex:1;min-height:0;height:auto}.settings-panel{min-height:0;overflow:auto}h1{text-wrap:balance}.view-buttons button{white-space:nowrap}
+@media(min-width:761px) and (max-height:850px){header{padding-top:12px;padding-bottom:12px}.brandmark{width:40px;height:40px}h1{font-size:20px}.metric-card{padding-top:10px;padding-bottom:9px}.metric-value strong{font-size:29px}.metric-sub{font-size:10px;margin:3px 0 6px}.metric-title{font-size:11px}.step-no{font-size:9px}.settings-panel{padding:11px;gap:7px}.field label{margin-bottom:5px;font-size:10px}.field select{padding:7px 9px}.range-extents{margin-top:1px}.fixed-row{padding-top:8px;font-size:10px}.secondary{padding:6px 8px}.camera-controls{padding-top:8px}.view-buttons{margin-bottom:7px}.view-buttons button{padding:5px 2px}.inspection{padding:8px 10px;min-height:65px}.inspection-top{margin-bottom:3px}.inspect-status{margin:3px 0}.maphead{min-height:58px;padding-top:9px;padding-bottom:9px}.compare{margin-top:11px}.footer{margin-top:9px;font-size:8px}.preview3d,.compare-card svg{height:83px}}
+@media(min-width:1700px){.layout{grid-template-columns:minmax(0,1fr) 280px}.settings-panel{padding:20px;gap:18px}.field label{font-size:12px}}
+@media(max-width:1050px){header,main{padding-left:20px;padding-right:20px}.layout{grid-template-columns:minmax(0,1fr) 230px}.maphead{align-items:flex-start;flex-direction:column;gap:9px}.tabs{align-self:flex-end;margin-top:-3px}.header-note{display:none}.legend .legend-note{display:none}.metric-badge{font-size:9px}.metric-card{padding-left:14px;padding-right:14px}}
+@media(max-width:760px){header{padding:18px 16px}.brandmark{width:38px;height:38px}h1{font-size:19px}main{padding:0 12px 20px}.pipeline{gap:7px;margin-bottom:10px}.metric-card{padding:11px 10px 9px}.step-no{display:none}.metric-title{font-size:10px}.metric-value strong{font-size:26px}.metric-badge{display:none}.metric-sub{font-size:9px;min-height:29px;line-height:1.5}.layout{grid-template-columns:1fr;gap:10px}.maphead{flex-direction:row;align-items:center;gap:8px;padding:11px 12px}.map-title{font-size:12px}.scenario-pill{display:none}.maphead .hint{max-width:260px}.tabs{align-self:auto;margin:0}.tabs button{padding:7px 8px;font-size:10px}#map{height:370px}.settings-panel{display:grid;grid-template-columns:1fr 1fr;padding:15px;gap:15px}.panel-title{grid-column:1/-1}.settings-panel .fixed-row{border-top:0;padding-top:0;align-self:center}.inspection{grid-column:1/-1;min-height:65px}.camera-controls{border-top:0;padding-top:0}.legend{gap:11px;padding:10px 12px}.compare{gap:8px}.compare-head{padding:9px 8px 1px}.compare-head span{font-size:9px}.preview3d,.compare-card svg{height:100px}.footer{display:block;font-size:9px}.footer>span{display:block;margin-top:4px}.level-key{font-size:9px}.view-status{font-size:9px}.cutaway-note{bottom:30px}}
+@media(max-width:760px){.layout{height:auto}.mapcard{height:475px}.settings-panel{overflow:visible}.view-buttons button{font-size:9px}h1{font-size:17px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body>
+<header><div class="brand"><div class="brandmark">ACE</div><div><div class="eyebrow">WITNESS LAB / 관측차 선별 시뮬레이터</div><h1>메시지는 모두에게, 증거는 필요한 차량에서.</h1></div></div><div class="header-note"><i class="live-dot"></i>위치·화각 → 기하 가시성</div></header>
+<main>
+<section class="pipeline" aria-label="필터 단계별 결과" aria-live="polite">
+<div class="metric-card" style="--c:var(--blue)"><div class="metric-top"><div class="metric-title"><span class="step-no">01 / RECEIVE</span>전체 수신</div><span class="metric-badge">이벤트 전달</span></div><div class="metric-value"><strong id="n0">0</strong><span>대</span></div><p class="metric-sub">사고 이벤트를 수신한 전체 관측차</p><div class="meter"><i></i></div></div>
+<div class="metric-card" style="--c:var(--amber)"><div class="metric-top"><div class="metric-title"><span class="step-no">02 / GEOMETRY</span>1차 · 위치 + 화각</div><span class="metric-badge" id="saving1"></span></div><div class="metric-value"><strong id="n1">0</strong><span>대 통과</span></div><p class="metric-sub" id="drop1"></p><div class="meter"><i id="meter1"></i></div></div>
+<div class="metric-card" style="--c:var(--green)"><div class="metric-top"><div class="metric-title"><span class="step-no">03 / VISIBILITY</span>2차 · 기하 가시성</div><span class="metric-badge" id="saving2"></span></div><div class="metric-value"><strong id="n2">0</strong><span>대 최종 선정</span></div><p class="metric-sub" id="drop2"></p><div class="meter"><i id="meter2"></i></div></div>
+</section>
+<div class="layout"><section class="mapcard" aria-label="시뮬레이션"><div class="maphead"><div><div class="map-title"><span id="title"></span><span class="scenario-pill" id="scenarioName"></span></div><div class="hint" id="mapHint"></div></div><div class="tabs" aria-label="표시 단계"><button data-stage="0">전체</button><button data-stage="1">1차 필터</button><button data-stage="2">2차 필터</button></div></div><div id="map"></div><div class="legend"><span><i class="dot" style="--c:var(--red)"></i>사고차</span><span><i class="dot" style="--c:var(--blue)"></i>전체 수신</span><span><i class="dot" style="--c:var(--amber)"></i>1차 후보</span><span><i class="dot" style="--c:var(--green)"></i>최종 선정</span><span><i class="dot" style="--c:#adbbc4"></i>제외</span><span class="legend-note">차량 선택 → 시야와 제외 이유</span></div></section>
+<aside class="settings-panel" aria-label="환경 설정"><h2 class="panel-title">환경 설정</h2><div class="field"><label for="scenario">도로 시나리오</label><select id="scenario"><option value="normal">일반도로</option><option value="urban">평면 교차로</option><option value="underpass">지하차도</option><option value="elevated" selected>고가도로</option></select></div><div class="field"><label for="lanes">도로별 왕복 차선 <b><span id="lanesValue">6</span>차로</b></label><input class="range" id="lanes" type="range" min="4" max="12" step="2" value="6"><div class="range-extents"><span>4차로</span><span>12차로</span></div></div><div class="field"><label for="count">전체 관측 차량 <b><span id="countValue">60</span>대</b></label><input class="range" id="count" type="range" min="20" max="100" step="5" value="60"><div class="range-extents"><span>20대</span><span>100대</span></div></div><div class="fixed-row"><span>카메라 수평 화각</span><strong>64° <small>±32°</small></strong></div><button id="shuffle" class="secondary"><span class="icon">↻</span>다른 차량 배치</button><div class="camera-controls"><div class="view-buttons"><button id="angle3d">입체 보기</button><button id="side3d">측면 보기</button><button id="top3d">상단 보기</button></div><label class="toggle"><input id="cutaway" type="checkbox">상판 투시</label></div><div class="inspection" id="inspection"></div></aside></div>
+<section class="compare" id="compare" aria-label="같은 차량 배치의 단계별 비교"></section>
+<footer class="footer"><span><strong>비교 기준</strong> 동일 차량 배치 · 수평 화각 64° 고정 · 사고차 1대</span><span>2차는 사고차 표본점 한 개 이상이 가려지지 않으면 통과하는 기하 가시성 모형입니다. 실제 AI 추론·정확도 측정값이 아닙니다.</span></footer>
+</main>
+<script>
+// One world model drives the bridge geometry, vehicle placement and visibility.
+const CAMERA_FOV=64;
+const ACCIDENT_BODY_RADIUS=Math.hypot(15,8);
+const HEADLESS=globalThis.ACE_HEADLESS===true;
+const sceneSettings={scenario:'elevated',lanes:6,count:60};
+function sceneValue(id){return HEADLESS?sceneSettings[id]:$(id).value}
+const $=id=>document.getElementById(id);
+let cars=[],blocks=[],structures=[],roads=[],stage=0,selected=null,layoutSeed=42,accidentZ=0;
+const colors=['#4389bd','#d99a36','#169b84'];
+const names={normal:'일반도로',urban:'평면 교차로',underpass:'지하차도',elevated:'고가도로'};
+const descriptions={normal:'동일 도로 위 관측 차량의 방향과 가림을 비교합니다.',urban:'사거리의 건물과 앞 차량이 사고 영상을 가립니다.',underpass:'진입 경사 · 측벽 · 지상 교량으로 지하 도로를 구분합니다.',elevated:'경사로로 올라가는 고가 본선과 지상 측도를 함께 봅니다.'};
+const V={add:(a,b)=>a.map((v,i)=>v+b[i]),sub:(a,b)=>a.map((v,i)=>v-b[i]),mul:(a,k)=>a.map(v=>v*k),dot:(a,b)=>a.reduce((s,v,i)=>s+v*b[i],0),cross:(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],unit:a=>{let n=Math.hypot(...a);return a.map(v=>v/n)}};
+function isGrade(){return ['underpass','elevated'].includes(sceneValue('scenario'))}
+function volumeHit(a,b,o){
+  let start,delta,limits;
+  if(o.axes){let A=V.sub([a.x,a.y,a.z],o.center),D=[b.x-a.x,b.y-a.y,b.z-a.z];start=o.axes.map(v=>V.dot(A,v));delta=o.axes.map(v=>V.dot(D,v));limits=o.size.map(v=>[-v/2,v/2]);}
+  else {let c=Math.cos(o.rotation||0),s=Math.sin(o.rotation||0),dx=a.x-o.x,dy=a.y-o.y,tx=b.x-a.x,ty=b.y-a.y;start=[dx*c+dy*s,-dx*s+dy*c,a.z];delta=[tx*c+ty*s,-tx*s+ty*c,b.z-a.z];limits=[[-o.w/2,o.w/2],[-o.h/2,o.h/2],[o.zMin,o.zMax]];}
+  let lo=0,hi=1;
+  for(let i=0;i<3;i++){let [m,M]=limits[i],d=delta[i],s=start[i];if(Math.abs(d)<1e-9){if(s<m||s>M)return false}else{let p=(m-s)/d,q=(M-s)/d;if(p>q)[p,q]=[q,p];lo=Math.max(lo,p);hi=Math.min(hi,q);if(lo>hi)return false}}
+  return hi>1e-5&&lo<1-1e-5;
+}
+function occludes(v,o,p){return isGrade()?volumeHit({x:v.x,y:v.y,z:(v.z||0)+12},{...p,z:p.z??accidentZ+10},o):intersects(v,o,p)}
+function profile(x){const a=180,b=320,c=680,d=820;return x<a?0:x<b?80*(x-a)/(b-a):x<=c?80:x<d?80*(d-x)/(d-c):0}
+function roadModel(id,points,width,lanes,raised=false,kind='road'){
+  let segments=[],total=0;
+  for(let i=1;i<points.length;i++){
+    const a=points[i-1],b=points[i],d=V.sub(b,a),u=V.unit(d),v=V.unit([-d[1],d[0],0]),n=V.cross(u,v),len=Math.hypot(...d),thick=raised?8:2;
+    const center=V.sub(V.mul(V.add(a,b),.5),V.mul(n,thick/2));
+    const seg={a,b,u,v,n,len,start:total,center,axes:[u,v,n],size:[len+.15,width,thick],x:center[0],y:center[1],kind:'deck',name:'고가도로 상판'};
+    if(raised&&Math.max(a[2],b[2])>4)structures.push(seg);
+    segments.push(seg);total+=len;
+  }
+  const r={id,points,width,lanes,raised,kind,segments,total};roads.push(r);return r;
+}
+function sampleRoad(r,t,offset=0,reverse=false){
+  const distance=Math.max(0,Math.min(.999999,t))*r.total,s=r.segments.find(s=>distance<=s.start+s.len)||r.segments.at(-1),f=(distance-s.start)/s.len;
+  let p=V.add(V.add(s.a,V.mul(V.sub(s.b,s.a),f)),V.mul(s.v,offset));
+  return {x:p[0],y:p[1],z:p[2]+.25,h:Math.atan2(s.u[1],s.u[0])+(reverse?Math.PI:0),pitch:Math.asin(s.u[2])*(reverse?-1:1),road:r.id,roadName:r.id==='event'?'고가 본선':r.id==='under'?'지하 본선':'지상 도로'};
+}
+function structure(x,y,w,h,zMin,zMax,name,kind='pier'){structures.push({x,y,w,h,zMin,zMax,name,kind})}
+// Flat scenes share the visual road model; their original filtering stays in XY.
+function buildFlatRoads(){
+  const half=+sceneValue('lanes')*19/2+8;roads=[];
+  roadModel('flatMain',[[0,340,0],[1000,340,0]],half*2,+sceneValue('lanes'));
+  if(sceneValue('scenario')==='urban')roadModel('flatCross',[[500,0,0],[500,680,0]],half*2,+sceneValue('lanes'));
+}
+function buildGrade(){
+  const type=sceneValue('scenario'),L=+sceneValue('lanes'),half=L*19/2+8;roads=[];structures=[];
+  if(type==='underpass'){
+    accidentZ=-50;
+    roadModel('under',[[0,340,0],[90,340,0],[270,340,-50],[730,340,-50],[910,340,0],[1000,340,0]],half*2,L);
+    roadModel('surface',[[500,0,0],[500,680,0]],half*2,L);
+    structure(500,340,half*2+18,half*2+20,-9,-.5,'地上 교량 상판'.replace('地上','지상'),'roof');
+    for(const side of [-1,1])structure(500,340+side*(half+6),460,10,-60,0,'지하차도 측벽','wall');
+  }else{
+    accidentZ=80;
+    const xs=[0,180,320,680,820,1000];
+    roadModel('event',xs.map(x=>[x,340,profile(x)]),half*2,L,true);
+    roadModel('surface',[[500,0,0],[500,680,0]],half*2,L);
+    for(const side of [-1,1])roadModel('side'+side,[[0,340+side*(half+45),0],[1000,340+side*(half+45),0]],half-2,L/2,false,'frontage');
+    for(const x of [365,635]){
+      structure(x,340,14,23,0,65,'고가 교각','pier');
+      structure(x,340,22,half*1.65,65,72,'교각 받침보','cap');
+      structure(x,340,28,38,-.2,3,'교각 기초','footing');
+    }
+  }
+  for(const x of [85,915])for(const y of [65,615])blocks.push({x,y,w:62,h:58,zMin:0,zMax:32,name:'주변 건물',decor:true});
+}
+function generateGrade(){
+  const type=sceneValue('scenario'),L=+sceneValue('lanes'),n=+sceneValue('count'),rng=random(layoutSeed);cars=[];blocks=[];buildGrade();
+  let tries=0;
+  while(cars.length<n){
+    if(++tries>200000)throw new Error('차량 배치 공간이 부족합니다.');
+    let r,reverse=false,offset=0,choice=rng();
+    if(type==='underpass')r=roads[choice<.55?0:1];
+    else r=choice<.48?roads[0]:choice<.7?roads[1]:roads[2+Math.floor(rng()*2)];
+    const lane=Math.floor(rng()*r.lanes);
+    offset=(lane-(r.lanes-1)/2)*19;
+    reverse=r.kind==='frontage'?r.id==='side-1':lane<r.lanes/2;
+    // Vertical roads use the same right-hand driving convention as the flat view.
+    if(r.id==='surface')reverse=lane>=r.lanes/2;
+    const q=sampleRoad(r,.035+rng()*.93,offset,reverse),candidate={...q,id:cars.length+1,truck:rng()<.07};
+    if((Math.abs(q.z-accidentZ)<24&&overlaps(candidate,{x:500,y:340,h:-18*Math.PI/180,accident:true}))||cars.some(o=>Math.abs(q.z-o.z)<24&&overlaps(candidate,o)))continue;
+    if(structures.some(o=>!o.axes&&o.kind.includes('ier')&&q.z<o.zMax&&Math.abs(q.x-o.x)<o.w/2+16&&Math.abs(q.y-o.y)<o.h/2+12))continue;
+    cars.push(candidate);
+  }
+  cars.forEach(v=>blocks.push({x:v.x,y:v.y,w:v.truck?34:24,h:14,rotation:v.h,id:v.id,zMin:v.z,zMax:v.z+(v.truck?30:18),name:(v.truck?'대형 차량 #':'앞 차량 #')+v.id}));calculate();
+}
+
+function random(seed){let a=seed>>>0;return()=>{a+=0x6D2B79F5;let t=a;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296}}
+function intersects(v,o,target={x:500,y:340}){if(o.rotation!==undefined){let c=Math.cos(o.rotation),sn=Math.sin(o.rotation),dx=v.x-o.x,dy=v.y-o.y,tx=target.x-o.x,ty=target.y-o.y;return boxHit({x:dx*c+dy*sn,y:-dx*sn+dy*c},{x:tx*c+ty*sn,y:-tx*sn+ty*c},{x:0,y:0,w:o.w,h:o.h})}return boxHit(v,target,o)}
+function boxHit(v,target,o){let lo=0,hi=1;for(const [a,d,m,M] of [[v.x,target.x-v.x,o.x-o.w/2,o.x+o.w/2],[v.y,target.y-v.y,o.y-o.h/2,o.y+o.h/2]]){if(Math.abs(d)<1e-9){if(a<m||a>M)return false}else{let p=(m-a)/d,q=(M-a)/d;if(p>q)[p,q]=[q,p];lo=Math.max(lo,p);hi=Math.min(hi,q);if(lo>hi)return false}}return hi>.015&&lo<.98}
+function alongPosition(v,vertical){return vertical?50+(v.y-50)*900/580:v.x}
+function roundGeometry(){let lanes=+sceneValue('lanes'),base=Math.max(132,Math.ceil(+sceneValue('count')/lanes)*44/(2*Math.PI)),mid=base+(lanes-1)*24/2;return {base,cx:500-mid,outer:base+(lanes-1)*24+12}}
+function overlaps(a,b,gap=1){const corners=v=>{let w=v.truck?34:24,h=14;if(v.accident){w=30;h=16}let c=Math.cos(v.h),sn=Math.sin(v.h);return [[-w/2-gap,-h/2-gap],[w/2+gap,-h/2-gap],[w/2+gap,h/2+gap],[-w/2-gap,h/2+gap]].map(([x,y])=>({x:v.x+x*c-y*sn,y:v.y+x*sn+y*c}))};let A=corners(a),B=corners(b);for(const v of [a,b])for(const ang of [v.h,v.h+Math.PI/2]){let c=Math.cos(ang),sn=Math.sin(ang),aa=A.map(p=>p.x*c+p.y*sn),bb=B.map(p=>p.x*c+p.y*sn);if(Math.max(...aa)<Math.min(...bb)||Math.max(...bb)<Math.min(...aa))return false}return true}
+function generate(){if(isGrade())return generateGrade();structures=[];accidentZ=0;buildFlatRoads();const rng=random(layoutSeed),n=+sceneValue('count'),type=sceneValue('scenario'),lanes=+sceneValue('lanes');cars=[];blocks=[];if(type==='urban'){let offset=lanes*19/2+8+12+26+105/2;for(const x of [500-offset,500+offset])for(const y of [340-offset,340+offset])blocks.push({x,y,w:105,h:105,name:'교차로 건物'.replace('物','물')});}const incident={x:500,y:340,h:-18*Math.PI/180,accident:true};let failures=0,restarts=0;while(cars.length<n){let lane=Math.floor(rng()*lanes),vertical=type==='urban'&&rng()<.5,truck=rng()<.08,cross=(lane-(lanes-1)/2)*19,x,y,h;if(type==='roundabout'){const g=roundGeometry(),radius=g.base+lane*24,angle=rng()*Math.PI*2;x=g.cx+radius*Math.cos(angle);y=340+radius*Math.sin(angle);h=angle-Math.PI/2}else{let along=45+rng()*(vertical?590:910);x=vertical?500+cross:along;y=vertical?along:340+cross;h=vertical?(lane<lanes/2?-Math.PI/2:Math.PI/2):(lane<lanes/2?Math.PI:0)}let candidate={id:cars.length+1,x,y,h,truck};if(overlaps(candidate,incident)||cars.some(other=>overlaps(candidate,other))){failures++;if(failures>25000){if(++restarts>20)throw Error('Unable to place vehicles without overlap');cars=[];failures=0;}continue}cars.push(candidate);failures=0;}cars.forEach(v=>blocks.push({x:v.x,y:v.y,w:v.truck?34:24,h:14,rotation:v.h,id:v.id,name:(v.truck?'대형 차량 #':'앞 차량 #')+v.id}));calculate()}
+
+function accidentBodyPoints(){const points=[],angle=-18*Math.PI/180,c=Math.cos(angle),sn=Math.sin(angle);for(let ix=0;ix<=12;ix++)for(let iy=0;iy<=8;iy++){const x=-15+30*ix/12,y=-8+16*iy/8;if(isGrade())for(const z of [accidentZ+3,accidentZ+10,accidentZ+17])points.push({x:500+x*c-y*sn,y:340+x*sn+y*c,z});else points.push({x:500+x*c-y*sn,y:340+x*sn+y*c})}return points}
+function angleDifference(v,p){return Math.abs(Math.atan2(Math.sin(Math.atan2(p.y-v.y,p.x-v.x)-v.h),Math.cos(Math.atan2(p.y-v.y,p.x-v.x)-v.h)))*180/Math.PI}
+// Geometric visibility only: a single unoccluded in-FOV body sample is enough.
+// This has no learned detector, temporal voting, confidence, or identity matching.
+function evaluateObserver(v,points,occluders,grade,accidentElevation){
+  const delta=angleDifference(v,{x:500,y:340}),distance=Math.hypot(500-v.x,340-v.y);
+  const bodyHalfAngle=distance<=ACCIDENT_BODY_RADIUS?180:Math.asin(ACCIDENT_BODY_RADIUS/distance)*180/Math.PI;
+  // The 30 x 16 body fits in this circle; include a tangent despite floating-point rounding.
+  const first=distance<=ACCIDENT_BODY_RADIUS||delta<=CAMERA_FOV/2+bodyHalfAngle+1e-10;
+  const hit=(o,p)=>grade
+    ?volumeHit({x:v.x,y:v.y,z:(v.z||0)+12},{...p,z:p.z??accidentElevation+10},o)
+    :intersects(v,o,p);
+  const inView=points.filter(p=>angleDifference(v,p)<=CAMERA_FOV/2);
+  const visiblePoints=inView.filter(p=>!occluders.some(o=>o.id!==v.id&&hit(o,p)));
+  const visible=visiblePoints.length>0,final=first&&visible;
+  const target=final?visiblePoints.reduce((best,p)=>Math.hypot(p.x-500,p.y-340)<Math.hypot(best.x-500,best.y-340)?p:best,visiblePoints[0]):{x:500,y:340};
+  const blocker=final?null:occluders.filter(o=>o.id!==v.id&&hit(o,target)).sort((a,b)=>Math.hypot(a.x-v.x,a.y-v.y)-Math.hypot(b.x-v.x,b.y-v.y))[0];
+  return {delta,distance,bodyHalfAngle,first,visible,final,inViewCount:inView.length,visibleCount:visiblePoints.length,sampleCount:points.length,
+    visibleFraction:inView.length?visiblePoints.length/inView.length:0,
+    visibleBodyFraction:points.length?visiblePoints.length/points.length:0,target,blocker};
+}
+function calculate(){
+  const points=accidentBodyPoints(),occluders=[...blocks,...structures],grade=isGrade();
+  for(const v of cars)Object.assign(v,evaluateObserver(v,points,occluders,grade,accidentZ));
+  if(!HEADLESS)render();
+}
+// Browser and CLI use these exact geometry/generation functions, without a second port.
+function runScenario({road='elevated',lanes=6,count=60,seed=42}={}){
+  if(!HEADLESS)throw new Error('runScenario is the headless batch entry point');
+  if(!Object.hasOwn(names,road))throw new Error('Unknown road: '+road);
+  if(!Number.isInteger(lanes)||lanes<4||lanes>12||lanes%2)throw new Error('lanes must be 4, 6, 8, 10, or 12');
+  if(!Number.isInteger(count)||count<20||count>100||count%5)throw new Error('count must be 20 through 100 in steps of 5');
+  if(!Number.isInteger(seed)||seed<0||seed>0xffffffff)throw new Error('seed must be an unsigned 32-bit integer');
+  Object.assign(sceneSettings,{scenario:road,lanes,count});layoutSeed=seed;selected=null;generate();
+  return {road,lanes,seed,accident:{x:500,y:340,z:accidentZ,heading_degrees:-18},
+    vehicles:cars.map(v=>({...v,target:{...v.target},blocker:v.blocker?{...v.blocker}:null}))};
+}
+globalThis.ACE_MODEL=Object.freeze({runScenario,random,evaluateObserver,angleDifference,overlaps,intersects,volumeHit,cameraFov:CAMERA_FOV,accidentBodyRadius:ACCIDENT_BODY_RADIUS});
+
+function flatScene(s,detail){const type=sceneValue('scenario'),lanes=+sceneValue('lanes'),half=lanes*19/2+8;let m='<svg viewBox="0 0 1000 680" role="img" aria-label="도로 위 차량 필터링 결과"><rect width="1000" height="680" fill="#e3ece1"/>';for(const x of [80,220,780,920])for(const y of [100,200,480,580])m+=`<circle cx="${x}" cy="${y}" r="14" fill="#c2d4be"/><circle cx="${x-3}" cy="${y-3}" r="9" fill="#aac5a6"/>`;m+=`<rect y="${340-half-12}" width="1000" height="${2*half+24}" fill="#c5cdd1"/><rect y="${340-half}" width="1000" height="${2*half}" fill="#465462"/>`;if(type==='urban')m+=`<rect x="${500-half-12}" width="${2*half+24}" height="680" fill="#c5cdd1"/><rect x="${500-half}" width="${2*half}" height="680" fill="#465462"/>`;if(type==='urban')m+=`<rect x="${500-half-12}" y="${340-half}" width="${2*half+24}" height="${2*half}" fill="#465462"/>`;for(let i=1;i<lanes;i++){let y=340+(i-lanes/2)*19,x=500+(i-lanes/2)*19;m+=`<path d="${type==='urban'?`M0 ${y} H${500-half-30} M${500+half+30} ${y} H1000`:`M0 ${y} H1000`}" stroke="${i===lanes/2?'#e6ca70':'#94a3af'}" stroke-width="${i===lanes/2?2:1}" stroke-dasharray="${i===lanes/2?'0':'15 18'}"/>`;if(type==='urban')m+=`<path d="M${x} 0 V${340-half-30} M${x} ${340+half+30} V680" stroke="${i===lanes/2?'#e6ca70':'#94a3af'}" stroke-width="${i===lanes/2?2:1}" stroke-dasharray="${i===lanes/2?'0':'15 18'}"/>`;}if(type==='urban'){const span=lanes*19/2,edge=half+16;m+=`<path d="M${500-edge} 340 V${340+span} M${500+edge} ${340-span} V340 M${500-span} ${340-edge} H500 M500 ${340+edge} H${500+span}" stroke="#ffffff" stroke-width="5" stroke-linecap="butt" fill="none"/>`;} if(type==='roundabout'){let g=roundGeometry(),cx=g.cx,inner=g.base-12,outer=g.outer;m=`<svg viewBox="${cx-outer-45} ${340-outer-45} ${2*(outer+45)} ${2*(outer+45)}" role="img" aria-label="원형 도로 차량 필터링"><rect x="${cx-outer-45}" y="${340-outer-45}" width="${2*(outer+45)}" height="${2*(outer+45)}" fill="#e3ece1"/>`;m+=`<circle cx="${cx}" cy="340" r="${outer+12}" fill="#c5cdd1"/><circle cx="${cx}" cy="340" r="${outer}" fill="#465462"/><circle cx="${cx}" cy="340" r="${inner}" fill="#b5cfa8"/><circle cx="${cx}" cy="340" r="${inner-15}" fill="#cfdfc8"/><text x="${cx}" y="337" text-anchor="middle" font-size="17" fill="#617d58" font-weight="bold">중앙 섬</text><text x="${cx}" y="360" text-anchor="middle" font-size="12" fill="#617d58">반시계 방향 통행 ↺</text>`;for(let j=1;j<lanes;j++)m+=`<circle cx="${cx}" cy="340" r="${g.base+(j-.5)*24}" fill="none" stroke="#94a3af" stroke-dasharray="15 18"/>`;for(const angle of [.65,2.1,3.6,5.1]){let r=g.base+(lanes-1)*24/2;m+=`<g transform="translate(${cx+r*Math.cos(angle)} ${340+r*Math.sin(angle)}) rotate(${(angle-Math.PI/2)*180/Math.PI})"><path d="M-10 0 H10 M4 -5 L10 0 L4 5" fill="none" stroke="#d4dfe6" stroke-width="2"/></g>`;}}for(const o of blocks.filter(o=>!o.id))m+=`<rect x="${o.x-o.w/2+6}" y="${o.y-o.h/2+7}" width="${o.w}" height="${o.h}" rx="6" fill="#b1bdab"/><rect x="${o.x-o.w/2}" y="${o.y-o.h/2}" width="${o.w}" height="${o.h}" rx="6" fill="#7b8d77"/><rect x="${o.x-o.w/2+12}" y="${o.y-o.h/2+12}" width="${o.w-24}" height="${o.h-24}" rx="4" fill="#93a28d"/>`;let v=cars.find(v=>v.id===selected);if(detail&&v){let r=380,a=v.h-CAMERA_FOV*Math.PI/360,b=v.h+ CAMERA_FOV*Math.PI/360;m+=`<path d="M${v.x} ${v.y} L${v.x+r*Math.cos(a)} ${v.y+r*Math.sin(a)} A${r} ${r} 0 0 1 ${v.x+r*Math.cos(b)} ${v.y+r*Math.sin(b)} Z" fill="#5ab9f0" fill-opacity=".2" stroke="#55abdc" stroke-opacity=".5"/><path d="M${v.x} ${v.y} L${v.target.x} ${v.target.y}" stroke="${v.final?'#38e7bf':v.first?'#ffb45e':'#ff7e89'}" stroke-width="3" stroke-dasharray="7 5"/>`;if(v.first&&v.blocker)m+=`<circle cx="${v.blocker.x}" cy="${v.blocker.y}" r="25" fill="none" stroke="#f67d47" stroke-width="3"/>`;}
+for(const v of cars){let active=s===0||s===1&&v.first||s===2&&v.final,c=active?colors[s]:'#b8c3cd',w=v.truck?34:24;m+=`<g class="car" data-id="${v.id}" opacity="${active?1:.3}" transform="translate(${v.x} ${v.y}) rotate(${v.h*180/Math.PI})"><rect x="${-w/2}" y="-7" width="${w}" height="14" rx="3" fill="${c}" stroke="${detail&&v.id===selected?'#162b43':'white'}" stroke-width="${detail&&v.id===selected?3:1}"/><rect x="4" y="-5" width="4" height="10" rx="1" fill="#d9ecf6"/><rect x="-8" y="-5" width="4" height="10" rx="1" fill="#213d57"/><path d="M${w/2+1} -3 L${w/2+6} 0 L${w/2+1} 3" fill="${c}"/>${v.truck?'<rect x="-14" y="-5" width="8" height="10" rx="1" fill="#687a66"/>':''}</g>`;}m+='<circle cx="500" cy="340" r="24" fill="#ed635b" opacity=".18"/><g transform="translate(500 340) rotate(-18)"><rect x="-15" y="-8" width="30" height="16" rx="4" fill="#ed635b" stroke="white" stroke-width="2"/><rect x="4" y="-5" width="5" height="10" fill="#ffe5d6"/></g><path d="M493 320 L500 307 L507 320" fill="none" stroke="#e65950" stroke-width="3"/><rect x="456" y="371" width="88" height="25" rx="12" fill="white"/><text x="500" y="388" text-anchor="middle" font-size="12" fill="#bd4840" font-weight="bold">사고 차량</text>';m+=`<text x="28" y="38" font-size="15" font-weight="bold" fill="#667d63">${{normal:'일반도로 · 왕복 '+lanes+'차로',urban:'교차로 · 왕복 '+lanes+'차로',roundabout:'원형 도로 · '+lanes+'차로'}[type]}</text><text x="28" y="650" font-size="12" fill="#667d63">위에서 본 도로 · 차량 앞 삼각형 = 카메라 방향</text></svg>`;if(type==='normal')m=m.replace('viewBox="0 0 1000 680"','viewBox="0 190 1000 300"');return m}
+
+let orbit3D={yaw:-.4,pitch:.52,zoom:1},pick3D=[],drawRequest=0;
+function requestDraw(){if(!drawRequest)drawRequest=requestAnimationFrame(()=>{drawRequest=0;drawAll3D()})}
+function mount3D(){
+  if(!$('world3d')){
+    $('map').innerHTML='<div class="viewer3d"><canvas id="world3d" aria-label="드래그로 회전하는 도로 시뮬레이션"></canvas><div class="level-key"><span><i class="high"></i><span id="gradeLevelName">고가</span> <b id="highLevel">+8 m</b></span><span><i></i>지상 0 m</span></div><div class="view-status">드래그 회전 <em>·</em> 휠 확대 <em>·</em> 차량 선택</div><div class="cutaway-note" id="cutawayNote">상판 투시 중 · 가림 판정은 그대로 유지</div></div>';
+    const c=$('world3d');let drag=null,travel=0;
+    c.onpointerdown=e=>{drag={x:e.clientX,y:e.clientY};travel=0;c.setPointerCapture(e.pointerId)};
+    c.onpointermove=e=>{if(!drag)return;let dx=e.clientX-drag.x,dy=e.clientY-drag.y;travel+=Math.abs(dx)+Math.abs(dy);orbit3D.yaw+=dx*.006;orbit3D.pitch=Math.max(.22,Math.min(1.54,orbit3D.pitch+dy*.005));drag={x:e.clientX,y:e.clientY};requestDraw()};
+    c.onpointerup=e=>{drag=null;if(travel>5)return;const r=c.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
+      const hit=pick3D.filter(p=>p.visible&&Math.hypot(p.x-x,p.y-y)<p.radius).sort((a,b)=>b.depth-a.depth)[0];selected=hit?.id??null;render();};
+    c.onpointercancel=()=>drag=null;
+    c.onwheel=e=>{e.preventDefault();orbit3D.zoom=Math.max(.65,Math.min(2.8,orbit3D.zoom*Math.exp(-e.deltaY*.001)));requestDraw()};
+    c.oncontextmenu=e=>e.preventDefault();
+  }
+  $('gradeLevelName').textContent=sceneValue('scenario')==='underpass'?'지하':'고가';
+  $('highLevel').textContent=sceneValue('scenario')==='underpass'?'−5 m':'+8 m';
+  $('gradeLevelName').parentElement.style.display=isGrade()?'flex':'none';
+  $('cutawayNote').classList.toggle('show',$('cutaway').checked);
+  drawAll3D();
+}
+function drawAll3D(){draw3D($('world3d'),stage,true);document.querySelectorAll('canvas[data-preview]').forEach(c=>draw3D(c,+c.dataset.preview,false))}
+function draw3D(canvas,s,interactive){
+  if(!canvas)return;
+  let gl=canvas._gl;
+  if(!gl){
+    gl=canvas.getContext('webgl',{antialias:true,alpha:false});
+    if(!gl){canvas.parentNode.innerHTML='<div class="webgl-error">3D 그래픽을 사용할 수 없습니다.<br>브라우저의 그래픽 가속을 켜고 다시 열어주세요.</div>';return}
+    const shader=(type,src)=>{let q=gl.createShader(type);gl.shaderSource(q,src);gl.compileShader(q);if(!gl.getShaderParameter(q,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(q));return q};
+    let p=gl.createProgram();gl.attachShader(p,shader(gl.VERTEX_SHADER,'attribute vec3 a;attribute vec4 c;varying vec4 color;void main(){gl_Position=vec4(a,1.0);color=c;}'));
+    gl.attachShader(p,shader(gl.FRAGMENT_SHADER,'precision mediump float;varying vec4 color;void main(){gl_FragColor=color;}'));gl.linkProgram(p);
+    if(!gl.getProgramParameter(p,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(p));
+    canvas._gl=gl;canvas._program=p;canvas._buffer=gl.createBuffer();
+  }
+  const rect=canvas.getBoundingClientRect(),w=Math.max(1,rect.width),h=Math.max(1,rect.height),dpr=Math.min(devicePixelRatio||1,2);
+  if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr)}
+  gl.viewport(0,0,canvas.width,canvas.height);gl.clearColor(.937,.958,.966,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+  gl.enable(gl.DEPTH_TEST);gl.depthFunc(gl.LEQUAL);gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
+  const type=sceneValue('scenario'),L=+sceneValue('lanes'),half=L*19/2+8,ghost=$('cutaway').checked;
+  const yaw=orbit3D.yaw,pitch=orbit3D.pitch,cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
+  const raw=p=>{let u=p[0]-500,v=p[1]-340,z=p[2]-15,right=cy*u-sy*v,front=sy*u+cy*v,up=z*cp-front*sp,depth=front*cp+z*sp,per=2200/(2200-depth);return [right*per,up*per,depth]};
+  const bounds=[];for(let x of [-25,1025])for(let y of [-25,705])for(let z of [-8,105])bounds.push(raw([x,y,z]));
+  const minx=Math.min(...bounds.map(p=>p[0])),maxx=Math.max(...bounds.map(p=>p[0])),miny=Math.min(...bounds.map(p=>p[1])),maxy=Math.max(...bounds.map(p=>p[1]));
+  const scale=Math.min((w-32)/(maxx-minx),(h-24)/(maxy-miny))*orbit3D.zoom,ox=(minx+maxx)/2,oy=(miny+maxy)/2;
+  // Depth must use the same perspective division as the screen coordinates.
+  // Linear eye-space depth makes large coplanar road/ground triangles intersect.
+  const project=p=>{let q=raw(p);return [(q[0]-ox)*scale*2/w,(q[1]-oy)*scale*2/h,-q[2]/(2200-q[2]),q[2]]};
+  const opaque=[],transparent=[];
+  const rgb=c=>Array.isArray(c)?c:[parseInt(c.slice(1,3),16)/255,parseInt(c.slice(3,5),16)/255,parseInt(c.slice(5,7),16)/255,1];
+  function tri(a,b,c,color){let col=rgb(color),buffer=col[3]<.99?transparent:opaque;for(let p of [a,b,c])buffer.push(...project(p).slice(0,3),...col)}
+  function quad(a,b,c,d,color){tri(a,b,c,color);tri(a,c,d,color)}
+  const shade=(col,f,alpha)=>{let c=rgb(col);return [c[0]*f,c[1]*f,c[2]*f,alpha??c[3]]};
+  function cuboid(center,axes,size,color,topColor=color,alpha=1){
+    const p=[];for(let k of [-1,1])for(let [i,j] of [[-1,-1],[1,-1],[1,1],[-1,1]])p.push(V.add(center,V.add(V.add(V.mul(axes[0],i*size[0]/2),V.mul(axes[1],j*size[1]/2)),V.mul(axes[2],k*size[2]/2))));
+    quad(...p.slice(4),shade(topColor,1,alpha));
+    for(let i=0;i<4;i++)quad(p[i],p[(i+1)%4],p[(i+1)%4+4],p[i+4],shade(color,[.69,.86,.77,.94][i],alpha));
+  }
+  function box(x,y,z,width,length,height,color,rotation=0,tilt=0,alpha=1){
+    let c=Math.cos(rotation),sn=Math.sin(rotation),ct=Math.cos(tilt),st=Math.sin(tilt),u=[c*ct,sn*ct,st],v=[-sn,c,0],n=V.cross(u,v);
+    cuboid(V.add([x,y,z],V.mul(n,height/2)),[u,v,n],[width,length,height],color,color,alpha);
+  }
+  function ribbon(a,b,width,color){let d=V.sub(b,a),side=V.mul(V.unit([-d[1],d[0],0]),width/2);quad(V.add(a,side),V.sub(a,side),V.sub(b,side),V.add(b,side),color)}
+  function stripAt(r,t,length,offset,width,color,zlift=.45){
+    let a=sampleRoad(r,Math.max(0,t-length/r.total/2),offset),b=sampleRoad(r,Math.min(1,t+length/r.total/2),offset);
+    ribbon([a.x,a.y,a.z+zlift],[b.x,b.y,b.z+zlift],width,color);
+  }
+  // A single ground datum makes the deck height, columns and approaches legible.
+  if(type==='underpass'){
+    for(const side of [-1,1])box(500,340+side*(half+(340-half)/2),-7,1030,340-half,6,'#d6e2d7');
+    box(500,340,-59,1020,half*2,4,'#a7bab2');
+  }else box(500,340,-7,1030,710,6,'#d5e1d5');
+  // Quiet site grid and ground reference, entirely outside the driving surface.
+  for(let x=0;x<=1000;x+=100)ribbon([x,0,-.7],[x,680,-.7],.5,'#c7d6cb');
+  for(let y=40;y<=640;y+=100)ribbon([0,y,-.7],[1000,y,-.7],.5,'#c7d6cb');
+  for(const r of roads.filter(r=>r.raised))for(const seg of r.segments){
+    if(Math.max(seg.a[2],seg.b[2])<15)continue;
+    let a=[seg.a[0]+10,seg.a[1]+14,-.3],b=[seg.b[0]+10,seg.b[1]+14,-.3];ribbon(a,b,r.width+9,[.18,.26,.3,.10]);
+  }
+  for(const o of structures.filter(o=>!o.axes)){
+    let alpha=ghost&&o.kind==='roof'?.15:1;
+    box(o.x,o.y,o.zMin,o.w,o.h,o.zMax-o.zMin,o.kind==='pier'?'#b9c6c7':o.kind==='wall'?'#bac8c9':'#a5b6be',0,0,alpha);
+    if(o.kind==='pier')box(o.x-7.2,o.y,o.zMin+5,1,o.h,8,'#4d6978');
+  }
+  if(!isGrade()){
+    // Low curbs, quiet paving and interrupted markings leave the junction clear.
+    const cross=type==='urban',edge=half+14;
+    const spans=cross?[[0,500-half],[500+half,1000]]:[[0,1000]];
+    for(const side of [-1,1])for(const [a,b] of spans){
+      box((a+b)/2,340+side*(half+8),-.4,b-a,16,2.4,'#c2cfd0');
+      box((a+b)/2,340+side*(half+1),-.3,b-a,2,3,'#dce5e4');
+      for(let x=a+20;x<b;x+=35)box(x,340+side*(half+9),2.05,.55,12,.12,'#aebec0');
+    }
+    if(cross)for(const side of [-1,1])for(const [a,b] of [[0,340-half],[340+half,680]]){
+      box(500+side*(half+8),(a+b)/2,-.4,16,b-a,2.4,'#c2cfd0');
+      box(500+side*(half+1),(a+b)/2,-.3,2,b-a,3,'#dce5e4');
+      for(let y=a+20;y<b;y+=35)box(500+side*(half+9),y,2.05,12,.55,.12,'#aebec0');
+    }
+    for(const r of roads)for(const seg of r.segments)cuboid(seg.center,seg.axes,seg.size,'#5b6a76');
+    const segments=cross?[[0,500-half-34],[500+half+34,1000]]:[[0,1000]];
+    for(const r of roads){
+      const vertical=r.id==='flatCross',ranges=vertical?[[0,340-half-34],[340+half+34,680]]:segments;
+      const line=(a,b,offset,width,color,z=.7)=>vertical?ribbon([500+offset,a,z],[500+offset,b,z],width,color):ribbon([a,340+offset,z],[b,340+offset,z],width,color);
+      for(const side of [-1,1])for(const [a,b] of vertical?[[0,340-half],[340+half,680]]:spans)line(a,b,side*(half-2),.85,'#e0e7e9');
+      for(const [a,b] of ranges){
+        for(const side of [-1,1])line(a,b,side*.85,.65,'#e3c77e');
+        for(let j=1;j<L;j++)if(j!==L/2)for(let d=a+12;d<b-5;d+=30)line(d,Math.min(d+13,b),(j-L/2)*19,.75,'#d3dee3');
+      }
+      for(const t of [.17,.83])for(const side of [-1,1]){
+        const p=sampleRoad(r,t,side*19*.5,vertical?side>0:side<0),dx=Math.cos(p.h),dy=Math.sin(p.h),z=1;
+        const a=[p.x-dx*7,p.y-dy*7,z],b=[p.x+dx*7,p.y+dy*7,z];ribbon(a,b,1.5,'#e0e7e9');
+        tri(b,[p.x+dx-dy*3,p.y+dy+dx*3,z],[p.x+dx+dy*3,p.y+dy-dx*3,z],'#e0e7e9');
+      }
+    }
+    if(cross)for(const side of [-1,1]){
+      for(let offset=-half+8;offset<half-4;offset+=9){
+        box(500+side*edge,340+offset,.75,14,4,.15,'#dce6e9');
+        box(500+offset,340+side*edge,.75,4,14,.15,'#dce6e9');
+      }
+      // Stop bars face approaching traffic; the central intersection stays open.
+      box(500+side*(half+29),340-side*(half-4)/2,.8,2.5,half-8,.15,'#e4ebec');
+      box(500+side*(half-4)/2,340+side*(half+29),.8,half-8,2.5,.15,'#e4ebec');
+    }
+  }
+  for(const r of (isGrade()?[...roads].sort((a,b)=>Number(a.raised)-Number(b.raised)):[])){
+    const alpha=ghost&&(r.raised||(type==='underpass'&&r.id==='surface'))?.24:1;
+    const asphalt=r.id==='event'?'#4d6073':'#5b6a76';
+    for(const seg of r.segments){
+      cuboid(seg.center,seg.axes,seg.size,r.raised?'#a9bac6':asphalt,asphalt,alpha);
+      for(const side of [-1,1]){
+        let edge=(r.width/2-2)*side,a=V.add(seg.a,V.mul(seg.v,edge)),b=V.add(seg.b,V.mul(seg.v,edge));a[2]+=.8;b[2]+=.8;
+        ribbon(a,b,.85,shade('#e0e7e9',1,alpha));
+        if(r.raised){
+          let a2=V.add(a,[0,0,3]),b2=V.add(b,[0,0,3]);ribbon(a2,b2,1.7,shade('#ccd8df',1,alpha));
+          quad(a,b,b2,a2,shade('#829cac',1,alpha));
+        }
+      }
+    }
+    for(let j=1;j<r.lanes;j++){
+      let off=(j-r.lanes/2)*19;
+      if(j===r.lanes/2&&r.kind!=='frontage'){
+        for(let k=0;k<r.segments.length;k++){let seg=r.segments[k];if(!r.raised&&Math.abs((seg.a[1]+seg.b[1])/2-340)<half&&r.id==='surface'&&type!=='underpass')continue;
+          for(const shift of [-1,1]){let a=V.add(seg.a,V.mul(seg.v,shift*.85)),b=V.add(seg.b,V.mul(seg.v,shift*.85));a[2]+=.7;b[2]+=.7;ribbon(a,b,.65,shade('#e3c77e',1,alpha))}
+        }
+      }else for(let d=14;d<r.total-5;d+=30){let p=sampleRoad(r,d/r.total);if(r.id==='surface'&&type!=='underpass'&&Math.abs(p.y-340)<half+16)continue;stripAt(r,d/r.total,13,off,.75,shade('#d3dee3',1,alpha))}
+    }
+    // Repeated travel arrows make the road hierarchy read without extra labels.
+    for(const t of [.17,.83])for(const side of [-1,1]){
+      let p=sampleRoad(r,t,side*19*.5,side<0),dx=Math.cos(p.h),dy=Math.sin(p.h),z=p.z+1;
+      const a=[p.x-dx*7,p.y-dy*7,z],b=[p.x+dx*7,p.y+dy*7,z];ribbon(a,b,1.5,shade('#e0e7e9',1,alpha));
+      tri(b,[p.x+dx*1-dy*3,p.y+dy*1+dx*3,z],[p.x+dx*1+dy*3,p.y+dy*1-dx*3,z],shade('#e0e7e9',1,alpha));
+    }
+  }
+  // Crosswalks on the surface intersection, below the elevated mainline.
+  if(type==='elevated')for(const y of [340-half-67,340+half+67])for(let x=500-half+8;x<500+half-5;x+=9)box(x,y,.7,4,13,.2,'#dce6e9');
+  for(const o of blocks.filter(o=>!o.id)){
+    box(o.x+5,o.y+7,-.5,o.w+6,o.h+6,.3,'#bacac0');box(o.x,o.y,0,o.w,o.h,o.zMax||36,'#aebfb5');
+    box(o.x,o.y,(o.zMax||36)+.1,o.w-8,o.h-8,1.8,'#d7e1d9');
+    for(let xx=-18;xx<=18;xx+=12)box(o.x+xx,o.y-o.h/2-.2,10,5,.5,12,'#728d90');
+  }
+  // Small vertical poles reinforce the human-scale height reference.
+  if(type!=='underpass')for(const x of [120,875])for(const side of [-1,1]){
+    const y=340+side*(type==='elevated'?half+80:half+18);box(x,y,0,1.7,1.7,30,'#8fa6ae');box(x+4,y,29,9,3,2,'#dfe8e9');
+  }
+  const picked=[];
+  function car(v,incident=false){
+    const active=incident||s===0||s===1&&v.first||s===2&&v.final,len=incident?30:v.truck?34:24,height=v.truck?28:16,col=incident?'#e5695c':active?colors[s]:'#adbbc4',z=v.z||0,tilt=v.pitch||0;
+    const pos=(x,y,zoff)=>[v.x+x*Math.cos(v.h)-y*Math.sin(v.h),v.y+x*Math.sin(v.h)+y*Math.cos(v.h),z+zoff+x*Math.sin(tilt)];
+    box(v.x,v.y,z+2,len,14,height*.54,col,v.h,tilt);
+    let c=pos(-2,0,height*.53+2);box(...c,len*.56,11,height*.43,shade(col,1.04),v.h,tilt);
+    let win=pos(len*.17,0,height*.92+2);box(...win,3,9,.6,active?'#c5e3eb':'#d6e0e5',v.h,tilt);
+    for(let side of [-1,1])for(let end of [-1,1]){let p=pos(end*len*.31,side*7,1);box(...p,5,2,4,'#354b5c',v.h,tilt)}
+    let p=project([v.x,v.y,z+height+3]);
+    const eye={x:v.x+sy*cp*3000,y:v.y+cy*cp*3000,z:z+sp*3000+height};
+    let hidden=!ghost&&structures.some(o=>volumeHit({x:v.x,y:v.y,z:z+height+2},eye,o));
+    if(!incident)picked.push({id:v.id,x:(p[0]+1)*w/2,y:(1-p[1])*h/2,depth:p[3],radius:Math.max(8,len*scale*.65),visible:!hidden});
+    if(incident){
+      for(let k=0;k<32;k++){let a=k/32*Math.PI*2,b=(k+1)/32*Math.PI*2;ribbon([v.x+23*Math.cos(a),v.y+23*Math.sin(a),z+1],[v.x+23*Math.cos(b),v.y+23*Math.sin(b),z+1],1.2,'#ef8f80')}
+      box(v.x,v.y,z+26,2,2,16,'#e5695c');box(v.x+6,v.y,z+38,12,2,7,'#e5695c');
+    }
+  }
+  cars.forEach(v=>car(v));car({x:500,y:340,z:accidentZ,h:-18*Math.PI/180},true);
+  const chosen=cars.find(v=>v.id===selected);
+  if(interactive&&chosen){
+    let r=200,z=(chosen.z||0)+12,a=chosen.h-CAMERA_FOV*Math.PI/360,b=chosen.h+CAMERA_FOV*Math.PI/360;
+    tri([chosen.x,chosen.y,z],[chosen.x+r*Math.cos(a),chosen.y+r*Math.sin(a),z],[chosen.x+r*Math.cos(b),chosen.y+r*Math.sin(b),z],[.21,.61,.85,.13]);
+    let start=[chosen.x,chosen.y,z],end=[chosen.target.x,chosen.target.y,chosen.target.z??accidentZ+10];
+    for(let j=0;j<40;j+=2)ribbon(V.add(start,V.mul(V.sub(end,start),j/40)),V.add(start,V.mul(V.sub(end,start),(j+1)/40)),2,chosen.final?'#2bddb2':'#efb34c');
+    box(chosen.x,chosen.y,(chosen.z||0)+23,4,4,5,'#225d88');
+  }
+  gl.useProgram(canvas._program);gl.bindBuffer(gl.ARRAY_BUFFER,canvas._buffer);
+  const submit=(data,depthWrite)=>{gl.depthMask(depthWrite);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(data),gl.DYNAMIC_DRAW);for(const [name,size,offset] of [['a',3,0],['c',4,12]]){let loc=gl.getAttribLocation(canvas._program,name);gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,size,gl.FLOAT,false,28,offset)}gl.drawArrays(gl.TRIANGLES,0,data.length/7)};
+  submit(opaque,true);submit(transparent,false);gl.depthMask(true);
+  if(interactive)pick3D=picked;
+}
+if(!HEADLESS)window.addEventListener('resize',requestDraw);
+
+function updateInspection(){
+ const v=cars.find(c=>c.id===selected);
+ if(!v){$('inspection').innerHTML='<div class="inspection-top">차량을 선택해 보세요<span class="inspection-tag">INSPECT</span></div><p>차량의 카메라 시야와 사고차까지의 시선을 표시합니다.</p>';return}
+ const status=!v.first?'1차 제외 · 차체 범위가 화각 밖':v.final?'2차 통과 · 사고차가 보임':v.inViewCount?'2차 제외 · 시야가 가려짐':'2차 제외 · 화각 내 차체 표본 없음';
+ $('inspection').innerHTML=`<div class="inspection-top">관측 차량 #${v.id}<span class="inspection-tag">${((v.z||0)/10).toFixed(1)} m</span></div><strong class="inspect-status ${v.final?'pass':'reject'}">${status}</strong><p>${!v.first?`차체 각도 범위 ${Math.max(0,v.delta-v.bodyHalfAngle).toFixed(1)}~${(v.delta+v.bodyHalfAngle).toFixed(1)}° / 카메라 반화각 32°`:v.final?`화각 내 사고차 표본 중 ${(v.visibleFraction*100).toFixed(0)}%가 보입니다.`:v.inViewCount?`${v.blocker?.name||'주변 물체'}에 사고차가 가려집니다.`:'차체를 감싸는 원은 화각과 겹치지만 화각 안에 차체 표본점이 없습니다.'}</p><small>${v.roadName||'지상 도로'} · ${v.truck?'대형 차량':'일반 차량'}</small>`;
+}
+function render(){
+ const n=cars.length,p=cars.filter(v=>v.first).length,a=cars.filter(v=>v.final).length,counts=[n,p,a],type=sceneValue('scenario');
+ $('countValue').textContent=n;$('lanesValue').textContent=sceneValue('lanes');
+ ['n0','n1','n2'].forEach((id,i)=>$(id).textContent=counts[i]);
+ $('drop1').textContent=`${n-p}대 제외 · 영상 확인 대상 ${p}대`;
+ $('drop2').textContent=`${p-a}대 추가 제외 · 화각 내 가시 표본점 없음`;
+ $('saving1').textContent=`영상 확인 대상 −${Math.round((n-p)/n*100)}%`;
+ $('saving2').textContent=`전체 대비 −${Math.round((n-a)/n*100)}%`;
+ $('meter1').style.width=p/n*100+'%';$('meter2').style.width=a/n*100+'%';
+ $('title').textContent=['전체 차량의 이벤트 수신','사고차 차체 범위가 카메라 화각과 겹치는가?','사고차 표본점이 가려지지 않았는가?'][stage];
+ $('scenarioName').textContent=names[type];$('mapHint').textContent=descriptions[type];
+ document.querySelectorAll('[data-stage]').forEach(b=>{b.classList.toggle('active',+b.dataset.stage===stage);b.setAttribute('aria-pressed',String(+b.dataset.stage===stage))});
+ document.querySelector('.camera-controls').style.display='block';
+ $('cutaway').closest('label').style.display=isGrade()?'flex':'none';
+ const sameScene=document.querySelectorAll('[data-preview]').length===3;
+ if(!sameScene)$('compare').innerHTML=[0,1,2].map(s=>`<button class="compare-card" data-compare="${s}" style="--c:${colors[s]}" aria-label="${['전체 수신','1차 통과','최종 선정'][s]} 단계 보기"><div class="compare-head"><span>${['01 전체 수신','02 1차 통과','03 최종 선정'][s]}</span><b class="compare-count">${counts[s]}대</b></div><canvas data-preview="${s}" class="preview3d" aria-hidden="true"></canvas></button>`).join('');
+ document.querySelectorAll('[data-compare]').forEach((b,i)=>{b.classList.toggle('active',i===stage);b.querySelector('.compare-count').textContent=counts[i]+'대';b.onclick=()=>{stage=i;render()}});
+ mount3D();$('map').onclick=null;
+ updateInspection();
+}
+if(!HEADLESS){
+document.querySelectorAll('[data-stage]').forEach(b=>b.onclick=()=>{stage=+b.dataset.stage;render()});
+$('scenario').onchange=()=>{selected=null;$('cutaway').checked=false;orbit3D={yaw:-.4,pitch:.52,zoom:1};generate()};
+let generationFrame=0;
+function scheduleGenerate(){selected=null;if(generationFrame)cancelAnimationFrame(generationFrame);generationFrame=requestAnimationFrame(()=>{generationFrame=0;generate()})}
+$('lanes').oninput=scheduleGenerate;$('count').oninput=scheduleGenerate;
+$('shuffle').onclick=()=>{let seed=new Uint32Array(1);crypto.getRandomValues(seed);layoutSeed=seed[0];selected=null;generate()};
+$('angle3d').onclick=()=>{orbit3D={yaw:-.4,pitch:.52,zoom:1};requestDraw()};
+$('side3d').onclick=()=>{orbit3D={yaw:-.18,pitch:.25,zoom:1};requestDraw()};
+$('top3d').onclick=()=>{orbit3D={yaw:0,pitch:1.53,zoom:1};requestDraw()};
+$('cutaway').onchange=()=>{$('cutawayNote')?.classList.toggle('show',$('cutaway').checked);requestDraw()};
+generate();
+}
+
+</script>
+</body></html>

@@ -1,0 +1,133 @@
+{
+  "interval_s": 15.0,
+  "interval_source": "inject_config",
+  "planned_events": 100,
+  "triggered_events": 100,
+  "attempted_events": 100,
+  "not_attempted_events": 0,
+  "attempts_without_trigger": 0,
+  "helper_error_attempts": 0,
+  "p2p_reception": {
+    "craft3": {
+      "triggered_events": 100,
+      "transmitted_events": 100,
+      "received_events": 100,
+      "receiver_rx_recorded_events": 100,
+      "initial_received": 99,
+      "after_retry_first_rx_estimate": 0,
+      "received_phase_unknown": 1,
+      "final_missing": 0,
+      "final_missing_rate": 0.0,
+      "rx_record_unavailable": 0,
+      "duplicate_rx_packets": 7,
+      "duplicate_forward_events": 0,
+      "not_sent": 0,
+      "tx_trace_missing": 0
+    },
+    "craft4": {
+      "triggered_events": 100,
+      "transmitted_events": 100,
+      "received_events": 100,
+      "receiver_rx_recorded_events": 100,
+      "initial_received": 100,
+      "after_retry_first_rx_estimate": 0,
+      "received_phase_unknown": 0,
+      "final_missing": 0,
+      "final_missing_rate": 0.0,
+      "rx_record_unavailable": 0,
+      "duplicate_rx_packets": 7,
+      "duplicate_forward_events": 0,
+      "not_sent": 0,
+      "tx_trace_missing": 0
+    },
+    "seongugi": {
+      "triggered_events": 100,
+      "transmitted_events": 100,
+      "received_events": 99,
+      "receiver_rx_recorded_events": 99,
+      "initial_received": 95,
+      "after_retry_first_rx_estimate": 0,
+      "received_phase_unknown": 4,
+      "final_missing": 1,
+      "final_missing_rate": 0.01,
+      "rx_record_unavailable": 0,
+      "duplicate_rx_packets": 3,
+      "duplicate_forward_events": 0,
+      "not_sent": 0,
+      "tx_trace_missing": 0
+    },
+    "craft6": {
+      "triggered_events": 100,
+      "transmitted_events": 100,
+      "received_events": 99,
+      "receiver_rx_recorded_events": 99,
+      "initial_received": 95,
+      "after_retry_first_rx_estimate": 0,
+      "received_phase_unknown": 4,
+      "final_missing": 1,
+      "final_missing_rate": 0.01,
+      "rx_record_unavailable": 0,
+      "duplicate_rx_packets": 3,
+      "duplicate_forward_events": 0,
+      "not_sent": 0,
+      "tx_trace_missing": 0
+    }
+  },
+  "trace_rows": 3046,
+  "unmatched_trace_rows": 0,
+  "resource_rows": {
+    "craft2": 16873,
+    "craft3": 17427,
+    "craft4": 17425,
+    "seongugi": 17425,
+    "craft6": 17426
+  },
+  "outcomes": {
+    "craft2": {
+      "storage_confirmed": 100
+    },
+    "craft3": {
+      "fov_reject": 100
+    },
+    "craft4": {
+      "storage_confirmed": 100
+    },
+    "seongugi": {
+      "ai_reject": 99,
+      "missing_rx": 1
+    },
+    "craft6": {
+      "fov_reject": 99,
+      "missing_rx": 1
+    }
+  },
+  "nodes_without_valid_chrony": [],
+  "resource_cycle_counts": {
+    "craft2": {
+      "complete": 100,
+      "partial": 0,
+      "unaligned": 0
+    },
+    "craft3": {
+      "complete": 100,
+      "partial": 0,
+      "unaligned": 0
+    },
+    "craft4": {
+      "complete": 100,
+      "partial": 0,
+      "unaligned": 0
+    },
+    "seongugi": {
+      "complete": 100,
+      "partial": 0,
+      "unaligned": 0
+    },
+    "craft6": {
+      "complete": 100,
+      "partial": 0,
+      "unaligned": 0
+    }
+  },
+  "output": "docs/measurements/20260928-e2e"
+}
